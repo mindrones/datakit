@@ -1,0 +1,36 @@
+{
+	"bugs": {
+		"url": "https://github.com/mindrones/datakit/issues"
+	},
+	"dependencies": {
+		"@svizzle/utils": "catalog:",
+		"just-compare": "catalog:",
+		"lamb": "catalog:"
+	},
+	"description": "Utilities for data transformation.",
+	"files": [
+		"src/**/*.js",
+		"!src/**/*.test.js",
+		"CHANGELOG.md",
+		"README.md"
+	],
+	"homepage": "https://github.com/mindrones/datakit",
+	"keywords": [
+		"@svizzle/utils",
+		"data transformation",
+		"functional programming"
+	],
+	"license": "MIT",
+	"main": "src/index.js",
+	"name": "@datakit/tx",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"directory": "packages/tx",
+		"type": "git",
+		"url": "github:mindrones/datakit"
+	},
+	"type": "module",
+	"version": "0.1.0"
+}

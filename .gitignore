@@ -1,0 +1,5 @@
+_/
+**/*.idea.js
+**/*.todo.js
+coverage/
+node_modules/

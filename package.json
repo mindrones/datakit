@@ -1,0 +1,26 @@
+{
+	"bugs": {
+		"url": "https://github.com/mindrones/datakit/issues"
+	},
+	"description": "A collection of utilities for data transformation and visualisation",
+	"devDependencies": {
+		"@datakit/eslint": "workspace:",
+		"@vitest/coverage-v8": "^2.0.5",
+		"vitest": "^2.0.5"
+	},
+	"homepage": "https://github.com/mindrones/datakit",
+	"license": "MIT",
+	"name": "datakit-monorepo",
+	"private": true,
+	"scripts": {
+		"coverage": "vitest run --coverage",
+		"lint": "eslint",
+		"publish": "pnpm publish -r",
+		"publishDry": "pnpm publish -r --dry-run",
+		"test": "vitest"
+	},
+	"type": "module",
+	"workspaces": [
+		"packages/*"
+	]
+}
