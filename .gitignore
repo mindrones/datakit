@@ -3,3 +3,6 @@ _/
 **/*.todo.js
 coverage/
 node_modules/
+
+# Mac
+.DS_Store
