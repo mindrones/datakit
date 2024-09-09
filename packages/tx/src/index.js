@@ -81,6 +81,6 @@ export * from '@svizzle/utils/src/modules/string-string.js';
 
 export {default as areEquals} from 'just-compare';
 
-export * from './src/array-any.js';
-export * from './src/array-number.js';
-export * from './src/array-string.js';
+export * from './array-any.js';
+export * from './array-number.js';
+export * from './array-string.js';

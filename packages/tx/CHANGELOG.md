@@ -1,5 +1,9 @@
 # @datakit/tx
 
+## v0.1.2
+
+- Fix local exports inadvertently broken in `v0.1.1`
+
 ## v0.1.1
 
 - Change how we re-exports `@svizzle/utils` to enable its autocompletion

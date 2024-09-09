@@ -2,7 +2,7 @@
 
 ## 20240909
 
-- [`@datakit/tx@0.1.1`](./packages/tx/CHANGELOG.md)
+- [`@datakit/tx@0.1.2`](./packages/tx/CHANGELOG.md)
 
 ## 20240828
 
