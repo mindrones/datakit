@@ -7,9 +7,9 @@
 		"@datakit/eslint": "workspace:",
 		"@eslint/compat": "catalog:",
 		"@types/node": "^25.3.2",
-		"@vitest/coverage-v8": "^2.0.5",
+		"@vitest/coverage-v8": "^4.0.18",
 		"typescript": "catalog:",
-		"vitest": "^2.0.5"
+		"vitest": "^4.0.18"
 	},
 	"homepage": "https://github.com/mindrones/datakit",
 	"license": "MIT",

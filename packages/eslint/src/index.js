@@ -1,5 +1,5 @@
 import pluginJs from '@eslint/js';
-import pluginJsStyle from '@stylistic/eslint-plugin-js';
+import pluginJsStyle from '@stylistic/eslint-plugin';
 import pluginJsDoc from 'eslint-plugin-jsdoc';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -26,14 +26,14 @@ export const tsConfig = tseslint.configs.recommended;
 export const styleConfig = [
 	{
 		plugins: {
-			'@stylistic/js': pluginJsStyle
+			'@stylistic': pluginJsStyle
 		},
 		rules: {
-			'@stylistic/js/indent': ['warn', 'tab', {
+			'@stylistic/indent': ['warn', 'tab', {
 				MemberExpression: 'off',
 				SwitchCase: 1,
 			}],
-			'@stylistic/js/quotes': ['warn', 'single', {avoidEscape: true}]
+			'@stylistic/quotes': ['warn', 'single', {avoidEscape: true}]
 		}
 	},
 ];
