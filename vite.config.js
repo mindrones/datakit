@@ -1,19 +1,17 @@
 import {defineConfig} from 'vitest/config';
 
-import {gitIgnoredPatterns} from './.gitignore.js';
-
 export default defineConfig(() => ({
 	test: {
 		coverage: {
 			exclude: [
-				...gitIgnoredPatterns,
-				'packages/**/src/index.js'
+				'_/**',
+				'packages/**/src/index.{js,ts}'
 			],
-			include: ['packages/**/src/*.js',]
+			include: ['packages/**/src/*.{js,ts}']
 		},
 		exclude: [
-			...gitIgnoredPatterns,
+			'_/**',
 		],
-		include: ['packages/*/src/**/*.test.js']
+		include: ['packages/*/src/**/*.test.{js,ts}']
 	},
 }));

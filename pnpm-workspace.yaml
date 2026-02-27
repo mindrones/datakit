@@ -1,6 +1,14 @@
 packages:
   - packages/*
+
 catalog:
-  "@svizzle/utils": 0.21.0
+  '@eslint/compat': ^1.2.7
+  '@svizzle/utils': 0.21.0
   just-compare: 2.3.0
   lamb: 0.61.1
+  lamb-types: ^0.61.16
+  typescript: ^5.8.2
+  typescript-eslint: ^8.0.0
+
+onlyBuiltDependencies:
+  - esbuild

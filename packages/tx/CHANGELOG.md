@@ -1,5 +1,9 @@
 # @datakit/tx
 
+## next
+
+Move to TypeScript
+
 ## v0.1.2
 
 - Fix local exports inadvertently broken in `v0.1.1`

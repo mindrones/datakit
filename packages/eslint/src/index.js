@@ -2,6 +2,7 @@ import pluginJs from '@eslint/js';
 import pluginJsStyle from '@stylistic/eslint-plugin-js';
 import pluginJsDoc from 'eslint-plugin-jsdoc';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export const jsConfig = [
 	{
@@ -19,6 +20,8 @@ export const jsConfig = [
 	},
 	pluginJs.configs.recommended, // {rules}
 ];
+
+export const tsConfig = tseslint.configs.recommended;
 
 export const styleConfig = [
 	{
@@ -42,6 +45,14 @@ export const jsdocConfig = [
 			'jsdoc/require-param-description': 'off',
 			'jsdoc/require-returns-description': 'off',
 			'jsdoc/tag-lines': 'off',
+		}
+	},
+	{
+		// TypeScript types cover @param and @returns
+		files: ['**/*.ts'],
+		rules: {
+			'jsdoc/require-param': 'off',
+			'jsdoc/require-returns': 'off',
 		}
 	},
 ];

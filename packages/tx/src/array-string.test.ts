@@ -1,6 +1,6 @@
 import {describe, it, expect} from 'vitest';
 
-import {joinWithNewline} from './array-string.js';
+import {joinWithNewline} from './array-string';
 
 describe('joinWithNewline', () => {
 	it('joins numbers with `\n`', () => {

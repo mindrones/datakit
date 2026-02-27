@@ -1,0 +1,15 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"checkJs": false,
+		"noImplicitAny": false,
+		"tsBuildInfoFile": "_/tsconfig.tsbuildinfo"
+	},
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.js"
+	]
+}

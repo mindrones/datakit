@@ -7,7 +7,8 @@
 		"@stylistic/eslint-plugin-js": "^2.6.4",
 		"eslint": "^9.9.1",
 		"eslint-plugin-jsdoc": "^50.2.2",
-		"globals": "^15.9.0"
+		"globals": "^15.9.0",
+		"typescript-eslint": "catalog:"
 	},
 	"description": "eslint configurations used by @datakit/* packages.",
 	"files": [

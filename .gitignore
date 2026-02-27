@@ -1,8 +1,7 @@
 _/
-**/*.idea.js
-**/*.todo.js
 coverage/
 node_modules/
+*.tsbuildinfo
 
 # Mac
 .DS_Store

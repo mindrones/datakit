@@ -1,6 +1,6 @@
 import {describe, it, expect} from 'vitest';
 
-import {getRandomIndexOf} from './array-number.js';
+import {getRandomIndexOf} from './array-number';
 
 describe('getRandomIndexOf', () => {
 	it('get a random index in the array', () => {

@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"tsBuildInfoFile": "_/tsconfig.tsbuildinfo",
+		"types": [
+			"lamb-types"
+		]
+	},
+	"exclude": [
+		"node_modules",
+		"src/**/*.idea.ts"
+	],
+	"extends": "../../tsconfig.json",
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.js"
+	]
+}
