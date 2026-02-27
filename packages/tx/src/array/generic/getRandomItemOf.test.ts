@@ -1,7 +1,7 @@
 import {makeIsIncluded} from '@svizzle/utils';
 import {describe, it, expect} from 'vitest';
 
-import {getRandomItemOf} from './array-any';
+import {getRandomItemOf} from './getRandomItemOf';
 
 describe('getRandomItemOf', () => {
 	it('get a random number in the array', () => {

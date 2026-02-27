@@ -1,0 +1,1 @@
+export { getRandomIndexOf } from './getRandomIndexOf';

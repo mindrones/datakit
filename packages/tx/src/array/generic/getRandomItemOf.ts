@@ -1,4 +1,4 @@
-import {getRandomIndexOf} from './array-number';
+import {getRandomIndexOf} from '../number/getRandomIndexOf';
 
 /**
  * Return a random item of the passed array

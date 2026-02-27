@@ -1,0 +1,1 @@
+export { getRandomItemOf } from './getRandomItemOf';
