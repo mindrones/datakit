@@ -1,0 +1,40 @@
+{
+	"bugs": {
+		"url": "https://github.com/mindrones/datakit/issues"
+	},
+	"dependencies": {},
+	"description": "Types used in @datakit packages.",
+	"devDependencies": {},
+	"exports": {
+		".": {
+			"types": "./src/index.ts"
+		},
+		"./lamb": {
+			"types": "./lamb/index.d.ts"
+		}
+	},
+	"files": [
+		"lamb/**/*.d.ts",
+		"src/**/*.ts",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
+	],
+	"homepage": "https://github.com/mindrones/datakit",
+	"keywords": [
+		"types"
+	],
+	"license": "MIT",
+	"name": "@datakit/types",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"directory": "packages/types",
+		"type": "git",
+		"url": "github:mindrones/datakit"
+	},
+	"type": "module",
+	"types": "src/index.ts",
+	"version": "0.0.1"
+}

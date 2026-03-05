@@ -29,6 +29,7 @@ export const styleConfig = [
 			'@stylistic': pluginJsStyle
 		},
 		rules: {
+			'@stylistic/arrow-parens': ['warn', 'as-needed'],
 			'@stylistic/indent': ['warn', 'tab', {
 				MemberExpression: 'off',
 				SwitchCase: 1,
