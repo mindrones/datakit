@@ -1,1 +1,1 @@
-export { getRandomItemOf } from './getRandomItemOf';
+export {getRandomItemOf} from './getRandomItemOf';

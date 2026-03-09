@@ -1,0 +1,1 @@
+export {getEndOfLineLength} from './getEndOfLineLength';

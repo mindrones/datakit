@@ -1,86 +1,107 @@
-// autocomplete seems to fail with:
-// `export * from '@svizzle/utils';`
-// `export * from '@svizzle/utils/src/index.js';`
-export * from '@svizzle/utils/src/modules/[any-any]-[any-boolean].js';
-export * from '@svizzle/utils/src/modules/[any-any]-[array-boolean].js';
-export * from '@svizzle/utils/src/modules/[any-any]-[iterable-object].js';
-export * from '@svizzle/utils/src/modules/[any-any]-[object-array].js';
-export * from '@svizzle/utils/src/modules/[any-any]-[object-boolean].js';
-export * from '@svizzle/utils/src/modules/[any-any]-[object-number].js';
-export * from '@svizzle/utils/src/modules/[any-any]-[object-object].js';
-export * from '@svizzle/utils/src/modules/[any-array]-[any-array].js';
-export * from '@svizzle/utils/src/modules/[any-array]-[array-object].js';
-export * from '@svizzle/utils/src/modules/[any-boolean]-[array-array].js';
-export * from '@svizzle/utils/src/modules/[any-boolean]-[object-any].js';
-export * from '@svizzle/utils/src/modules/[any-number]-[array-number].js';
-export * from '@svizzle/utils/src/modules/[any-object]-[array-object].js';
-export * from '@svizzle/utils/src/modules/[string-boolean]-[object-boolean].js';
-export * from '@svizzle/utils/src/modules/[string-boolean]-[object-object].js';
-export * from '@svizzle/utils/src/modules/[string-string]-[object-object].js';
-export * from '@svizzle/utils/src/modules/any-[any-boolean].js';
-export * from '@svizzle/utils/src/modules/any-[array-object].js';
-export * from '@svizzle/utils/src/modules/any-[object-boolean].js';
-export * from '@svizzle/utils/src/modules/any-any.js';
-export * from '@svizzle/utils/src/modules/any-boolean.js';
-export * from '@svizzle/utils/src/modules/any-string.js';
-export * from '@svizzle/utils/src/modules/any-undefined.js';
-export * from '@svizzle/utils/src/modules/array_proto-array.js';
-export * from '@svizzle/utils/src/modules/array_proto-boolean.js';
-export * from '@svizzle/utils/src/modules/array_proto-string.js';
-export * from '@svizzle/utils/src/modules/array-[any-any].js';
-export * from '@svizzle/utils/src/modules/array-[any-boolean].js';
-export * from '@svizzle/utils/src/modules/array-[any-object].js';
-export * from '@svizzle/utils/src/modules/array-[array-array].js';
-export * from '@svizzle/utils/src/modules/array-[array-object].js';
-export * from '@svizzle/utils/src/modules/array-[number-boolean].js';
-export * from '@svizzle/utils/src/modules/array-[number-number].js';
-export * from '@svizzle/utils/src/modules/array-[object-array].js';
-export * from '@svizzle/utils/src/modules/array-[object-boolean].js';
-export * from '@svizzle/utils/src/modules/array-[object-object].js';
-export * from '@svizzle/utils/src/modules/array-[string-boolean].js';
-export * from '@svizzle/utils/src/modules/array-[string-string].js';
-export * from '@svizzle/utils/src/modules/array-array.js';
-export * from '@svizzle/utils/src/modules/array-boolean.js';
-export * from '@svizzle/utils/src/modules/array-iterable.js';
-export * from '@svizzle/utils/src/modules/array-number.js';
-export * from '@svizzle/utils/src/modules/array-object.js';
-export * from '@svizzle/utils/src/modules/array-string.js';
-export * from '@svizzle/utils/src/modules/buffer-any.js';
-export * from '@svizzle/utils/src/modules/constructor-[reduceCb[any-any]-[array-any]].js';
-export * from '@svizzle/utils/src/modules/iterable-boolean.js';
-export * from '@svizzle/utils/src/modules/iterable-number.js';
-export * from '@svizzle/utils/src/modules/iterable-object.js';
-export * from '@svizzle/utils/src/modules/number-[number-number].js';
-export * from '@svizzle/utils/src/modules/number-boolean.js';
-export * from '@svizzle/utils/src/modules/object-[any-object].js';
-export * from '@svizzle/utils/src/modules/object-[object-object].js';
-export * from '@svizzle/utils/src/modules/object-[string-boolean].js';
-export * from '@svizzle/utils/src/modules/object-any.js';
-export * from '@svizzle/utils/src/modules/object-array.js';
-export * from '@svizzle/utils/src/modules/object-boolean.js';
-export * from '@svizzle/utils/src/modules/object-number.js';
-export * from '@svizzle/utils/src/modules/object-object.js';
-export * from '@svizzle/utils/src/modules/reduceCb[any-any]-[array-any].js';
-export * from '@svizzle/utils/src/modules/regexp-boolean.js';
-export * from '@svizzle/utils/src/modules/string_proto-array.js';
-export * from '@svizzle/utils/src/modules/string_proto-boolean.js';
-export * from '@svizzle/utils/src/modules/string_proto-string.js';
-export * from '@svizzle/utils/src/modules/string-[array-array].js';
-export * from '@svizzle/utils/src/modules/string-[array-number].js';
-export * from '@svizzle/utils/src/modules/string-[object-number].js';
-export * from '@svizzle/utils/src/modules/string-[string-array].js';
-export * from '@svizzle/utils/src/modules/string-[string-boolean].js';
-export * from '@svizzle/utils/src/modules/string-[string-regexp].js';
-export * from '@svizzle/utils/src/modules/string-[string-string].js';
-export * from '@svizzle/utils/src/modules/string-any.js';
-export * from '@svizzle/utils/src/modules/string-array.js';
-export * from '@svizzle/utils/src/modules/string-boolean.js';
-export * from '@svizzle/utils/src/modules/string-number.js';
-export * from '@svizzle/utils/src/modules/string-regexp.js';
-export * from '@svizzle/utils/src/modules/string-string.js';
+/* N-arity functions */
+
+export * from './_n_arity';
+
+/* Unarity functions */
+
+// fn: (any->any) -> output
+export * from './any-any/any-boolean';
+export * from './any-any/array-boolean';
+export * from './any-any/iterable-object';
+export * from './any-any/object-array';
+export * from './any-any/object-boolean';
+export * from './any-any/object-object';
+
+// fn: (any->array) -> output
+export * from './any-array/any-array';
+export * from './any-array/array-object';
+
+// fn: (any->boolean) -> output
+export * from './any-boolean/array-array';
+export * from './any-boolean/object-generic';
+
+// fn: (any->number) -> output
+export * from './any-number/array-number';
+export * from './any-number/object-number';
+
+// fn: (any->object) -> output
+export * from './any-object/array-object';
+
+// array -> iterable
+export * from './array/iterable';
+
+// array -> output
+export * from './array/array';
+export * from './array/array-array';
+export * from './array/array-object';
+export * from './array/boolean';
+export * from './array/generic';
+export * from './array/generic-boolean';
+export * from './array/generic-generic';
+export * from './array/generic-object';
+export * from './array/number';
+export * from './array/number-boolean';
+export * from './array/number-number';
+export * from './array/object';
+export * from './array/object-array';
+export * from './array/object-boolean';
+export * from './array/object-object';
+export * from './array/string';
+export * from './array/string-boolean';
+export * from './array/string-string';
+
+// iterable -> output
+export * from './iterable/boolean';
+export * from './iterable/number';
+
+// generic -> output
+export * from './generic/any-boolean';
+export * from './generic/array-object';
+export * from './generic/boolean';
+export * from './generic/generic';
+export * from './generic/object-boolean';
+export * from './generic/string';
+export * from './generic/undefined';
+
+// number -> output
+export * from './number/boolean';
+export * from './number/number-number';
+
+// object -> output
+export * from './object/array';
+export * from './object/boolean';
+export * from './object/generic';
+export * from './object/generic-object';
+export * from './object/number';
+export * from './object/object';
+export * from './object/object-object';
+export * from './object/string-boolean';
+
+// regexp -> output
+export * from './regexp/boolean';
+
+// fn: (string->boolean) -> output
+export * from './string-boolean/object-boolean';
+export * from './string-boolean/object-object';
+
+// fn: (string->string) -> output
+export * from './string-string/object-object';
+
+// string -> output
+export * from './string/array';
+export * from './string/array-array';
+export * from './string/array-number';
+export * from './string/boolean';
+export * from './string/generic';
+export * from './string/number';
+export * from './string/object-number';
+export * from './string/regexp';
+export * from './string/string';
+export * from './string/string-array';
+export * from './string/string-boolean';
+export * from './string/string-regexp';
+export * from './string/string-string';
+
+/* commodity re-export */
 
 export {default as areEquals} from 'just-compare';
-
-export * from './array/generic';
-export * from './array/number';
-export * from './array/string';

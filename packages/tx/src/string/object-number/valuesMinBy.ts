@@ -1,0 +1,24 @@
+import * as _ from 'lamb';
+
+import type {Obj} from '@datakit/types';
+
+import {arrayMinBy} from '../array-number/arrayMinBy';
+
+/**
+ * Return a function expecting an object of objects and returning the min of values by the provided key.
+ * The same can be done by `valuesMinWith(_.getKey(key))` but here we avoid invoking a function for all the items.
+ *
+ * @example
+ * > minByK1 = valuesMinBy('k1')
+ * > minByK1({a: {k1: 1, k2: 20}, b: {k1: 3, k2: 2}})
+ * 1
+ * > minByK1({a: {k1: 9, k2: 12}, b: {k1: 7, k2: 2}})
+ * 7
+ *
+ * @since 0.1.0
+ */
+export const valuesMinBy = (key: string) =>
+	_.pipe<Obj<Obj<unknown>>, number>([
+		_.values,
+		arrayMinBy(key)
+	]);

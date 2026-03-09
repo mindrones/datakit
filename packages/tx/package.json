@@ -3,27 +3,31 @@
 		"url": "https://github.com/mindrones/datakit/issues"
 	},
 	"dependencies": {
-		"@svizzle/utils": "catalog:",
+		"escape-string-regexp": "^5.0.0",
 		"just-compare": "catalog:",
 		"lamb": "catalog:"
 	},
 	"description": "Utilities for data transformation.",
 	"devDependencies": {
-		"lamb-types": "catalog:"
+		"@datakit/types": "workspace:"
+	},
+	"exports": {
+		".": {
+			"default": "./src/index.ts",
+			"types": "./src/index.ts"
+		}
 	},
 	"files": [
 		"src/**/*.ts",
 		"!src/**/*.test.ts",
-		"!src/**/*.idea.ts",
-		"!src/**/*.todo.ts",
 		"CHANGELOG.md",
 		"README.md"
 	],
 	"homepage": "https://github.com/mindrones/datakit",
 	"keywords": [
-		"@svizzle/utils",
 		"data transformation",
-		"functional programming"
+		"functional programming",
+		"utils"
 	],
 	"license": "MIT",
 	"main": "src/index.ts",
@@ -37,5 +41,6 @@
 		"url": "github:mindrones/datakit"
 	},
 	"type": "module",
-	"version": "0.1.2"
+	"types": "./src/index.ts",
+	"version": "0.2.0"
 }

@@ -1,0 +1,1 @@
+export {exportedJsObjToAny} from './exportedJsObjToAny';

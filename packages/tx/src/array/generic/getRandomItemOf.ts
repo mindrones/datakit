@@ -4,15 +4,13 @@ import {getRandomIndexOf} from '../number/getRandomIndexOf';
  * Return a random item of the passed array
  *
  * @example
- * > getRandomItem = getRandomItemOf([0, 1, 2, 3])
- * > getRandomItem()
+ * > getRandomItemOf([0, 1, 2, 3])
  * 2
- * > getRandomItem()
+ * > getRandomItemOf([0, 1, 2, 3])
  * 1
- * > getRandomItem = getRandomItemOf([{a: 0}, {a: 1}, {a: 2}, {a: 3}])
- * > getRandomItem()
+ * > getRandomItemOf([{a: 0}, {a: 1}, {a: 2}, {a: 3}])
  * {a: 3}
- * > getRandomItem()
+ * > getRandomItemOf([{a: 0}, {a: 1}, {a: 2}, {a: 3}])
  * {a: 0}
  *
  * @since 0.1.0

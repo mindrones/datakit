@@ -1,0 +1,1 @@
+export {makeBiPermutationsWith} from './makeBiPermutationsWith';

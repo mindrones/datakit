@@ -1,0 +1,1 @@
+export {truthynessTo} from './truthynessTo';

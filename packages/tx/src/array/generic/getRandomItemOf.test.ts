@@ -1,7 +1,6 @@
-import {makeIsIncluded} from '@svizzle/utils';
 import {describe, it, expect} from 'vitest';
 
-import {getRandomItemOf} from './getRandomItemOf';
+import {getRandomItemOf, makeIsIncluded, makeOccursIn} from '@datakit/tx';
 
 describe('getRandomItemOf', () => {
 	it('get a random number in the array', () => {
@@ -13,9 +12,9 @@ describe('getRandomItemOf', () => {
 	});
 	it('get a random object in the array', () => {
 		const objs = [{a: 0}, {a: 1}, {a: 2}, {a: 3}];
-		const isIncluded = makeIsIncluded(objs);
+		const occursIn = makeOccursIn(objs);
 
 		const obj = getRandomItemOf(objs);
-		expect(obj).toSatisfy(isIncluded);
+		expect(obj).toSatisfy(occursIn);
 	});
 });

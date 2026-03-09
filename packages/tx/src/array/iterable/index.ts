@@ -1,0 +1,1 @@
+export {getShorter} from './getShorter';

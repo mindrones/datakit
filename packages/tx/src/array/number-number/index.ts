@@ -1,0 +1,1 @@
+export {makePolynomial} from './makePolynomial';

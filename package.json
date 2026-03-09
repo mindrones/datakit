@@ -21,7 +21,8 @@
 		"publish": "pnpm publish -r",
 		"publishDry": "pnpm publish -r --dry-run",
 		"test": "vitest",
-		"typecheck": "tsc -b packages/*/tsconfig.json"
+		"typecheck": "tsc -b packages/*/tsconfig.json",
+		"typecheck:watch": "tsc -b packages/*/tsconfig.json --watch"
 	},
 	"type": "module",
 	"workspaces": [
