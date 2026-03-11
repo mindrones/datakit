@@ -31,7 +31,7 @@ export type Obj<T> = Record<string, T>;
  *   { key: '2', name: 'Bob' },
  * ];
  */
-export type ObjK<Rest extends Obj<any> = {}> = {
+export type ObjK<Rest extends Obj<any> = Obj<unknown>> = {
 	key: string;
 } & Partial<Rest>;
 
@@ -46,7 +46,7 @@ export type ObjK<Rest extends Obj<any> = {}> = {
  *   { label: 'Bob', id: '2' },
  * ];
  */
-export type ObjL<Rest extends Obj<any> = {}> = {
+export type ObjL<Rest extends Obj<any> = Obj<unknown>> = {
 	label: string;
 } & Partial<Rest>;
 
@@ -61,7 +61,7 @@ export type ObjL<Rest extends Obj<any> = {}> = {
  *   { value: 2, name: 'Bob' },
  * ];
  */
-export type ObjV<VType, Rest extends Obj<any> = {}> = {
+export type ObjV<VType, Rest extends Obj<any> = Obj<unknown>> = {
 	value: VType;
 } & Partial<Rest>;
 
@@ -92,6 +92,19 @@ export interface ObjKL extends ObjK, ObjL {};
 export interface ObjKV<VType> extends ObjK, ObjV<VType> {};
 
 /**
+ * An object with `label`, `value` properties and optional additional properties.
+ * Useful for representing items in a list or options in a dropdown.
+ *
+ * @example
+ * type UserOption = ObjLV<number, { name: string }>;
+ * const userOptions: UserOption[] = [
+ *   { label: 'Alice', value: 25, name: 'Alice' },
+ *   { label: 'Bob', value: 30, name: 'Bob' },
+ * ];
+ */
+export interface ObjLV<VType> extends ObjL, ObjV<VType> {};
+
+/**
  * An object with `key`, `label`, `value` properties and optional additional properties.
  * Useful for representing items in a list or options in a dropdown.
  *
@@ -117,7 +130,7 @@ export interface ObjKLV<VType> extends ObjK, ObjL, ObjV<VType> {};
  *   { values: [3, 4], name: 'Bob' },
  * ];
  */
-export type ObjVs<VType, Rest extends Obj<any> = {}> = {
+export type ObjVs<VType, Rest extends Obj<any> = Obj<unknown>> = {
 	values: VType[];
 } & Partial<Rest>;
 
@@ -133,6 +146,19 @@ export type ObjVs<VType, Rest extends Obj<any> = {}> = {
  * ];
  */
 export interface ObjKVs<VType> extends ObjK, ObjVs<VType> {};
+
+/**
+ * An object with `label`, `values` properties and optional additional properties.
+ * Useful for representing items in a list or options in a dropdown.
+ *
+ * @example
+ * type UserOption = ObjLVs<number, { name: string }>;
+ * const userOptions: UserOption[] = [
+ *   { label: 'Alice', values: [25, 30], name: 'Alice' },
+ *   { label: 'Bob', values: [30, 35], name: 'Bob' },
+ * ];
+ */
+export interface ObjLVs<VType> extends ObjL, ObjVs<VType> {};
 
 /**
  * An object with `key`, `label`, `values` properties and optional additional properties.
