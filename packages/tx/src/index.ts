@@ -2,6 +2,10 @@
 
 export * from './_n_arity';
 
+/* Sorters */
+
+export * from './_sorters';
+
 /* Unarity functions */
 
 // fn: (any->any) -> output
@@ -65,10 +69,13 @@ export * from './generic/undefined';
 
 // number -> output
 export * from './number/boolean';
+export * from './number/number';
 export * from './number/number-number';
+export * from './number/string';
 
 // object -> output
 export * from './object/array';
+export * from './object/string';
 export * from './object/boolean';
 export * from './object/generic';
 export * from './object/generic-object';
@@ -90,6 +97,7 @@ export * from './string-string/object-object';
 // string -> output
 export * from './string/array';
 export * from './string/array-array';
+export * from './string/array-object';
 export * from './string/array-number';
 export * from './string/boolean';
 export * from './string/generic';

@@ -1,5 +1,50 @@
 # @datakit/tx
 
+## next
+
+Added:
+
+- sorters:
+	- `sorterKeyDesc`
+	- `sorterLabelDesc`
+	- `sorterValueDesc`
+
+- sort functions:
+	- `sortDesc`
+	- `sortKeyAsc`
+	- `sortKeyDesc`
+	- `sortValueAsc`
+	- `sortValueAscKeyDesc`
+	- `sortValueDesc`
+	- `sortValueDescKeyAsc`
+	- `sortValueDescKeyDesc`
+	- `sortValueDescLabelAsc`
+	- `sortValueDescLabelDesc`
+	- `sortValueDescLabelLowercaseAsc`
+	- `sortValueDescLabelLowercaseDesc`
+
+- accessors:
+	- `getLabel`
+	- `getLabelLowercase`
+
+- rest:
+	- `chunkArray`
+	- `pluckUniquesFrom`
+	- `permutationsCount`
+	- `sumValue`
+	- `makeKeyedEmptyArray`
+	- `makeKeyedNull`
+	- `factorial`
+	- `plural`
+	- `objectToValueDescKeyAsc`
+	- `areAllValuesTruthy`
+	- `areSomeValuesTruthy`
+	- `countValues`
+	- `pickIfKeyWith`
+	- `skipIfKeyWith`
+	- `pluckUniques`
+	- `countByKey`
+
 ## 0.2.0
 
 ### Ported `@svizzle/utils` to TypeScript here.

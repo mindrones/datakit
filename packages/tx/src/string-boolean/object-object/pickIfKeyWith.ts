@@ -12,12 +12,12 @@ import type {Obj, Predicate} from '@datakit/types';
  * {a: 1, aa: 2}
  * > keysStartWithA({b: 0, c: 0})
  * {}
- *
- * @since 0.1.0
  */
 export const pickIfKeyWith = (predicate: Predicate<string>) =>
 	_.pipe<Obj<unknown>, Obj<unknown>>([
 		_.pairs,
-		_.filterWith(_.pipe([_.head, predicate])),
+		_.filterWith(
+			_.pipe<[string, unknown], boolean>([_.head, predicate])
+		),
 		_.fromPairs
 	]);

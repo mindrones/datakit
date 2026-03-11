@@ -1,3 +1,4 @@
+export {chunkArray} from './chunkArray';
 export {endsWith} from './endsWith';
 export {includes} from './includes';
 export {join} from './join';
@@ -7,6 +8,7 @@ export {mergeWithAppendTo} from './mergeWithAppendTo';
 export {mergeWithConcat} from './mergeWithConcat';
 export {mergeWithMerge} from './mergeWithMerge';
 export {mergeWithSum} from './mergeWithSum';
+export {pluckUniquesFrom} from './pluckUniquesFrom';
 export {split} from './split';
 export {startsWith} from './startsWith';
 export {toggleItem} from './toggleItem';

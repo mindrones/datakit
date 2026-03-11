@@ -12,12 +12,12 @@ import type {Obj, Predicate} from '@datakit/types';
  * {b: 0, c: 0}
  * > keysDontStartWithA({b: 0, c: 0})
  * {b: 0, c: 0}
- *
- * @since 0.1.0
  */
 export const skipIfKeyWith = <T>(predicate: Predicate<string>) =>
 	_.pipe<Obj<T>, Obj<T>>([
 		_.pairs,
-		_.filterWith(_.pipe([_.head, _.not(predicate)])),
+		_.filterWith(
+			_.pipe<[string, unknown], boolean>([_.head, _.not(predicate)])
+		),
 		_.fromPairs
 	]);

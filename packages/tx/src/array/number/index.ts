@@ -5,3 +5,5 @@ export {arraySum} from './arraySum';
 export {getRandomIndexOf} from './getRandomIndexOf';
 export {keyValueArrayAverage} from './keyValueArrayAverage';
 export {makeRandomNumInRange} from './makeRandomNumInRange';
+export {permutationsCount} from './permutationsCount';
+export {sumValue} from './sumValue';
