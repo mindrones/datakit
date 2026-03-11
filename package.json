@@ -9,11 +9,12 @@
 		"@types/node": "^25.3.2",
 		"@vitest/coverage-v8": "^4.0.18",
 		"typescript": "catalog:",
-		"vitest": "^4.0.18"
+		"vitest": "catalog:"
 	},
 	"homepage": "https://github.com/mindrones/datakit",
 	"license": "MIT",
 	"name": "datakit-monorepo",
+	"packageManager": "pnpm@10.30.3",
 	"private": true,
 	"scripts": {
 		"coverage": "vitest run --coverage",

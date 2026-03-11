@@ -1,0 +1,23 @@
+{
+	"devDependencies": {
+		"ts-morph": "catalog:",
+		"tsx": "^4.21.0",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"exports": {
+		"./site": {
+			"types": "./site/types.ts",
+			"default": "./site/types.ts"
+		}
+	},
+	"name": "@datakit/scripts",
+	"private": true,
+	"scripts": {
+		"extractDocs": "tsx site/extract-docs.ts",
+		"generateLlms": "tsx site/generate-llms.ts",
+		"test": "vitest run"
+	},
+	"type": "module",
+	"version": "0.0.1"
+}

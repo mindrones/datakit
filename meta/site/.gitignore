@@ -1,0 +1,9 @@
+.svelte-kit/
+build/
+node_modules/
+playwright-report/
+src/lib/data/generated/
+static/data/
+static/llms-full.txt
+static/llms.txt
+test-results/

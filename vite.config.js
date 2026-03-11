@@ -11,7 +11,11 @@ export default defineConfig(() => ({
 		},
 		exclude: [
 			'_/**',
+			'**/playwright.config.*',
 		],
-		include: ['packages/*/src/**/*.test.{js,ts}']
+		include: [
+			'meta/scripts/**/*.test.{js,ts}',
+			'packages/*/src/**/*.test.{js,ts}',
+		]
 	},
 }));

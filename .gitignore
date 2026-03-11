@@ -1,7 +1,7 @@
 _/
+.DS_Store
+.playwright-cli
+*.tsbuildinfo
+brave-debug-profile
 coverage/
 node_modules/
-*.tsbuildinfo
-
-# Mac
-.DS_Store

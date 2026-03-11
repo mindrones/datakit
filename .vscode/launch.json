@@ -1,0 +1,24 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Launch Dev Server in Brave",
+			"url": "http://localhost:5173",
+			"webRoot": "${workspaceFolder}/meta/site",
+			"runtimeExecutable": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+			"runtimeArgs": [
+				"--remote-debugging-port=9222",
+				"--auto-open-devtools-for-tabs",
+				"--user-data-dir=${workspaceFolder}/.vscode/brave-debug-profile"
+			],
+			"preLaunchTask": "pnpm: dev - site",
+			"serverReadyAction": {
+				"pattern": "Local:.*(https?://localhost:[0-9]+)",
+				"uriFormat": "%s",
+				"action": "openExternally"
+			}
+		}
+	]
+}

@@ -1,13 +1,16 @@
 packages:
   - packages/*
+  - meta/*
 
 catalog:
   '@eslint/compat': ^1.2.7
   just-compare: 2.3.0
   lamb: 0.61.1
-  lamb-types: ^0.61.16
+  ts-morph: ^27.0.2
   typescript: ^5.8.2
   typescript-eslint: ^8.0.0
+  vitest: ^4.0.18
 
 onlyBuiltDependencies:
+  - '@playwright/browser-chromium'
   - esbuild
