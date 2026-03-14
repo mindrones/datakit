@@ -1,0 +1,138 @@
+{
+	"array": [
+		{
+			"description": "",
+			"file": "array",
+			"name": "Pair",
+			"source": "export type Pair<T> = [T, T];"
+		}
+	],
+	"function": [
+		{
+			"description": "A generic unary function.\nUseful for general-purpose transformations.",
+			"file": "function",
+			"name": "Fn",
+			"source": "export type Fn<A, B> = (a: A) => B;"
+		},
+		{
+			"description": "A predicate function.\nUseful for filtering and conditional logic.",
+			"file": "function",
+			"name": "Predicate",
+			"source": "export type Predicate<A> = (a: A) => boolean;"
+		},
+		{
+			"description": "Useful for event handlers and other side-effectful functions.",
+			"file": "function",
+			"name": "Action",
+			"source": "export type Action<A> = (a: A) => void;"
+		},
+		{
+			"description": "Useful for event handlers that need to know the key and label of the item being interacted with.",
+			"file": "function",
+			"name": "ActionKL",
+			"source": "export type ActionKL = (key: string, label?: string) => void;"
+		},
+		{
+			"description": "Useful for effects and other side-effectful functions that don't need any input.",
+			"file": "function",
+			"name": "Effect",
+			"source": "export type Effect = () => void;"
+		}
+	],
+	"object": [
+		{
+			"description": "A type representing an object with string keys and values of type T.",
+			"file": "object",
+			"name": "Obj",
+			"source": "export type Obj<T> = Record<string, T>;"
+		},
+		{
+			"description": "In this library we have a number of functions expecting objects with specific\nkeys `key`, `label`, `value`/`values` and their combinations and optional additional\nproperties.",
+			"file": "object",
+			"name": "ObjK",
+			"source": "export type ObjK<Rest extends Obj<any> = Obj<unknown>> = {\n\tkey: string;\n} & Partial<Rest>;"
+		},
+		{
+			"description": "An object with a `label` property and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjL",
+			"source": "export type ObjL<Rest extends Obj<any> = Obj<unknown>> = {\n\tlabel: string;\n} & Partial<Rest>;"
+		},
+		{
+			"description": "An object with a `value` property of type VType and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjV",
+			"source": "export type ObjV<VType, Rest extends Obj<any> = Obj<unknown>> = {\n\tvalue: VType;\n} & Partial<Rest>;"
+		},
+		{
+			"description": "An object with a `values` property of type VType[] and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjVs",
+			"source": "export type ObjVs<VType, Rest extends Obj<any> = Obj<unknown>> = {\n\tvalues: VType[];\n} & Partial<Rest>;"
+		},
+		{
+			"description": "A map of functions — an object whose values are functions accepting any\nsingle input and returning an opaque result.\nUsed in higher-order functions like `applyFnMap`, `transformValues`, etc.",
+			"file": "object",
+			"name": "FnMap",
+			"source": "export type FnMap = Obj<Fn<any, unknown>>;"
+		},
+		{
+			"description": "An object with `key`, `label` properties and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjKL",
+			"source": "export interface ObjKL extends ObjK, ObjL {}"
+		},
+		{
+			"description": "An object with `key`, `value` properties and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjKV",
+			"source": "export interface ObjKV<VType> extends ObjK, ObjV<VType> {}"
+		},
+		{
+			"description": "An object with `label`, `value` properties and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjLV",
+			"source": "export interface ObjLV<VType> extends ObjL, ObjV<VType> {}"
+		},
+		{
+			"description": "An object with `key`, `label`, `value` properties and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjKLV",
+			"source": "export interface ObjKLV<VType> extends ObjK, ObjL, ObjV<VType> {}"
+		},
+		{
+			"description": "An object with `key`, `values` properties and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjKVs",
+			"source": "export interface ObjKVs<VType> extends ObjK, ObjVs<VType> {}"
+		},
+		{
+			"description": "An object with `label`, `values` properties and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjLVs",
+			"source": "export interface ObjLVs<VType> extends ObjL, ObjVs<VType> {}"
+		},
+		{
+			"description": "An object with `key`, `label`, `values` properties and optional additional properties.\nUseful for representing items in a list or options in a dropdown.",
+			"file": "object",
+			"name": "ObjKLVs",
+			"source": "export interface ObjKLVs<VType> extends ObjK, ObjL, ObjVs<VType> {}"
+		}
+	],
+	"shared": [
+		{
+			"description": "Types with a length property.",
+			"file": "shared",
+			"name": "HasLength",
+			"since": "0.1.0",
+			"source": "export type HasLength = {length: number};"
+		},
+		{
+			"description": "Types with a size property",
+			"file": "shared",
+			"name": "HasSize",
+			"since": "0.1.0",
+			"source": "export type HasSize = {size: number};"
+		}
+	]
+}

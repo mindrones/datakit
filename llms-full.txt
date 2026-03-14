@@ -1,0 +1,2573 @@
+# @datakit
+
+> A collection of TypeScript utilities for functional data transformation.
+> Two documented packages: `@datakit/tx` (237 functions) and `@datakit/types` (21 types).
+
+`@datakit/tx` organises its functions by signature category (e.g. `string → string`,
+`array → object`). Each function has a JSDoc description, type signature, and usage example.
+
+## @datakit/tx — any-any → any-boolean (any-any → any-boolean)
+
+### isArrayWith
+
+Return a function returning true if the accessed value is an array
+
+> isArrayWith(getValue)({key: 'a', value: [1, 2]})
+true
+
+### isNilWith
+
+Return a function returning true if the accessed value is null or undefined
+
+> isNilWith(getValue)({key: 'a', value: null})
+true
+> isNilWith(getValue)({key: 'a'})
+true
+
+### isNotNaNWith
+
+Return a function returning true if the accessed value is not NaN
+
+> isNotNaNWith(getValue)({key: 'a', value: 1})
+true
+
+### isNotNilWith
+
+Return a function returning true if the accessed value is not null or undefined
+
+> isNotNilWith(getValue)({key: 'a', value: 1})
+true
+
+### isNotNullWith
+
+Return a function returning true if the accessed value is not null
+
+> isNotNullWith(getValue)({key: 'a', value: 1})
+true
+
+### isNullWith
+
+Return a function returning true if the accessed value is null
+
+> isNullWith(getValue)({key: 'a', value: null})
+true
+
+### isNumberWith
+
+Return a function returning true if the accessed value is a number
+
+> isNumberWith(getValue)({key: 'a', value: 1})
+true
+> isNumberWith(getValue)({key: 'a', value: 'a'})
+false
+
+### isObjectWith
+
+Return a function returning true if the accessed value is an object
+
+> isObjectWith(getValue)({key: 'a', value: {a: 1}})
+true
+> isObjectWith(getValue)({key: 'a', value: 'a'})
+false
+
+### isStringWith
+
+Return a function returning true if the accessed value is a string
+
+> isStringWith(getValue)({key: 'a', value: 'a'})
+true
+> isStringWith(getValue)({key: 'a', value: 1})
+false
+
+### isToFloatValidNumberWith
+
+Return a function returning true if the accessed value can be turned into a valid number via parseFloat()
+
+> isToFloatValidNumberWith(getValue)({key: 'a', value: [1]})
+true
+> isToFloatValidNumberWith(getValue)({key: 'a', value: []})
+false
+
+### isToNumberValidNumberWith
+
+Return a function returning true if the accessed value can be turned into a valid number via Number()
+
+> isToNumberValidNumberWith(getValue)({key: 'a', value: '123'})
+true
+> isToNumberValidNumberWith(getValue)({key: 'a', value: '123px'})
+false
+
+### isUndefinedWith
+
+Return a function returning true if the accessed value is undefined
+
+> isUndefinedWith(getValue)({key: 'a', value: 'a'})
+false
+> isUndefinedWith(getValue)({key: 'a', value: 1})
+false
+
+### isValidNumberWith
+
+Return a function returning true if the accessed value is a valid number
+
+> isValidNumberWith(getValue)({key: 'a', value: 'a'})
+false
+> isValidNumberWith(getValue)({key: 'a', value: 1})
+true
+
+## @datakit/tx — any-any → array-boolean (any-any → array-boolean)
+
+### areEqualWith
+
+Return a function returning `true` if all the items of an array are equal
+once processed with the provided `fn`
+
+> areEqualByValue = areEqualWith(getValue)
+> areEqualByValue([{key: 'a', value: 1}, {key: 'b', value: 1}])
+true
+> areEqualByValue([{key: 'a', value: 1}, {key: 'b', value: 2}])
+false
+> areEqualByValue([{key: 'a', value: 1}])
+false
+> areEqualByValue([])
+false
+
+## @datakit/tx — any-any → iterable-object (any-any → iterable-object)
+
+### pairToKeyValueObjectWith
+
+Return a function expecting a pair and returning a {key, value} object
+using the provided `fn` to get the `value`.
+
+> objectifySelfSum = pairToKeyValueObjectWith(x => x + x)
+
+> objectifySelfSum('')
+{key: undefined, value: undefined}
+> objectifySelfSum('a')
+{key: 'a', value: undefined}
+> objectifySelfSum('ab')
+{key: 'a', value: 'bb'}
+> objectifySelfSum('abc')
+{key: 'a', value: 'bb'}
+
+
+> objectifyGetA = pairToKeyValueObjectWith(_.getKey('a'))
+
+> objectifyGetA([])
+{key: undefined, value: undefined}
+> objectifyGetA([1])
+{key: 1, value: undefined}
+> objectifyGetA([1, {a: 2}])
+{key: 1, value: 2}
+> objectifyGetA([1, {a: 2}, 3])
+{key: 1, value: 2}
+
+> function func () {
+	return objectifyGetA(arguments);
+}
+> func()
+{key: undefined, value: undefined}
+> func(1)
+{key: 1, value: undefined}
+> func(1, {a: 2})
+{key: 1, value: 2}
+> func(1, {a: 2}, 3)
+{key: 1, value: 2}
+
+## @datakit/tx — any-any → object-array (any-any → object-array)
+
+### objectToKeyValueArrayWith
+
+Return a function expecting an object and returning an array of {key, value}
+objects, using the provided `fn` to get the `value` of each object.
+
+> obj = {k1: {a: 1}, k2: {a: 2}}
+> convertToArray = objectToKeyValueArrayWith(_.getKey('a'))
+> convertToArray(obj)
+[{key: 'k1', value: 1}, {key: 'k2', value: 2}]
+
+### valuesWith
+
+Return a function expecting an object and returning an array of its values
+processed with the provided function.
+The accessor receives (value, key) so keys can be used in the transformation.
+
+> triplicatedValues = valuesWith(_.add(3));
+> triplicatedValues({a: 1, b: 2, c: 3})
+[4, 5, 6]
+
+> getFoos = valuesWith(_.getKey('foo'));
+> getFoos({a: {foo: 1, bar: 2}, b: {foo: 15, bar: -3}})
+[1, 15]
+
+> keysAndValues = valuesWith((value, key) => `${value} (${key})`);
+> keysAndValues({a: 3, b: 5})
+['3 (a)', '5 (b)']
+
+## @datakit/tx — any-any → object-boolean (any-any → object-boolean)
+
+### areValuesEqualWith
+
+Return a function expecting an object and returning `true` if its values,
+once processed with the provided `fn` function, are all equal.
+
+> areValuesEqual = areValuesEqualWith(getValue)
+> areValuesEqual({a: {key: 'a', value: 1}, b: {key: 'b', value: 1}})
+true
+> areValuesEqual({a: {key: 'a', value: 1}, b: {key: 'b', value: 2}})
+false
+
+## @datakit/tx — any-any → object-object (any-any → object-object)
+
+### groupValuesWith
+
+Return a function expecting an object and returning an object grouping its
+values using the provided `fn`.
+Values that are arrays are flattened before grouping.
+
+> regroupedByX = groupValuesWith(obj => obj.x)
+> regroupedByX({a: {x: 1, y: 2}, b: {x: 3, y: 4}, c: {x: 'a', y: 6}, d: {x: 1, y: 8}})
+{1: [{x: 1, y: 2}, {x: 1, y: 8}], 3: [{x: 3, y: 4}], a: [{x: 'a', y: 6}]}
+
+### indexValuesWith
+
+Return a function expecting an object and returning an index of all its
+values using the provided `fn`.
+Use this if you're sure that applying the `fn` on the object values
+returns unique strings.
+Values that are arrays are flattened before indexing.
+
+> reindexedByX = indexValuesWith(obj => obj.x)
+> reindexedByX({a: {x: 'u1', y: 2}, b: {x: 'u2', y: 4}})
+{u1: {x: 'u1', y: 2}, u2: {x: 'u2', y: 4}}
+
+## @datakit/tx — any-array → any-array (any-array → any-array)
+
+### makeBiPermutationsWith
+
+Return a function returning the pair-permutations of the items returned by the provided `fn`.
+
+> object = {
+  key: 'foobars',
+  value: [{foo: 'a'}, {foo: 'b'}, {bar: 'c'}, {bar: 'd'}]
+}
+> makeBiPermutations = makeBiPermutationsWith(getValue)
+[
+  [{foo: 'a'}, {foo: 'b'}],
+  [{foo: 'a'}, {bar: 'c'}],
+  [{foo: 'a'}, {bar: 'd'}],
+  [{foo: 'b'}, {bar: 'c'}],
+  [{foo: 'b'}, {bar: 'd'}],
+  [{bar: 'c'}, {bar: 'd'}]
+]
+
+## @datakit/tx — any-array → array-object (any-array → array-object)
+
+### makeArrayToObjectWith
+
+Return a function expecting an array and returning an object
+with keys and values defined by the provided function, which expects a value
+and returns a pair [key, value].
+
+> valueToPair = x => [`${x}${x}`, `${x}${x}${x}`];
+> arrayToObject1 = makeArrayToObjectWith(valueToPair)
+> arrayToObject1(['a', 'b', 1])
+{aa: 'aaa', bb: 'bbb', 11: '111'}
+
+> valueIndexToPair = (x, i) => [`${i}${i}`, `${x}${x}${x}`];
+> arrayToObject2 = makeArrayToObjectWith(valueIndexToPair)
+> arrayToObject2(['a', 'b', 1])
+{'00': 'aaa', '11': 'bbb', '22': '111'}
+
+## @datakit/tx — any-boolean → array-array (any-boolean → array-array)
+
+### raiseWith
+
+Return a function expecting an array and returning a new array with all items
+satisfying the provided predicate in the tail, in the same relative order
+they were in the input array.
+
+> raiseOdds = raiseWith(x => x % 2 === 1);
+> raiseOdds([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+[0, 2, 4, 6, 8, 1, 3, 5, 7, 9]
+
+## @datakit/tx — any-boolean → object-generic (any-boolean → object-generic)
+
+### findValueWith
+
+Return a function expecting an object and returning the first of its values
+satisfying the provided predicate.
+
+> findFirstOdd = findValueWith(x => x % 2 === 1);
+> findFirstOdd({a: 2, b: 4, c: 3, d: 6, e: 7})
+3
+> findItem = findValueWith(isKeyValue(['max', 10]))
+> findItem({a: {id: 'foo', min: 1, max: 2}, b: {id: 'bar', min: -1, max: 10}, c: {id: 'baz', min: -4, max: 10}})
+{id: 'bar', min: -1, max: 10}
+
+## @datakit/tx — any-number → array-number (any-number → array-number)
+
+### arrayMaxWith
+
+Return a function expecting an array and returning the max of results
+of applying the provided function on all of the array items.
+
+> maxWithAbsSin = arrayMaxWith(_.pipe([Math.sin, Math.abs]))
+> maxWithAbsSin([-Math.PI/2, -Math.PI/4])
+1
+> maxWithAbsSin([Math.PI/4, Math.PI/6])
+0.7071067811865475
+
+### arrayMinWith
+
+Return a function expecting an array and returning the min of results
+of applying the provided function on all of the array items.
+
+> minWithAbsSin = arrayMinWith(_.pipe([Math.sin, Math.abs]))
+> minWithAbsSin([-Math.PI/2, -Math.PI/4])
+0.7071067811865475
+> minWithAbsSin([Math.PI/4, Math.PI/6])
+0.49999999999999994
+
+### arraySumWith
+
+Return a function expecting an array and summing the numbers obtained
+from applying the provided `fn` to the array items.
+
+> sumValues = arraySumWith(_.getKey('a'))
+> sumValues([{a: 1}, {a: 2}, {a: 3}])
+6
+> sumValues([])
+0
+
+### makeAverageWith
+
+Return a function expecting an array and returning the average of
+the numbers obtained by applying the provided `fn` to the array items.
+
+> makeAverageOfA = makeAverageWith(_.getKey('a'));
+> makeAverageOfA([{a: 1, b: 2}, {a: 10, b: 7}, {a: 7, b: 9}])
+6
+> makeAverageOfA([])
+0
+
+## @datakit/tx — any-number → object-number (any-number → object-number)
+
+### valuesMaxWith
+
+Return a function expecting an object, applying the provided function to its
+values and returning the largest of the results.
+
+> maxWithAbsSin = valuesMaxWith(_.pipe([Math.sin, Math.abs]))
+> maxWithAbsSin({a: -Math.PI/2, b: -Math.PI/4})
+1
+> maxWithAbsSin({a: -Math.PI/4, b: -Math.PI/6})
+0.7071067811865475
+
+### valuesMinWith
+
+Return a function expecting an object, applying the provided function to its
+values and returning the lowest of the results.
+
+> minWithAbsSin = valuesMinWith(_.pipe([Math.sin, Math.abs]))
+> minWithAbsSin({a: -Math.PI/2, b: -Math.PI/4})
+0.7071067811865475
+> minWithAbsSin({a: -Math.PI/4, b: -Math.PI/6})
+0.49999999999999994
+
+## @datakit/tx — any-object → array-object (any-object → array-object)
+
+### makeAllOccurrencesWith
+
+Return a function expecting an array and returning an object of occurrences
+of all the keys contained in the property reachable with the provided `fn`
+in the items of the provided array.
+
+> items = [
+  {foo: 1, bar: {a: 1}},
+  {foo: 1, bar: {a: 6, b: -1}},
+  {foo: 1, bar: {a: 2, b: 0, c: 1}},
+  {foo: 1, bar: {c: 4, e: 2}},
+]
+> makeAllOccurrences = makeAllOccurrencesWith(_.getKey('bar'))
+> makeAllOccurrences(items)
+{a: 3, b: 2, c: 2, e: 1}
+
+## @datakit/tx — array → array (array → array)
+
+### getFirstAndLast
+
+Return an array containing the first and the last element of the provided array.
+
+> getFirstAndLast([0, 1, 2, 3, 4])
+[0, 4]
+> getFirstAndLast([0])
+[0, 0]
+> getFirstAndLast([])
+[undefined, undefined]
+
+### inclusiveRange
+
+Return the range within the provided limits, both limits being included.
+
+> inclusiveRange([2, 5])
+[2, 3, 4, 5]
+> inclusiveRange([2, 12, 2])
+[2, 4, 6, 8, 10, 12]
+> inclusiveRange([])
+[]
+
+### makeBiPermutations
+
+Return the permutations of pairs of the provided items.
+
+> makeBiPermutations([{foo: 'a'}, {foo: 'b'}, {bar: 'c'}])
+[[{foo: 'a'}, {foo: 'b'}], [{foo: 'a'}, {bar: 'c'}], [{foo: 'b'}, {bar: 'c'}]]
+
+### pluckKey
+
+Pluck the `key` property value from an array of objects.
+
+> pluckKey([{key: 'John', value: 'Foo'}, {key: 'Jane', value: 'Bar'}])
+['John', 'Jane']
+
+### pluckValue
+
+Pluck the `value` property value from an array of objects.
+
+> pluckValue([{key: 'John', value: 'Foo'}, {key: 'Jane', value: 'Bar'}])
+['Foo', 'Bar']
+
+### sortDesc
+
+Return a copy of the provided array sorted in descending order.
+
+> sortDesc([3, 1, 2])
+[3, 2, 1]
+
+### sortKeyAsc
+
+Return a copy of the provided array of key-value objects sorted by `key` (ascending).
+
+> sortKeyAsc([{key: 'b', value: 1}, {key: 'a', value: 2}])
+[{key: 'a', value: 2}, {key: 'b', value: 1}]
+
+### sortKeyDesc
+
+Return a copy of the provided array of key-value objects sorted by `key` (descending).
+
+> sortKeyDesc([{key: 'a', value: 1}, {key: 'c', value: 2}, {key: 'b', value: 3}])
+[{key: 'c', value: 2}, {key: 'b', value: 3}, {key: 'a', value: 1}]
+
+### sortValueAsc
+
+Return a copy of the provided array of key-value objects sorted by `value` (ascending).
+
+> sortValueAsc([{key: 'a', value: 3}, {key: 'b', value: 1}, {key: 'c', value: 2}])
+[{key: 'b', value: 1}, {key: 'c', value: 2}, {key: 'a', value: 3}]
+
+### sortValueAscKeyAsc
+
+Return a copy of the provided array with items
+sorted by `value` (ascending) then by `key` (ascending)
+
+### sortValueAscKeyDesc
+
+Return a copy of the provided array with items
+sorted by `value` (ascending) then by `key` (descending)
+
+### sortValueDesc
+
+Return a copy of the provided array of key-value objects sorted by `value` (descending).
+
+> sortValueDesc([{key: 'a', value: 1}, {key: 'b', value: 3}, {key: 'c', value: 2}])
+[{key: 'b', value: 3}, {key: 'c', value: 2}, {key: 'a', value: 1}]
+
+### sortValueDescKeyAsc
+
+Return a copy of the provided array with items
+sorted by `value` (descending) then by `key` (ascending)
+
+### sortValueDescKeyDesc
+
+Return a copy of the provided array with items
+sorted by `value` (descending) then by `key` (descending)
+
+### sortValueDescLabelAsc
+
+Return a copy of the provided array sorted by `value` (descending) then `label` (ascending).
+
+> sortValueDescLabelAsc([{key: 'a', label: 'z', value: 1}, {key: 'b', label: 'a', value: 1}])
+[{key: 'b', label: 'a', value: 1}, {key: 'a', label: 'z', value: 1}]
+
+### sortValueDescLabelDesc
+
+Return a copy of the provided array sorted by `value` (descending) then `label` (descending).
+
+> sortValueDescLabelDesc([{key: 'a', label: 'a', value: 1}, {key: 'b', label: 'z', value: 1}])
+[{key: 'b', label: 'z', value: 1}, {key: 'a', label: 'a', value: 1}]
+
+### sortValueDescLabelLowercaseAsc
+
+Return a copy of the provided array sorted by `value` (descending) then `label` lowercase (ascending).
+
+> sortValueDescLabelLowercaseAsc([{key: 'a', label: 'Z', value: 1}, {key: 'b', label: 'a', value: 1}])
+[{key: 'b', label: 'a', value: 1}, {key: 'a', label: 'Z', value: 1}]
+
+### sortValueDescLabelLowercaseDesc
+
+Return a copy of the provided array sorted by `value` (descending) then `label` lowercase (descending).
+
+> sortValueDescLabelLowercaseDesc([{key: 'a', label: 'a', value: 1}, {key: 'b', label: 'Z', value: 1}])
+[{key: 'b', label: 'Z', value: 1}, {key: 'a', label: 'a', value: 1}]
+
+## @datakit/tx — array → array-array (array → array-array)
+
+### makeArrayTransformer
+
+Return a function expecting an array and applying the provided transforms to its elements.
+The result array length equals the length of the shorter of the two arrays.
+
+> transformer = makeArrayTransformer([x => x * 20, x => x + 3])
+> transformer([2, 2])
+[40, 5]
+
+### pluckKeys
+
+Return a function plucking the provided keys from each object in the expected array.
+
+> select = pluckKeys(['a', 'k'])
+> select([
+  {a: 1, b: 2, c: 3, k: 4},
+  {a: 5, b: 8},
+])
+[{a: 1, k: 4}, {a: 5}]
+
+### removeAt
+
+Return a function expecting an array and removing items at the provided indices.
+
+> removeIndices = removeAt([3, 4, 8])
+> removeIndices([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+[0, 1, 2, 5, 6, 7, 9]
+
+## @datakit/tx — array → array-object (array → array-object)
+
+### makeWithKeys
+
+Return a function expecting an array of values and returning an object
+assigning the values to the provided keys.
+
+> makeWithLatLng = makeWithKeys(['lng', 'lat'])
+> makeWithLatLng([1, 2])
+{lng: 1, lat: 2}
+> makeWithLatLng([10, 20])
+{lng: 10, lat: 20}
+
+### makeWithValues
+
+Return a function expecting an array of keys and returning an object
+assigning the keys to the provided values.
+
+> makeWithTheseValues = makeWithValues([1, 2])
+> makeWithTheseValues(['lng', 'lat'])
+{lng: 1, lat: 2}
+> makeWithTheseValues(['foo', 'bar'])
+{foo: 1, bar: 2}
+
+## @datakit/tx — array → boolean (array → boolean)
+
+### areAllTruthy
+
+Return true if all elements of the provided array are truthy
+
+> areAllTruthy([true, true])
+true
+> areAllTruthy([1, [], [1, 2], {}, {a: 1}, 'a'])
+true
+> areAllTruthy([false, true])
+false
+> areAllTruthy([0, {a: 1}])
+false
+
+### areEqual
+
+Return `true` if items in the provided array are equal
+
+> areEqual([false, false, false])
+true
+> areEqual([true, false, false])
+false
+> areEqual([])
+false
+> areEqual([1])
+false
+
+### areSomeTruthy
+
+Return true if some elements of the provided array are truthy
+
+> areSomeTruthy([false, true])
+true
+> areSomeTruthy([0, ''])
+false
+
+## @datakit/tx — array → generic (array → generic)
+
+### getRandomItemOf
+
+Return a random item of the passed array
+
+> getRandomItemOf([0, 1, 2, 3])
+2
+> getRandomItemOf([0, 1, 2, 3])
+1
+> getRandomItemOf([{a: 0}, {a: 1}, {a: 2}, {a: 3}])
+{a: 3}
+> getRandomItemOf([{a: 0}, {a: 1}, {a: 2}, {a: 3}])
+{a: 0}
+
+## @datakit/tx — array → generic-boolean (array → generic-boolean)
+
+### makeIsIncluded
+
+Return a function returning true if the passed (primitive) value is found
+in the provided array.
+To check non-primitive values use makeOccursIn instead.
+
+> isIncluded = makeIsIncluded([1, 2, 3])
+> isIncluded(1)
+true
+> isIncluded(4)
+false
+
+### makeOccursIn
+
+Return a function returning true if the passed value is found in the provided array.
+This function is ideal to check the presence of arrays or objects.
+To check primitive values use makeIsIncluded instead.
+
+> isOneOfThoseArrays = makeOccursIn([
+  [1, 2, 3], [1, 2, 3, 4], [5, 6, 7, 6, 5]
+])
+> isOneOfThoseArrays([1, 2, 3])
+true
+> isOneOfThoseArrays([1, 2])
+false
+
+## @datakit/tx — array → generic-generic (array → generic-generic)
+
+### truthynessTo
+
+Return a function that maps the input to the first or the second element
+of the provided pair: the first if its truthy, the second otherwise.
+
+> boolToNum = truthynessTo([0, 1])
+> boolToNum(true)
+0
+> boolToNum(false)
+1
+
+> boolToString = truthynessTo(['OK!', 'Sorry!'])
+> boolToString(true)
+'OK!'
+> boolToString(false)
+'Sorry!'
+
+## @datakit/tx — array → generic-object (array → generic-object)
+
+### makeWith
+
+Return a function returning an object by assigning the results of the provided
+functions to the provided keys.
+
+> makeCircle = makeWith([
+  ['radius', 'perimeter', 'area'],
+  [_.identity, r => 2 * Math.PI * r, r => Math.PI * Math.pow(r, 2)]
+])
+> makeCircle(3)
+{radius: 3, perimeter: 18.85, area: 28.27}
+> makeCircle(4)
+{radius: 4, perimeter: 25.13, area: 50.27}
+
+## @datakit/tx — array → iterable (array → iterable)
+
+### getShorter
+
+Return the shorter iterable of the provided array of iterables.
+Returns the first one in case of equal length.
+Returns undefined for an empty input.
+
+> getShorter([[1, 2], [1], [1, 2, 3], ['a']])
+[1]
+> getShorter(['abc', 'a', [1]])
+'a'
+> getShorter(['b', 'a'])
+'b'
+> getShorter([])
+undefined
+
+## @datakit/tx — array → number (array → number)
+
+### arrayAverage
+
+Return the average of the numbers in the provided array
+
+> arrayAverage([1, 23, 6])
+10
+> arrayAverage([])
+0
+
+### arrayMax
+
+Return the max of the numbers in the provided array
+
+> arrayMax([-1, -2, 0, 1, 2])
+2
+
+### arrayMin
+
+Return the min of the numbers in the provided array
+
+> arrayMin([-1, -2, 0, 1, 2])
+-2
+
+### arraySum
+
+Return the sum of the numbers in the provided array
+
+> arraySum([1, -2, 3, -4, 5])
+3
+> arraySum([])
+0
+
+### getRandomIndexOf
+
+Return the index of a random item of the passed array
+
+> getRandomIndexOf([0, 1, 2, 3])
+2
+> getRandomIndexOf([0, 1, 2, 3])
+1
+
+### keyValueArrayAverage
+
+Return the average of values of a {key, value}[] array
+
+> keyValueArrayAverage([
+  {key: 'a', value: 1},
+  {key: 'b', value: 23},
+  {key: 'c', value: 6},
+])
+10
+> keyValueArrayAverage([])
+0
+
+### makeRandomNumInRange
+
+Return a random number in the specified range.
+
+> makeRandomNumInRange([1.2, 7.4])
+4.2
+
+### permutationsCount
+
+Calculate the number of combinations (permutations without repetition) of `n` items
+taken in groups of size `g`. Useful for sizing matrices of scatterplots / heatmaps.
+
+Formula: C(n,g) = n! / (g! × (n-g)!)
+
+> permutationsCount([4, 2])
+6
+> permutationsCount([5, 2])
+10
+
+### sumValue
+
+Return the sum of the `value` properties from the provided array of key-value objects.
+
+> sumValue([{key: 'a', value: 1}, {key: 'b', value: 2}, {key: 'c', value: 3}])
+6
+> sumValue([])
+0
+
+## @datakit/tx — array → number-boolean (array → number-boolean)
+
+### makeIsWithinRange
+
+Return a function expecting a number and returning true if the number
+is within the provided range (inclusive on both ends).
+
+> isWithinRange = makeIsWithinRange([0, 5])
+> isWithinRange(2)
+true
+> isWithinRange(5)
+true
+> isWithinRange(8)
+false
+
+## @datakit/tx — array → number-number (array → number-number)
+
+### makePolynomial
+
+Return a function that computes the polynomial of the input number using the provided coefficients.
+The exponent corresponds to the coefficient's index.
+
+> // x => 2 x + 4 x^3
+> poly = makePolynomial([0, 2, 0, 4])
+> poly(2)
+36
+> poly(5)
+510
+
+## @datakit/tx — array → object (array → object)
+
+### keyValueArrayToObject
+
+Return an object built using 'key's and 'value's from the objects in the provided array
+
+> keyValueArrayToObject([
+  {key: 'ITA', value: 0},
+  {key: 'FRA', value: 0},
+])
+{ ITA: 0, FRA: 0 }
+
+### makeAllOccurrences
+
+Return an object of occurrences of all the keys contained in the objects in the provided array
+
+> makeAllOccurrences([{a: 1}, {a: 6, b: -1}, {a: 2, b: 0, c: 1}, {c: 4, e: 2}])
+{a: 3, b: 2, c: 2, e: 1}
+
+### makeIndexByKey
+
+Return an object with the provided array elements as keys and all values
+equal to their index in the array
+
+> makeIndexByKey(['a', 'b'])
+{a: 0, b: 1}
+> makeIndexByKey([2, -4])
+{'2': 0, '-4': 1}
+
+### makeKeyedEmptyArray
+
+Return an object with the provided array elements as keys and all values equal to `[]`
+
+> makeKeyedEmptyArray(['a', 'b'])
+{a: [], b: []}
+
+### makeKeyedFalse
+
+Return an object with the provided array elements as keys and all values equal to `false`
+
+> makeKeyedFalse(['a', 'b'])
+{a: false, b: false}
+
+### makeKeyedNull
+
+Return an object with the provided array elements as keys and all values equal to `null`
+
+> makeKeyedNull(['a', 'b'])
+{a: null, b: null}
+
+### makeKeyedTrue
+
+Return an object with the provided array elements as keys and all values equal to `true`
+
+> makeKeyedTrue(['a', 'b'])
+{a: true, b: true}
+
+### makeKeyedZeroes
+
+Return an object with the provided array elements as keys and all values equal to zero
+
+> makeKeyedZeroes(['a', 'b'])
+{a: 0, b: 0}
+> makeKeyedZeroes([1, 2])
+{1: 0, 2: 0}
+
+### mergeObjects
+
+Merge all the objects in the provided array.
+The result depends on the order of the objects in the array.
+
+> mergeObjects([{a: 1}, {a: 6, b: -1}, {b: 1}])
+{a: 6, b: 1}
+
+### pairToKeyValueObject
+
+Return the {key, value} object from a pair
+
+> pairToKeyValueObject(['a', 2])
+{key: 'a', value: 2}
+> pairToKeyValueObject([1, 2, 3])
+{key: 1, value: 2}
+> pairToKeyValueObject([])
+{key: undefined, value: undefined}
+
+### pairToKeyValuesObject
+
+Return the {key, values} object from a pair
+
+> pairToKeyValuesObject(['a', [1, 2]])
+{key: 'a', values: [1, 2]}
+> pairToKeyValuesObject([1, [1, 2], 3])
+{key: 1, values: [1, 2]}
+
+## @datakit/tx — array → object-array (array → object-array)
+
+### makeKeysGetter
+
+### pickAndConcatValues
+
+Return a function expecting an object and concatenating values in the provided list of keys.
+
+> getProducts = pickAndConcatValues(['food', 'beverage'])
+> getProducts({
+    food: ['bread', 'cheese', 'ham'],
+    beverage: ['wine', 'water'],
+    id: 'area1',
+    value: 32.1,
+  })
+['bread', 'cheese', 'ham', 'wine', 'water']
+
+## @datakit/tx — array → object-boolean (array → object-boolean)
+
+### isKeyValue
+
+Return a predicate expecting an object and returning `true` if the value
+at the provided `key` is the same as the provided `value`.
+
+> isUSA = isKeyValue(['country_id', 'US'])
+> isUSA({country_id: 'GB', id: 123})
+false
+> isUSA({country_id: 'US', id: 456})
+true
+
+### isNotKeyValue
+
+Return a predicate expecting an object and returning `true` if the value
+at the provided `key` is not the same as the provided `value`.
+
+> isNotUSA = isNotKeyValue(['country_id', 'US'])
+> isNotUSA({country_id: 'GB', id: 123})
+true
+> isNotUSA({country_id: 'US', id: 456})
+false
+
+### isNotPathValue
+
+Return a predicate expecting an object and returning `true` if the value
+at the provided `path` is not the same as the provided `value`.
+
+> isNotDefaultStatus = isNotPathValue(['item.status', 'default'])
+> isNotDefaultStatus({item: {status: 'active'}, id: 123})
+true
+> isNotDefaultStatus({item: {status: 'default'}, id: 456})
+false
+
+### isPathValue
+
+Return a predicate expecting an object and returning `true` if the value
+at the provided `path` is the same as the provided `value`.
+
+> isDefaultStatus = isPathValue(['item.status', 'default'])
+> isDefaultStatus({item: {status: 'active'}, id: 123})
+false
+> isDefaultStatus({item: {status: 'default'}, id: 456})
+true
+
+## @datakit/tx — array → object-object (array → object-object)
+
+### applyTransformsSequence
+
+Return a function that expects an object and applies the provided sequence of
+transforms to the values of the correspondent paths to the input object.
+Note that transforms to the same path can be repeated.
+
+> transform = applyTransformsSequence([
+    ['a.a2.a22', _.pipe([Number, Math.sqrt])],
+    ['a.a3', parseInt],
+  ])
+> transform({a: {a2: {a22: '9'}, a3: '3px'}})
+{a: {a2: {a22: 3}, a3: 3}}
+
+### pluckValuesKeys
+
+Return a function plucking the provided keys from the expected object values.
+
+> let select = pluckValuesKeys(['a', 'k'])
+> select({
+    foo: {a: 1, b: 2, c: 3, k: 4},
+    bar: {a: 5, b: 8}
+  })
+{foo: {a: 1, k: 4}, bar: {a: 5}}
+
+### remapWith
+
+Return a function expecting an object and returning an object having keys
+and values defined by applying the provided array of two functions to the
+input object keys and values.
+
+> remap = remapWith([key => `${key}${key}`, value => 3 * value])
+> remap({a: 1, b: 2})
+{aa: 3, bb: 6}
+
+## @datakit/tx — array → string (array → string)
+
+### joinWithBlank
+
+Return a string joining the provided array items with a blank
+
+> joinWithBlank(['a', 'b', 'c'])
+'a b c'
+
+### joinWithColon
+
+Return a string joining the provided array items with a colon
+
+> joinWithColon(['a', 'b', 'c'])
+'a:b:c'
+
+### joinWithDash
+
+Return a string joining the provided array items with a dash
+
+> joinWithDash(['a', 'b', 'c'])
+'a-b-c'
+
+### joinWithNewline
+
+Return a string joining the provided array items with a return
+
+> joinWithNewline([1, 2, 3])
+'1\n2\n3'
+> joinWithNewline(['a', 'b', 'c'])
+'a\nb\nc'
+
+### joinWithSemicolon
+
+Return a string joining the provided array items with a semicolon
+
+> joinWithSemicolon(['a', 'b', 'c'])
+'a;b;c'
+
+## @datakit/tx — array → string-boolean (array → string-boolean)
+
+### containsOneOf
+
+Return a function that checks if a string contains one of the provided strings.
+
+> isWeight = containsOneOf(['(g)', '(mg)', '(mcg)'])
+> ['id', 'Energy (kcal)', 'Protein (g)', 'Cholesterol (mg)', 'Selenium (mcg)'].filter(isWeight)
+['Protein (g)', 'Cholesterol (mg)', 'Selenium (mcg)']
+
+## @datakit/tx — array → string-string (array → string-string)
+
+### sliceStringAt
+
+Return a function extracting the portion of a string between the provided
+indices (first included, second excluded). Note that indices can be negative.
+
+> slicerPosPos = sliceStringAt([3, 5])
+> slicerPosPos('0123456789')
+'34'
+
+> slicerPosImplicit = sliceStringAt([3])
+> slicerPosImplicit('0123456789')
+'3456789'
+
+> slicerPosNeg = sliceStringAt([1, -3])
+> slicerPosNeg('0123456789')
+'123456'
+
+> slicerNegPos = sliceStringAt([-6, 6])
+> slicerNegPos('0123456789')
+'45'
+
+## @datakit/tx — generic → any-boolean (generic → any-boolean)
+
+### isEqualTo
+
+Return a function that returns true if the input value is equal to the provided value.
+This can be used to compare objects and arrays.
+
+> isEqualToObj = isEqualTo({a: 1, b: [1,2]})
+> isEqualToObj({a: 1, b: [1, 2]})
+true
+> isEqualToObj({a: 1, b: [1, 2, 3]})
+false
+
+### isNot
+
+Return a function that returns true if the input is different from the provided value.
+
+> isNotTwo = isNot(2)
+> isNotTwo(3)
+true
+> isNotTwo(2)
+false
+
+## @datakit/tx — generic → array-object (generic → array-object)
+
+### makeKeyed
+
+Return a function expecting an array of keys and returning an object with
+the provided value as value of those keys.
+
+> makeKeyedEmptyArray = makeKeyed([])
+> makeKeyedEmptyArray([1, 2])
+{1: [], 2: []}
+> makeKeyedEmptyArray(['a', 'b'])
+{a: [], b: []}
+
+## @datakit/tx — generic → boolean (generic → boolean)
+
+### isArguments
+
+Return true if the input is an arguments list.
+
+### isArray
+
+Return true if the input is an array.
+
+### isFunction
+
+Return true if the input is a function.
+
+### isNotNaN
+
+Return true if the input is not a NaN.
+
+### isNotNil
+
+Return true if the input is not undefined or null.
+
+### isNotNull
+
+Return true if the input is not null.
+
+### isNumber
+
+Return true if the input is a number (including NaN and Infinity).
+
+### isObject
+
+Return true if the input is a plain object.
+
+### isPromise
+
+Return true if the input is a promise.
+
+### isString
+
+Return true if the input is a string.
+
+### isValidNumber
+
+Return true if the input is a valid number (including not being NaN).
+
+### negate
+
+Return the negated input.
+
+### toFloatIsValidNumber
+
+Return true if the input, parsed to float, is a valid number.
+
+### toNumberisValidNumber
+
+Return true if the input, converted to Number, is indeed a number.
+
+## @datakit/tx — generic → generic (generic → generic)
+
+### makeEmptyArrayIfUndefined
+
+Return an empty array if the input is undefined, identity otherwise.
+
+> makeEmptyArrayIfUndefined(undefined)
+[]
+> makeEmptyArrayIfUndefined([1, 2, 3])
+[1, 2, 3]
+
+### sanitize
+
+Return a copy of the input after stringifying and parsing it.
+Useful to strip `undefined` values for JSON comparison.
+
+> sanitize({a: 1, b: undefined})
+{a: 1}
+> sanitize([1, undefined])
+[1, null]
+
+### toFloatOrIdentity
+
+Return a number if the input can be converted to float, identity otherwise.
+
+> toFloatOrIdentity('2')
+2
+> toFloatOrIdentity('h2o')
+'h2o'
+
+## @datakit/tx — generic → object-boolean (generic → object-boolean)
+
+### hasValue
+
+Return a function that returns true if at least one of the input object
+properties has the provided value.
+
+> hasTwo = hasValue(2)
+> hasTwo({a: 1, b: 2})
+true
+> hasTwo({a: 1, b: 3})
+false
+
+## @datakit/tx — generic → string (generic → string)
+
+### stringify
+
+Return a string representation of the input with indentation = 2.
+
+> stringify([{a: 1}, {a: 2}])
+'[\n  {\n    "a": 1\n  },\n  {\n    "a": 2\n  }\n]'
+
+## @datakit/tx — generic → undefined (generic → undefined)
+
+### noop
+
+A function that does nothing.
+
+> noop()
+undefined
+
+## @datakit/tx — iterable → boolean (iterable → boolean)
+
+### hasIterableLength1
+
+Return true if the iterable has exactly one element
+
+> hasIterableLength1('a')
+true
+> hasIterableLength1([1])
+true
+> hasIterableLength1([1, 2])
+false
+
+### isIterableEmpty
+
+Return true if the iterable is empty
+
+> isIterableEmpty('')
+true
+> isIterableEmpty([])
+true
+> isIterableEmpty([1, 2])
+false
+
+### isIterableLongerThan1
+
+Return true if the iterable has more than one element
+
+> isIterableLongerThan1('ab')
+true
+> isIterableLongerThan1([1, 2])
+true
+> isIterableLongerThan1([1])
+false
+
+### isIterableNotEmpty
+
+Return true if the iterable is not empty
+
+> isIterableNotEmpty('a')
+true
+> isIterableNotEmpty([1, 2])
+true
+> isIterableNotEmpty([])
+false
+
+## @datakit/tx — iterable → number (iterable → number)
+
+### getLength
+
+Get the length of the iterable
+
+> getLength('a')
+1
+> getLength('two')
+3
+> getLength([10])
+1
+> getLength([3, 7])
+2
+
+## @datakit/tx — number → boolean (number → boolean)
+
+### is0
+
+Return `true` if the input number is 0.
+
+> is0(0)
+true
+> is0(2)
+false
+
+### is1
+
+Return `true` if the input number is 1.
+
+> is1(1)
+true
+> is1(2)
+false
+
+### isGT0
+
+Return `true` if the input number is greater than 0.
+
+> isGT0(-1)
+false
+> isGT0(2)
+true
+
+### isGT1
+
+Return `true` if the input number is greater than 1.
+
+> isGT1(0)
+false
+> isGT1(2)
+true
+
+## @datakit/tx — number → number (number → number)
+
+### factorial
+
+Return the factorial of a number.
+
+> factorial(0)
+1
+> factorial(5)
+120
+
+## @datakit/tx — number → number-number (number → number-number)
+
+### roundTo
+
+Return a function that rounds the input number to the provided number of digits.
+
+> roundTo2 = roundTo(2)
+> roundTo2(2.41285)
+2.41
+> roundTo2(2.41785)
+2.42
+
+## @datakit/tx — number → string (number → string)
+
+### plural
+
+Return an empty string if the provided number is 1, otherwise return 's'.
+Useful for building pluralized labels.
+
+> plural(1)
+''
+> plural(2)
+'s'
+> plural(0)
+'s'
+> plural(-1)
+'s'
+
+## @datakit/tx — object → array (object → array)
+
+### concatValues
+
+Concatenate the values of the provided object.
+
+> concatValues({a: [1, 2, 3], b: [4, 5, 6]})
+[1, 2, 3, 4, 5, 6]
+
+### getTruthyValuesKeys
+
+Return the keys of the provided object with a truthy value.
+
+> getTruthyValuesKeys({a: true, b: true, c: false})
+['a', 'b']
+> getTruthyValuesKeys({a: 1, b: 0, c: false})
+['a']
+> getTruthyValuesKeys({a: [1, 2], b: {a: 1}, c: false})
+['a', 'b']
+
+### makeKeyedValuesPermutations
+
+Return an array of the permutations of the provided object values items, by key.
+Note that this function assumes the provided object values are arrays.
+
+> makeKeyedValuesPermutations({a: [0, 1], b: [2, 3], c: [4, 5]})
+[
+  {a: 0, b: 2, c: 4}, {a: 1, b: 2, c: 4},
+  {a: 0, b: 3, c: 4}, {a: 1, b: 3, c: 4},
+  {a: 0, b: 2, c: 5}, {a: 1, b: 2, c: 5},
+  {a: 0, b: 3, c: 5}, {a: 1, b: 3, c: 5}
+]
+
+### objectToKeyValueArray
+
+Return an array of {key, value} objects from an object.
+
+> objectToKeyValueArray({k1: 'v1', k2: 'v2'})
+[{key: 'k1', value: 'v1'}, {key: 'k2', value: 'v2'}]
+
+### objectToKeyValuesArray
+
+Return an array of {key, values} objects from an object.
+
+> objectToKeyValuesArray({k1: ['a', 'b'], k2: ['c', 'd']})
+[{key: 'k1', values: ['a', 'b']}, {key: 'k2', values: ['c', 'd']}]
+
+### objectToValueDescKeyAsc
+
+Convert an object to a key-value array sorted by `value` (descending) then `key` (ascending).
+
+> objectToValueDescKeyAsc({b: 1, a: 3, c: 1})
+[{key: 'a', value: 3}, {key: 'b', value: 1}, {key: 'c', value: 1}]
+
+## @datakit/tx — object → boolean (object → boolean)
+
+### areAllValuesTruthy
+
+Return `true` if all values of the provided object are truthy.
+
+> areAllValuesTruthy({a: 1, b: 'hello', c: true})
+true
+> areAllValuesTruthy({a: 1, b: 0, c: true})
+false
+
+### areSomeValuesTruthy
+
+Return `true` if at least one value of the provided object is truthy.
+
+> areSomeValuesTruthy({a: 0, b: 1, c: false})
+true
+> areSomeValuesTruthy({a: 0, b: false, c: null})
+false
+
+### areValuesEqual
+
+Return `true` if all values of the provided object are equal.
+
+> areValuesEqual({a: 1, b: 1, c: 1})
+true
+> areValuesEqual({a: [1, 2], b: [1, 2], c: [1, 2]})
+true
+> areValuesEqual({a: 1, b: 2, c: 3})
+false
+> areValuesEqual({})
+false
+
+### hasObjSize1
+
+Return `true` if the provided object has exactly one key.
+
+> hasObjSize1({})
+false
+> hasObjSize1({a: 1})
+true
+> hasObjSize1({a: 1, b: 2})
+false
+
+### hasSomeNullValues
+
+Return true if some of the provided object properties are `null`.
+
+> hasSomeNullValues({a: 1})
+false
+> hasSomeNullValues({a: 1, b: undefined})
+false
+> hasSomeNullValues({a: 1, b: undefined, c: null})
+true
+
+### isObjEmpty
+
+Return `true` if the object is empty.
+
+> isObjEmpty({})
+true
+> isObjEmpty({a: 1})
+false
+
+### isObjNotEmpty
+
+Return `true` if the object is not empty.
+
+> isObjNotEmpty({a: 1})
+true
+> isObjNotEmpty({})
+false
+
+## @datakit/tx — object → generic (object → generic)
+
+### getId
+
+Retrieve the 'id' property of the provided object.
+
+> getId({id: 'foo', name: 'bar'})
+'foo'
+
+### getKey
+
+Retrieve the 'key' property of the provided object.
+
+> getKey({key: 'foo', value: 'bar'})
+'foo'
+
+### getValue
+
+Retrieve the 'value' property of the provided object.
+
+> getValue({key: 'foo', value: 'bar'})
+'bar'
+
+### getValues
+
+Retrieve the 'values' property of the provided object.
+
+> getValues({key: 'foo', values: [0, 1, 2, 3]})
+[0, 1, 2, 3]
+
+## @datakit/tx — object → generic-object (object → generic-object)
+
+### applyFnMap
+
+Return a function expecting any kind of input to be used as the argument
+of the provided functions
+
+> array = [
+    {fname: 'John', lname: 'Woo', lng: 1, lat: 2},
+    {fname: 'John', lname: 'Foo', lng: 7, lat: 8}
+];
+> format = applyFnMap({
+    coords: _.collect([_.getKey('lng'), _.getKey('lat')]),
+    fullname: _.pipe([
+        _.collect([_.getKey('fname'), _.getKey('lname')]),
+        _.joinWith(' ')
+    ]),
+});
+> formatted = _.map(raw, format)
+[
+    {coords: [1, 2], fullname: 'John Woo'},
+    {coords: [7, 8], fullname: 'John Foo'}
+]
+
+## @datakit/tx — object → number (object → number)
+
+### getObjSize
+
+Return the size of the provided object.
+
+> getObjSize({a: 1, b: 2})
+2
+
+### valuesMax
+
+Return the max of the provided object values.
+
+> valuesMax({a: -3, b: 2, c: 1})
+2
+
+### valuesMin
+
+Return the min of the provided object values.
+
+> valuesMin({a: -3, b: 2, c: 1})
+-3
+
+## @datakit/tx — object → object (object → object)
+
+### countValues
+
+Return an object counting the occurrences of each unique value in the provided object.
+
+> countValues({a: 'x', b: 'y', c: 'x', d: 'z', e: 'y'})
+{x: 2, y: 2, z: 1}
+
+### mapValuesToFloat
+
+Return a copy of the object with values converted to float.
+
+> mapValuesToFloat({a: '1.2px', b: '20px'})
+{a: 1.2, b: 20}
+> mapValuesToFloat({a: '1.2', b: 'h2o'})
+{a: 1.2, b: NaN}
+
+### mapValuesToFloatPossibly
+
+Return the object with values converted to numbers where possible.
+
+> mapValuesToFloatPossibly({a: '1.2', b: '2px', c: 'h2o'})
+{a: 1.2, b: 2, c: 'h2o'}
+
+### mapValuesToNumber
+
+Return a copy of the object with values converted to numbers.
+
+> mapValuesToNumber({a: '1.2', b: '2'})
+{a: 1.2, b: 2}
+> mapValuesToNumber({a: '1.2', b: '2s'})
+{a: 1.2, b: NaN}
+
+### pickIfTruthy
+
+Return a copy of the object without falsy values.
+
+> pickIfTruthy({a: true, b: true, c: false})
+{a: true, b: true}
+> pickIfTruthy({a: 1, b: 0, c: false})
+{a: 1}
+> pickIfTruthy({a: [1, 2], b: {a: 1}, c: false})
+{a: [1, 2], b: {a: 1}}
+
+### sortObjectKeysAsc
+
+Return a copy of the input object with enumerable properties sorted in ascending order.
+
+> sortObjectKeysAsc({c: 1, a: 2, b: 15})
+{a: 2, b: 15, c: 1}
+
+### sortObjectKeysDesc
+
+Return a copy of the input object with enumerable properties sorted in descending order.
+
+> sortObjectKeysDesc({c: 1, a: 2, b: 15})
+{c: 1, b: 15, a: 2}
+
+### swapKeyValue
+
+Return an object with swapped keys and values.
+If there are duplicate values, the last occurrence wins.
+
+> swapKeyValue({a: 1, b: 2, c: 'd'})
+{1: 'a', 2: 'b', d: 'c'}
+> swapKeyValue({a: 1, b: 2, c: 'd', e: 1})
+{2: 'b', d: 'c', 1: 'e'}
+
+## @datakit/tx — object → object-object (object → object-object)
+
+### makeMergeAppliedFnMap
+
+Return a function that applies the provided map to the expected object and
+merges the result to the object.
+This is useful to add new properties to an object, eventually modifying
+existing ones by using keys expected to be in the input objects.
+
+> enhancer = makeMergeAppliedFnMap({
+    coords: _.collect([_.getKey('lng'), _.getKey('lat')]),
+    fullname: _.pipe([
+        _.collect([_.getKey('fname'), _.getKey('lname')]),
+        _.joinWith(' ')
+    ]),
+    lat: obj => roundTo2(obj.lat),
+    lng: obj => roundTo2(obj.lng),
+})
+> enhancer({fname: 'John', lat: 2.345434, lname: 'Woo', lng: 10.3425})
+{coords: [10.3425, 2.345434], fname: 'John', fullname: 'John Woo', lat: 2.35, lname: 'Woo', lng: 10.34}
+
+### mergeObj
+
+Return a function expecting an object to merge with the input object.
+
+> mergeB = mergeObj({b: 2})
+> mergeB({a: 1})
+{a: 1, b: 2}
+> mergeB({a: 1, b: 1})
+{a: 1, b: 2}
+
+### transformPaths
+
+Return a function that expects an object and applies the functions in the
+values of the input object to the values of the provided object found in
+the paths in the correspondent keys.
+
+> transform = transformPaths({
+    'a.a2.a22': _.pipe([Number, Math.sqrt]),
+    'a.a3': parseInt,
+    'b.b2': parseInt,
+})
+> transform({a: {a1: 'a1', a2: {a21: 'a21', a22: '9'}, a3: '3px', a4: '2'}, b: {b1: 'b1', b2: '4px'}})
+{a: {a1: 'a1', a2: {a21: 'a21', a22: 3}, a3: 3, a4: '2'}, b: {b1: 'b1', b2: 4}}
+
+### transformValues
+
+Return a function that expects an object and applies the functions in the
+values of the input object to the correspondent values of the provided object.
+Since 0.6.0 it assumes identity for missing keys.
+
+> conversionFn = transformValues({
+    name: _.identity,
+    a: _.pipe([Number, Math.sqrt]),
+    b: Number,
+    width: parseFloat
+})
+> conversionFn({name: 'foo', a: '9', b: '2', width: '10px'})
+{name: 'foo', a: 3, b: 2, width: 10}
+
+### updateKeys
+
+Return a function that expects an object and applies the provided updater
+function to the values correspondent to the provided keys, leaving the other
+properties unchanged.
+
+> update = updateKeys({keys: ['a', 'k', 'm'], updater: x => x * 2})
+> update({a: 1, b: 2, d: 4, k: 7, m: 2})
+{a: 2, b: 2, d: 4, k: 14, m: 4}
+> update({a: 1, b: 2, d: 4})
+{a: 2, b: 2, d: 4}
+> update({b: 2, d: 4})
+{b: 2, d: 4}
+
+## @datakit/tx — object → string (object → string)
+
+### getLabel
+
+Retrieve the 'label' property of the provided object.
+
+> getLabel({label: 'foo', value: 42})
+'foo'
+
+### getLabelLowercase
+
+Retrieve the 'label' property of the provided object, lowercased.
+Returns an empty string if label is undefined.
+
+> getLabelLowercase({label: 'Foo', value: 42})
+'foo'
+> getLabelLowercase({value: 42})
+''
+
+## @datakit/tx — object → string-boolean (object → string-boolean)
+
+### isKeyOf
+
+Return a function that checks if the expected string is a key of the
+provided object.
+
+> isKeyOfObj = isKeyOf({a: 1, b: 2})
+> isKeyOfObj('a')
+true
+> isKeyOfObj('c')
+false
+
+## @datakit/tx — regexp → boolean (regexp → boolean)
+
+### isRegexpEmpty
+
+Returns true if the provided RegExp is empty
+
+> isRegexpEmpty(/(?:)/u)
+true
+> isRegexpEmpty(/^a/u)
+false
+
+### isRegexpNotEmpty
+
+Returns true if the provided RegExp is not empty
+
+> isRegexpNotEmpty(/^a/u)
+true
+> isRegexpNotEmpty(/(?:)/u)
+false
+
+## @datakit/tx — sorters (sorters → sorters)
+
+### sorterKeyDesc
+
+A descending sorter for arrays of objects with a `key` property.
+Use with `_.sortWith` to sort by `key` descending.
+
+> _.sortWith([sorterKeyDesc])([{key: 'b', value: 1}, {key: 'c', value: 2}])
+[{key: 'c', value: 2}, {key: 'b', value: 1}]
+
+### sorterLabelDesc
+
+A descending sorter for arrays of objects with a `label` property.
+Use with `_.sortWith` to sort by `label` descending.
+
+> _.sortWith([sorterLabelDesc])([{label: 'a'}, {label: 'c'}, {label: 'b'}])
+[{label: 'c'}, {label: 'b'}, {label: 'a'}]
+
+### sorterValueDesc
+
+A descending sorter for arrays of objects with a `value` property.
+Use with `_.sortWith` to sort by `value` descending.
+
+> _.sortWith([sorterValueDesc])([{key: 'a', value: 1}, {key: 'b', value: 3}])
+[{key: 'b', value: 3}, {key: 'a', value: 1}]
+
+## @datakit/tx — string-boolean → object-boolean (string-boolean → object-boolean)
+
+### hasKeyWith
+
+Return a function expecting an object and returning `true` if the input
+object has a key satisfying the provided predicate
+
+> const hasA = hasKeyWith(x => x === 'a')
+> hasA({a: 2, b: 4, c: 3})
+true
+> hasA({b: 4, c: 3})
+false
+
+## @datakit/tx — string-boolean → object-object (string-boolean → object-object)
+
+### pickIfKeyWith
+
+Return a function expecting an object and returning a new object with only
+the keys satisfying the provided predicate
+
+> const keysStartWithA = pickIfKeyWith(key => key.startsWith('a'))
+> keysStartWithA({a: 1, aa: 2, b: 0, c: 0})
+{a: 1, aa: 2}
+> keysStartWithA({b: 0, c: 0})
+{}
+
+### skipIfKeyWith
+
+Return a function expecting an object and returning a new object without
+the keys satisfying the provided predicate
+
+> const keysDontStartWithA = skipIfKeyWith(key => key.startsWith('a'))
+> keysDontStartWithA({a: 1, aa: 2, b: 0, c: 0})
+{b: 0, c: 0}
+> keysDontStartWithA({b: 0, c: 0})
+{b: 0, c: 0}
+
+## @datakit/tx — string-string → object-object (string-string → object-object)
+
+### renameKeysWith
+
+Return a function expecting an object and returning a new object with keys
+renamed with the provided function.
+
+> const rename = renameKeysWith(key => `--${key}`)
+> rename({foo: 1, bar: 2})
+{'--foo': 1, '--bar': 2}
+
+## @datakit/tx — string → array (string → array)
+
+### makeLines
+
+Return lines in a string (trimmed, split by newline)
+
+> makeLines('A,B\n1,2\n3,4\n')
+['A,B', '1,2', '3,4']
+
+### makeRows
+
+Return rows in a string excluding the first line (the header).
+Useful for CSVs.
+
+> makeRows('A,B\n1,2\n3,4\n')
+['1,2', '3,4']
+
+### ndjsonToArray
+
+Return an array from a ndjson string
+
+> ndjsonToArray('{"a":1}\n{"b":2}\n\n')
+[{a: 1}, {b: 2}]
+
+### splitByDot
+
+Return an array by splitting by '.'
+
+> splitByDot('a.b.c')
+['a', 'b', 'c']
+
+### splitByEOL
+
+Return an array by splitting by '\n'
+
+> splitByEOL('a\nb\nc')
+['a', 'b', 'c']
+
+### splitBySemiColon
+
+Return an array by splitting by ';'
+
+> splitBySemiColon('A;B;C')
+['A', 'B', 'C']
+
+## @datakit/tx — string → array-array (string → array-array)
+
+### pluckPath
+
+Return a function expecting an array of objects and plucking the provided array
+with the input path
+
+> getABs = pluckPath('a.b')
+> getABs([{a: {b: -1, label: 'foo'}}, {a: {b: 4, label: 'bar'}}])
+[-1, 4]
+> getABs([{a: {label: 'foo'}}, {a: {b: 2}}])
+[undefined, 2]
+
+### pluckUniques
+
+Return a function expecting an array of objects and returning an array of
+unique values for the provided key.
+
+> pluckUniquesByA = pluckUniques('a')
+> pluckUniquesByA([{a: 1, b: 2}, {a: 1, b: 3}, {a: 2, b: 2}])
+[1, 2]
+
+### setIndexAsKey
+
+Return a copy of the provided array of objects assigning each object index
+to a property with the provided key (defaulting to `index`)
+
+> setIndexAsKey()([{a: 2}, {c: 5}])
+[{a: 2, index: 0}, {c: 5, index: 1}]
+> setIndexAsKey('idx')([{a: 2}, {c: 5}])
+[{a: 2, idx: 0}, {c: 5, idx: 1}]
+
+## @datakit/tx — string → array-number (string → array-number)
+
+### arrayMaxBy
+
+Return a function expecting an array of objects and returning the max of values by the provided key.
+The same can be done by `arrayMaxWith(_.getKey(key))` but here we avoid invoking a function for all the items.
+
+> maxByA = arrayMaxBy('a')
+> maxByA([{a: -1, b: -1}, {a: 0, b: 0}])
+0
+> maxByA([{a: 1, b: 1}, {a: 2, b: -2}])
+2
+
+### arrayMinBy
+
+Return a function expecting an array of objects and returning the min of values by the provided key.
+The same can be done by `arrayMinWith(_.getKey(key))` but here we avoid invoking a function for all the items.
+
+> minByA = arrayMinBy('a')
+> minByA([{a: -1, b: -1}, {a: 0, b: 0}])
+-1
+> minByA([{a: 1, b: 1}, {a: 2, b: -2}])
+1
+
+## @datakit/tx — string → array-object (string → array-object)
+
+### countByKey
+
+Return a function expecting an array of objects and counting their values
+for the provided key.
+
+> countA = countByKey('a')
+> countA([{a: 1, b: 2}, {a: 1, b: 4}, {a: 'foo', b: 6}, {a: 'bar', b: 7}])
+{'1': 2, 'foo': 1, 'bar': 1}
+
+## @datakit/tx — string → boolean (string → boolean)
+
+### endsWithNewLine
+
+Return true if the string ends with a newline
+
+> endsWithNewLine('abc')
+false
+> endsWithNewLine('abc\n')
+true
+> endsWithNewLine('abc\r\n')
+true
+
+### isTrimmedNotEmpty
+
+Return true if the trimmed string is not empty
+
+> isTrimmedNotEmpty('  foo  ')
+true
+> isTrimmedNotEmpty('  ')
+false
+
+## @datakit/tx — string → generic (string → generic)
+
+### exportedJsObjToAny
+
+Parse a JS module string (possibly prefixed with `export default `) and
+return the resulting value.
+
+> exportedJsObjToAny('export default {"a":1}')
+{a: 1}
+> exportedJsObjToAny('{"a":1}')
+{a: 1}
+
+## @datakit/tx — string → number (string → number)
+
+### getEndOfLineLength
+
+Return the length of the end of line, if any.
+
+> getEndOfLineLength('hello')
+0
+> getEndOfLineLength('hello\n')
+1
+> getEndOfLineLength('hello\r\n')
+2
+
+## @datakit/tx — string → object-number (string → object-number)
+
+### valuesMaxBy
+
+Return a function expecting an object of objects and returning the max of values by the provided key.
+The same can be done by `valuesMaxWith(_.getKey(key))` but here we avoid invoking a function for all the items.
+
+> maxByK1 = valuesMaxBy('k1')
+> maxByK1({a: {k1: 1, k2: 20}, b: {k1: 3, k2: 2}})
+3
+> maxByK1({a: {k1: 9, k2: 12}, b: {k1: 7, k2: 2}})
+9
+
+### valuesMinBy
+
+Return a function expecting an object of objects and returning the min of values by the provided key.
+The same can be done by `valuesMinWith(_.getKey(key))` but here we avoid invoking a function for all the items.
+
+> minByK1 = valuesMinBy('k1')
+> minByK1({a: {k1: 1, k2: 20}, b: {k1: 3, k2: 2}})
+1
+> minByK1({a: {k1: 9, k2: 12}, b: {k1: 7, k2: 2}})
+7
+
+## @datakit/tx — string → regexp (string → regexp)
+
+### regexOf
+
+Return a regular expression based on the given string
+
+> regexOf('foo')
+/foo/giu
+
+### safeRegexOf
+
+Return a safe regular expression based on the given string,
+with any special characters escaped
+
+> safeRegexOf('foo+bar')
+/foo\+bar/giu
+
+## @datakit/tx — string → string (string → string)
+
+### capitalize
+
+Capitalise the input string
+
+> capitalize('hello')
+'Hello'
+
+### decapitalize
+
+Decapitalise the input string (makes the first letter lowercase)
+
+> decapitalize('Hello')
+'hello'
+> decapitalize('HELLO')
+'hELLO'
+
+### trim
+
+Return a copy of the provided string with whitespace trimmed from both ends.
+
+> trim(' abc \n ')
+'abc'
+
+### trimLastNewline
+
+Trim the last char of the provided string if it's a newline
+
+> trimLastNewline('a\nb\nc')
+'a\nb\nc'
+> trimLastNewline('a\nb\nc\n')
+'a\nb\nc'
+> trimLastNewline('a\nb\nc\n\n')
+'a\nb\nc\n'
+> trimLastNewline('a\nb\nc\r\n')
+'a\nb\nc'
+> trimLastNewline('a\nb\nc\n\r\n')
+'a\nb\nc\n'
+
+## @datakit/tx — string → string-array (string → string-array)
+
+### makeSplitBy
+
+Return a function expecting a string to be split using the provided separator or regex
+
+> splitByDoubleDot = makeSplitBy('..')
+> splitByDoubleDot('aa...a..a.a.aa.....aa..')
+['aa', '.a', 'a.a.aa', '', '.aa', '']
+
+### makeSplitStringBy
+
+Return a function expecting a separator or regex to split the provided string
+
+> splitStringBy = makeSplitStringBy('a.b-c,d:e')
+> splitStringBy(':')
+['a.b-c,d', 'e']
+> splitStringBy('-')
+['a.b', 'c,d:e']
+
+### makeTrimmedSplitBy
+
+Return a function that splits the expected string and trims all the elements
+of the returned array
+
+> trimSplitByDoubleDot = makeTrimmedSplitBy('..')
+> trimSplitByDoubleDot('  aa ..	a\n..a')
+['aa', 'a', 'a']
+
+## @datakit/tx — string → string-boolean (string → string-boolean)
+
+### makeEndsWith
+
+Return a function expecting a base string and checking if it ends with the provided search string.
+
+> endsWithExclamationMark = makeEndsWith('!')
+> endsWithExclamationMark('Hi!')
+true
+> endsWithExclamationMark('Who?')
+false
+
+### makeStartsWith
+
+Return a function expecting a base string and checking if it starts with the provided search string.
+
+> startsWithHash = makeStartsWith('#')
+> startsWithHash('# this is a bash comment')
+true
+> startsWithHash('This is not')
+false
+
+### makeStringEndsWith
+
+Return a function expecting a search string and checking if the provided base string ends with the search string.
+
+> stringEndsWith = makeStringEndsWith('Hi!')
+> stringEndsWith('!')
+true
+> stringEndsWith('?')
+false
+
+### makeStringStartsWith
+
+Return a function expecting a search string and checking if the provided base string starts with the search string.
+
+> stringStartsWith = makeStringStartsWith('Hi!')
+> stringStartsWith('H')
+true
+> stringStartsWith('h')
+false
+
+## @datakit/tx — string → string-regexp (string → string-regexp)
+
+### makeRegexOf
+
+Creates a regular expression using the flags provided
+
+> const regex = makeRegexOf('giu')('foo+bar')
+/foo+bar/giu
+
+### makeSafeRegexOf
+
+Creates an escaped regular expression using the flags provided to prevent
+regexp injections from source strings
+
+> regex = makeSafeRegexOf('giu')('foo+bar')
+/foo\+bar/giu
+
+## @datakit/tx — string → string-string (string → string-string)
+
+### makePostfixed
+
+Return a function that appends the provided string to the input string
+
+> postfixed = makePostfixed('---')
+> postfixed('A')
+'A---'
+> postfixed('B')
+'B---'
+
+### makePrefixed
+
+Return a function that prepends the provided string to the input string
+
+> prefixed = makePrefixed('---')
+> prefixed('A')
+'---A'
+> prefixed('B')
+'---B'
+
+## @datakit/tx — arity-gt-1 (arity-gt-1 → arity-gt-1)
+
+### chunkArray
+
+Split an array into chunks of the specified size.
+
+> chunkArray([1, 2, 3, 4, 5], 2)
+[[1, 2], [3, 4], [5]]
+> chunkArray([1, 2, 3], 3)
+[[1, 2, 3]]
+
+### concat
+
+Return an array by concatenating the provided arrays.
+
+> concat([0, 1, 2], [3, 4], [5, 6])
+[0, 1, 2, 3, 4, 5, 6]
+
+### endsWith
+
+Return true if the input string ends with the test string.
+
+> endsWith('Ping', 'ing')
+true
+> endsWith('Pong', 'ing')
+false
+
+### exportedObjBufferToAny
+
+Decode a TypedArray buffer and parse it as a JS object, stripping any `export default` prefix.
+
+> encoder = new TextEncoder()
+> buffer = encoder.encode('export default {"a": 1}')
+> exportedObjBufferToAny(buffer)
+{a: 1}
+
+### includes
+
+Return true if the provided value is included in the provided array.
+
+> includes([0, 1, 2], 2)
+true
+> includes([0, 1, 2], 3)
+false
+
+### join
+
+Return a string by joining the provided array with the provided separator.
+
+> join([0, 1, 2], '-')
+'0-1-2'
+
+### jsonBufferToAny
+
+Decode a TypedArray buffer and parse it as JSON.
+
+> encoder = new TextEncoder()
+> buffer = encoder.encode('{"a": 1}')
+> jsonBufferToAny(buffer)
+{a: 1}
+
+### makeMergeKeyValue
+
+Return a function that merges the provided value on the provided key of the
+expected object.
+
+> mergeFooValue = makeMergeKeyValue('foo', {b: -2, c: -3})
+> mergeFooValue({foo: {a: 1, b: 2}, bar: {k: 1}})
+{foo: {a: 1, b: -2, c: -3}, bar: {k: 1}}
+> mergeFooValue({bar: {k: 1}})
+{foo: {b: -2, c: -3}, bar: {k: 1}}
+
+### makeOccurrences
+
+Return an object of occurrences of keys in the provided array containing the provided keys
+
+> makeOccurrences([{a: 1}, {a: 6, b: -1}, {a: 2, b: 0, c: 1}], ['a', 'b'])
+{a: 3, b: 2}
+
+### mergeWith
+
+Return a function expecting two objects to merge using the provided merge function.
+
+> mergeWithSubtract = mergeWith(_.subtract)
+> mergeWithSubtract({a: 8, b: 3}, {a: 5, b: 2, c: 7})
+{a: 3, b: 1, c: 7}
+
+### mergeWithAppendTo
+
+Return the merge of two objects appending values of correspondent keys.
+
+> obj1 = {a: [1, 2, 3], b: [4, 5, 6]}
+> obj2 = {a: 4, b: [7]}
+> mergeWithAppendTo(obj1, obj2)
+{a: [1, 2, 3, 4], b: [4, 5, 6, [7]]}
+
+### mergeWithConcat
+
+Return the merge of two objects concatenating values of correspondent keys.
+
+> obj1 = {a: [1, 2, 3], b: [4, 5, 6]}
+> obj2 = {a: [1, 2, 3], b: [4, 5, 6]}
+> mergeWithConcat(obj1, obj2)
+{a: [1, 2, 3, 1, 2, 3], b: [4, 5, 6, 4, 5, 6]}
+
+### mergeWithMerge
+
+Return the merge of two objects merging values of correspondent keys.
+
+> obj1 = {A: {a: 1}, B: {b: 1}}
+> obj2 = {A: {b: 10}, B: {a: 10}}
+> mergeWithMerge(obj1, obj2)
+{A: {a: 1, b: 10}, B: {a: 10, b: 1}}
+
+### mergeWithSum
+
+Return the merge of two objects adding values of correspondent keys.
+
+> mergeWithSum({a: 1, b: 2}, {a: 10, c: 1})
+{a: 11, b: 2, c: 1}
+
+### pluckUniquesFrom
+
+Pluck unique values for the given key from the provided array of objects.
+
+> pluckUniquesFrom([{a: 1, b: 2}, {a: 1, b: 3}, {a: 2, b: 2}], 'a')
+[1, 2]
+
+### sliceString
+
+Return the portion of the provided string between the provided indices
+(first included, second excluded). Indices can be negative.
+
+> sliceString('0123456789', 3)
+'3456789'
+> sliceString('0123456789', 3, 5)
+'34'
+> sliceString('0123456789', 3, -1)
+'345678'
+
+### split
+
+Return an array by splitting the input string with the provided separator.
+
+> split('a-b-c', '-')
+['a', 'b', 'c']
+
+### startsWith
+
+Return true if the input string starts with the test string.
+
+> startsWith('Ping', 'Pin')
+true
+> startsWith('Pong', 'Pin')
+false
+
+### swap
+
+Return a copy of the array with values at the provided indices swapped
+
+> swap([0, 1, 2, 3, 4, 5], 1, 4)
+[0, 4, 2, 3, 1, 5]
+
+### toggleItem
+
+Return a copy of the provided array without all instances of the provided item
+if the item is in the array, or appending the item otherwise.
+
+> toggleItem([0, 1, 2, 0], 0)
+[1, 2]
+> toggleItem([1, 2], 0)
+[1, 2, 0]
+
+## @datakit/types — array
+
+### Pair
+
+```typescript
+export type Pair<T> = [T, T];
+```
+
+## @datakit/types — function
+
+### Fn
+
+```typescript
+export type Fn<A, B> = (a: A) => B;
+```
+
+A generic unary function.
+Useful for general-purpose transformations.
+
+### Predicate
+
+```typescript
+export type Predicate<A> = (a: A) => boolean;
+```
+
+A predicate function.
+Useful for filtering and conditional logic.
+
+### Action
+
+```typescript
+export type Action<A> = (a: A) => void;
+```
+
+Useful for event handlers and other side-effectful functions.
+
+### ActionKL
+
+```typescript
+export type ActionKL = (key: string, label?: string) => void;
+```
+
+Useful for event handlers that need to know the key and label of the item being interacted with.
+
+### Effect
+
+```typescript
+export type Effect = () => void;
+```
+
+Useful for effects and other side-effectful functions that don't need any input.
+
+## @datakit/types — object
+
+### Obj
+
+```typescript
+export type Obj<T> = Record<string, T>;
+```
+
+A type representing an object with string keys and values of type T.
+
+### ObjK
+
+```typescript
+export type ObjK<Rest extends Obj<any> = Obj<unknown>> = {
+	key: string;
+} & Partial<Rest>;
+```
+
+In this library we have a number of functions expecting objects with specific
+keys `key`, `label`, `value`/`values` and their combinations and optional additional
+properties.
+
+### ObjL
+
+```typescript
+export type ObjL<Rest extends Obj<any> = Obj<unknown>> = {
+	label: string;
+} & Partial<Rest>;
+```
+
+An object with a `label` property and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjV
+
+```typescript
+export type ObjV<VType, Rest extends Obj<any> = Obj<unknown>> = {
+	value: VType;
+} & Partial<Rest>;
+```
+
+An object with a `value` property of type VType and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjVs
+
+```typescript
+export type ObjVs<VType, Rest extends Obj<any> = Obj<unknown>> = {
+	values: VType[];
+} & Partial<Rest>;
+```
+
+An object with a `values` property of type VType[] and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### FnMap
+
+```typescript
+export type FnMap = Obj<Fn<any, unknown>>;
+```
+
+A map of functions — an object whose values are functions accepting any
+single input and returning an opaque result.
+Used in higher-order functions like `applyFnMap`, `transformValues`, etc.
+
+### ObjKL
+
+```typescript
+export interface ObjKL extends ObjK, ObjL {}
+```
+
+An object with `key`, `label` properties and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjKV
+
+```typescript
+export interface ObjKV<VType> extends ObjK, ObjV<VType> {}
+```
+
+An object with `key`, `value` properties and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjLV
+
+```typescript
+export interface ObjLV<VType> extends ObjL, ObjV<VType> {}
+```
+
+An object with `label`, `value` properties and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjKLV
+
+```typescript
+export interface ObjKLV<VType> extends ObjK, ObjL, ObjV<VType> {}
+```
+
+An object with `key`, `label`, `value` properties and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjKVs
+
+```typescript
+export interface ObjKVs<VType> extends ObjK, ObjVs<VType> {}
+```
+
+An object with `key`, `values` properties and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjLVs
+
+```typescript
+export interface ObjLVs<VType> extends ObjL, ObjVs<VType> {}
+```
+
+An object with `label`, `values` properties and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+### ObjKLVs
+
+```typescript
+export interface ObjKLVs<VType> extends ObjK, ObjL, ObjVs<VType> {}
+```
+
+An object with `key`, `label`, `values` properties and optional additional properties.
+Useful for representing items in a list or options in a dropdown.
+
+## @datakit/types — shared
+
+### HasLength
+
+```typescript
+export type HasLength = {length: number};
+```
+
+Types with a length property.
+
+### HasSize
+
+```typescript
+export type HasSize = {size: number};
+```
+
+Types with a size property

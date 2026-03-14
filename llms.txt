@@ -1,0 +1,23 @@
+# @datakit
+
+> A collection of TypeScript utilities for functional data transformation.
+> Two documented packages: `@datakit/tx` (237 functions) and `@datakit/types` (21 types).
+
+`@datakit/tx` organises its functions by signature category (e.g. `string → string`,
+`array → object`). Each function has a JSDoc description, type signature, and usage example.
+
+## Docs
+
+- [API reference — @datakit/tx](https://mindrones.github.io/datakit/tx/): Full list of transformation functions grouped by input/output type
+- [Type definitions — @datakit/types](https://mindrones.github.io/datakit/types/): Shared TypeScript types used across @datakit packages
+
+## Data
+
+- [tx.json](https://mindrones.github.io/datakit/data/tx.json): Machine-readable API data for @datakit/tx — function names, signatures, JSDoc descriptions, and examples
+- [types.json](https://mindrones.github.io/datakit/data/types.json): Machine-readable type definitions for @datakit/types — TypeScript source, descriptions, file groupings
+
+## Optional
+
+- [npm — @datakit/tx](https://www.npmjs.com/package/@datakit/tx)
+- [npm — @datakit/types](https://www.npmjs.com/package/@datakit/types)
+- [GitHub repository](https://github.com/mindrones/datakit)
