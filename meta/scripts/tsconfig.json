@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"tsBuildInfoFile": "_/tsconfig.tsbuildinfo"
+	},
+	"exclude": [
+		"node_modules"
+	],
+	"extends": "../../tsconfig.json",
+	"include": [
+		"**/*.ts"
+	]
+}

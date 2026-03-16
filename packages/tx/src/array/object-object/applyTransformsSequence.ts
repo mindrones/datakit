@@ -22,7 +22,7 @@ export const applyTransformsSequence =
 		obj =>
 			_.reduce(
 				pathFnPairs,
-			(acc: Obj<unknown>, [path, fn]: [string, Fn<any, any>]) =>
-				_.updatePathIn(acc, path, fn) as Obj<unknown>,
-			{...obj}
+				(acc: Obj<unknown>, [path, fn]: [string, Fn<any, any>]) =>
+					_.updatePathIn(acc, path, fn) as Obj<unknown>,
+				{...obj}
 			);

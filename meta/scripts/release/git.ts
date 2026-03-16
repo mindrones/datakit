@@ -61,8 +61,8 @@ export function resolveTag(today: string): string {
 		// exists locally but not on remote — warn
 		console.error(
 			`\n⚠ tag ${today} exists locally but not on remote — previous run may` +
-			` have failed at push.\n` +
-			`Run: git push origin HEAD --follow-tags   to retry, or\n` +
+			' have failed at push.\n' +
+			'Run: git push origin HEAD --follow-tags   to retry, or\n' +
 			`     git tag -d ${today}                   to discard and start fresh.\n`
 		);
 		process.exit(1);

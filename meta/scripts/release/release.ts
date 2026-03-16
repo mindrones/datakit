@@ -27,7 +27,7 @@ const program = new Command()
 	.description('datakit release script')
 	.option('--dry', 'simulate the full run (no writes, no git, no npm)')
 	.option('--packages <list>', 'comma-separated packages to release: tx, types, eslint')
-	.option('--bump <type>', 'bump type for all selected packages', (value) => {
+	.option('--bump <type>', 'bump type for all selected packages', value => {
 		if (!['patch', 'minor'].includes(value)) {
 			program.error('--bump must be "patch" or "minor". Major releases require interactive mode.');
 		}
@@ -69,8 +69,8 @@ function checkCancel(value: unknown): void {
 async function main(): Promise<void> {
 	intro(
 		isDry  ? 'datakit release — DRY RUN (no files written, no git, no npm)' :
-		isYes  ? 'datakit release — AUTO (non-interactive)' :
-		         'datakit release'
+			isYes  ? 'datakit release — AUTO (non-interactive)' :
+				'datakit release'
 	);
 
 	/* Steps 0 — Pre-flight checks */

@@ -21,7 +21,7 @@ import type {Fn, FnMap, Obj} from '@datakit/types';
  */
 export const transformValues =
 	(fnMap: FnMap): Fn<Obj<any>, Obj<any>> =>
-	_.mapValuesWith(
-		(value: unknown, key: string) =>
-			key in fnMap ? _.application(fnMap[key], [value]) : value
-	);
+		_.mapValuesWith(
+			(value: unknown, key: string) =>
+				key in fnMap ? _.application(fnMap[key], [value]) : value
+		);

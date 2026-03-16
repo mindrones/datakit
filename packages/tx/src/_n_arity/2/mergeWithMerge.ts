@@ -16,5 +16,5 @@ import type {Obj} from '@datakit/types';
  * @since 0.1.0
  */
 export const mergeWithMerge:
-	(base: Obj<Obj<unknown>>, obj: Obj<Obj<unknown>>) => Obj<Obj<unknown>> =
+(base: Obj<Obj<unknown>>, obj: Obj<Obj<unknown>>) => Obj<Obj<unknown>> =
 	mergeWith(_.merge);

@@ -15,7 +15,7 @@ describe('mergeWith', () => {
 
 		expect(merged).toEqual(expected);
 	});
-	 it('should not call the merge function for keys exclusive to one object — they pass through unchanged', () => {
+	it('should not call the merge function for keys exclusive to one object — they pass through unchanged', () => {
 		const calls: [number, number][] = [];
 		const trackingFn = (a: number, b: number) => { calls.push([a, b]); return a + b; };
 

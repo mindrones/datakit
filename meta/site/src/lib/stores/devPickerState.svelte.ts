@@ -172,7 +172,7 @@ export const themeState = {
 		_themeInitialized = true;
 
 		/* When ThemeToggle fires, re-apply the active pair's colours with the new dark value. */
-		registerOnDarkChange((dark) => {
+		registerOnDarkChange(dark => {
 			applyTheme(themeState.activePair, dark);
 			localStorage.setItem(THEME_KEY_DARK, String(dark));
 		});

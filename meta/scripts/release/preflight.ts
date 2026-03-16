@@ -10,7 +10,7 @@ export function checkBranch(isDry = false): string {
 	if (!isDry && currentBranch !== 'dev') {
 		console.error(
 			`\nYou are on branch "${currentBranch}". Releases must happen on the "dev" branch.\n` +
-			`Merge your work to dev first, then re-run.\n`
+			'Merge your work to dev first, then re-run.\n'
 		);
 		process.exit(1);
 	}
