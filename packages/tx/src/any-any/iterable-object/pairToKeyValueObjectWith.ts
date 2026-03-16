@@ -44,11 +44,11 @@ import type {Fn} from '@datakit/types';
  */
 export const pairToKeyValueObjectWith =
 	<V, R>(fn: Fn<V, R>) =>
-	(pair: ArrayLike<unknown>): {key: unknown; value: R | undefined} => {
-		const key = pair[0];
-		const item = pair[1] as V | undefined;
-		return {
-			key,
-			value: item != null ? fn(item) : undefined,
+		(pair: ArrayLike<unknown>): {key: unknown; value: R | undefined} => {
+			const key = pair[0];
+			const item = pair[1] as V | undefined;
+			return {
+				key,
+				value: item != null ? fn(item) : undefined,
+			};
 		};
-	};

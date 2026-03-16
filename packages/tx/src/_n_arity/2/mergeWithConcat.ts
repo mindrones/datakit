@@ -15,5 +15,5 @@ import {mergeWith} from '../mergeWith';
  * @since 0.1.0
  */
 export const mergeWithConcat:
-	(base: Obj<unknown[]>, obj: Obj<unknown[]>) => Obj<unknown[]> =
+(base: Obj<unknown[]>, obj: Obj<unknown[]>) => Obj<unknown[]> =
 	mergeWith(concat);

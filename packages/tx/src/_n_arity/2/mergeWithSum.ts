@@ -14,5 +14,5 @@ import {mergeWith} from '../mergeWith';
  * @since 0.1.0
  */
 export const mergeWithSum:
-	(base: Obj<number>, obj: Obj<number>) => Obj<number> =
+(base: Obj<number>, obj: Obj<number>) => Obj<number> =
 	mergeWith(_.sum);

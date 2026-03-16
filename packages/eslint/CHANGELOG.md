@@ -6,6 +6,8 @@
 
 - Support TypeScript
 
+- Disabled some TypeScript and JsDoc rules
+
 ## v0.1.0
 
 Exports `jsConfig`, `styleConfig`, `jsdocConfig`

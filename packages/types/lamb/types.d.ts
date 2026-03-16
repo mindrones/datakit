@@ -47,11 +47,14 @@ declare module 'lamb' {
 	> = (value: S[K], key: K, source: S) => R;
 
 	type Ord =
+		// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
 		| Boolean
 		| boolean
 		| Date
+		// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
 		| Number
 		| number
+		// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
 		| String
 		| string;
 
@@ -76,5 +79,6 @@ declare module 'lamb' {
 
 	type UnaryFunction<A = any, B = any> = (v: A) => B;
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 	type __ = {};
 }

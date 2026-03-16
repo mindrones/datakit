@@ -18,7 +18,7 @@ import {areEqualWith} from '../array-boolean';
  * @since 0.1.0
  */
 export const areValuesEqualWith = <V>(fn: Fn<V, unknown>) =>
-		_.pipe<Obj<V>, boolean>([
-			_.values,
-			areEqualWith(fn)
-		]);
+	_.pipe<Obj<V>, boolean>([
+		_.values,
+		areEqualWith(fn)
+	]);

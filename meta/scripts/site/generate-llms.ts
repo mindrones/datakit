@@ -135,7 +135,7 @@ writeFileSync(
 writeFileSync(path.join(staticDir, 'llms.txt'), llmsTxt);
 writeFileSync(path.join(staticDir, 'llms-full.txt'), llmsFullTxt);
 
-console.log(`✓ static/data/tx.json`);
-console.log(`✓ static/data/types.json`);
+console.log('✓ static/data/tx.json');
+console.log('✓ static/data/types.json');
 console.log(`✓ static/llms.txt  (${fnCount} functions, ${typeCount} types)`);
-console.log(`✓ static/llms-full.txt`);
+console.log('✓ static/llms-full.txt');

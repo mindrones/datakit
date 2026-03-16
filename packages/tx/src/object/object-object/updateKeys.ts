@@ -18,14 +18,14 @@ import type {Fn, Obj} from '@datakit/types';
  */
 export const updateKeys =
 	<V>({keys, updater}: {keys: string[]; updater: Fn<V, V>}) =>
-	(obj: Obj<V>): Obj<V> =>
-		keys.reduce(
-			(acc, key) => {
-				if (key in acc) {
-					acc[key] = updater(acc[key]);
-				}
+		(obj: Obj<V>): Obj<V> =>
+			keys.reduce(
+				(acc, key) => {
+					if (key in acc) {
+						acc[key] = updater(acc[key]);
+					}
 
-				return acc;
-			},
-			{...obj}
-		);
+					return acc;
+				},
+				{...obj}
+			);

@@ -44,6 +44,7 @@ declare module 'lamb' {
 
 	function identity<T>(value: T): T;
 
+	// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
 	function invokeOn<TG extends Object>(
 		target: TG
 	): <M extends string>(

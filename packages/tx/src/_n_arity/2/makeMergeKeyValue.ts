@@ -17,9 +17,9 @@ import type {Fn, Obj} from '@datakit/types';
  */
 export const makeMergeKeyValue =
 	<V extends Obj<unknown>>(key: string, value: V): Fn<Obj<unknown>, Obj<unknown>> =>
-	object =>
-		_.merge(object, {
-			[key]: object[key]
-				? _.merge(object[key] as Obj<unknown>, value)
-				: value,
-		});
+		object =>
+			_.merge(object, {
+				[key]: object[key]
+					? _.merge(object[key] as Obj<unknown>, value)
+					: value,
+			});

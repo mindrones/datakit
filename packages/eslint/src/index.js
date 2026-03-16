@@ -2,7 +2,7 @@ import pluginJs from '@eslint/js';
 import pluginJsStyle from '@stylistic/eslint-plugin';
 import pluginJsDoc from 'eslint-plugin-jsdoc';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import tsEslint from 'typescript-eslint';
 
 export const jsConfig = [
 	{
@@ -21,7 +21,24 @@ export const jsConfig = [
 	pluginJs.configs.recommended, // {rules}
 ];
 
-export const tsConfig = tseslint.configs.recommended;
+export const tsConfig = [
+	...tsEslint.configs.recommended,
+	{
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unused-vars': ['error', {
+				argsIgnorePattern: '^_',
+				varsIgnorePattern: '^_',
+			}],
+		}
+	},
+	{
+		files: ['**/*.d.ts'],
+		rules: {
+			'@typescript-eslint/triple-slash-reference': 'off',
+		},
+	},
+];
 
 export const styleConfig = [
 	{
@@ -43,6 +60,7 @@ export const jsdocConfig = [
 	pluginJsDoc.configs['flat/recommended'], // {plugins, rules}
 	{
 		rules: {
+			'jsdoc/require-jsdoc': 'off',
 			'jsdoc/require-param-description': 'off',
 			'jsdoc/require-returns-description': 'off',
 			'jsdoc/tag-lines': 'off',

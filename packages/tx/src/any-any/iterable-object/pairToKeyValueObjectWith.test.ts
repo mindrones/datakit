@@ -36,8 +36,8 @@ describe('pairToKeyValueObjectWith', () => {
 		const objectifyGetA = pairToKeyValueObjectWith(
 			(x: {a?: number}) => x.a
 		);
-		function func(..._args: unknown[]) {
-			return objectifyGetA(arguments);
+		function func(...args: unknown[]) {
+			return objectifyGetA(args);
 		}
 
 		expect(func()).toEqual({key: undefined, value: undefined});

@@ -1,6 +1,6 @@
 import * as _ from 'lamb';
 
-import type {Fn, Obj} from '@datakit/types';
+import type {Obj} from '@datakit/types';
 
 /**
  * Return a function expecting an array of objects and returning an array of
