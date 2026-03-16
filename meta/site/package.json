@@ -2,26 +2,26 @@
 	"devDependencies": {
 		"@datakit/scripts": "workspace:",
 		"@internationalized/date": "^3.12.0",
-		"@lucide/svelte": "^0.561.0",
+		"@lucide/svelte": "^0.577.0",
 		"@playwright/browser-chromium": "^1.58.2",
 		"@playwright/cli": "^0.1.1",
 		"@playwright/test": "^1.58.2",
 		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.54.0",
-		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@sveltejs/kit": "^2.55.0",
+		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/vite": "^4.2.1",
 		"bits-ui": "^2.16.3",
 		"clsx": "^2.1.1",
 		"paneforge": "^1.0.2",
 		"shiki": "^4.0.2",
-		"svelte": "^5.53.10",
+		"svelte": "^5.53.12",
 		"tailwind-merge": "^3.5.0",
 		"tailwind-variants": "^3.2.2",
 		"tailwindcss": "^4.2.1",
 		"tw-animate-css": "^1.4.0",
 		"typescript": "catalog:",
-		"vite": "^7.3.1"
+		"vite": "^8.0.0"
 	},
 	"name": "@datakit/site",
 	"private": true,
@@ -40,6 +40,5 @@
 		"test:e2e:codegen": "playwright-cli open --browser=chromium http://localhost:5200",
 		"test:e2e:ui": "playwright test --ui"
 	},
-	"type": "module",
-	"version": "0.0.1"
+	"type": "module"
 }

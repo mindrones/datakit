@@ -2,11 +2,11 @@
 
 ## next
 
-- Upgrade dependencies to latest major versions; migrate from `@stylistic/eslint-plugin-js` to `@stylistic/eslint-plugin` (rule names change from `@stylistic/js/*` to `@stylistic/*`)
-
 - Support TypeScript
-
 - Disabled some TypeScript and JsDoc rules
+- Dependencies:
+	- upgraded to latest major versions
+	- migrated from `@stylistic/eslint-plugin-js` to `@stylistic/eslint-plugin` (rule names change from `@stylistic/js/*` to `@stylistic/*`)
 
 ## v0.1.0
 

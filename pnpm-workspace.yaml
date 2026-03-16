@@ -3,14 +3,14 @@ packages:
   - meta/*
 
 catalog:
-  '@eslint/compat': ^1.2.7
-  eslint: ^10.0.2
+  '@eslint/compat': ^2.0.3
+  eslint: ^10.0.3
   just-compare: 2.3.0
   lamb: 0.61.1
   ts-morph: ^27.0.2
   typescript: ^5.8.2
-  typescript-eslint: ^8.0.0
-  vitest: ^4.0.18
+  typescript-eslint: ^8.57.1
+  vitest: ^4.1.0
 
 onlyBuiltDependencies:
   - '@playwright/browser-chromium'
