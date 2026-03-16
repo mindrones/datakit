@@ -1,7 +1,9 @@
 _/
 .DS_Store
 .playwright-cli
+.svelte-kit/
 *.tsbuildinfo
 brave-debug-profile
+build/
 coverage/
 node_modules/

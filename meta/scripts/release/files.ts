@@ -1,0 +1,40 @@
+import {readFileSync, writeFileSync} from 'fs';
+
+import {changelogPath, pkgJsonPath, releasemdPath} from './paths';
+import type {PkgRelease} from './types';
+import {readJson, writeJson} from './utils';
+
+export function writeReleaseFiles(releases: PkgRelease[], today: string): void {
+	const dateLabel =
+		today.slice(0, 4) + '-' + today.slice(4, 6) + '-' + today.slice(6, 8);
+
+	for (const release of releases) {
+		/* Bump version in package.json */
+		const pkgPath = pkgJsonPath(release.pkgName);
+		const pkgData = readJson(pkgPath);
+		pkgData.version = release.newVersion;
+		writeJson(pkgPath, pkgData);
+
+		/* Rename ## next in CHANGELOG.md */
+		const clPath = changelogPath(release.pkgName);
+		try {
+			const content = readFileSync(clPath, 'utf-8');
+			const updated = content.replace(
+				/^## next\s*$/m,
+				`## v${release.newVersion} — ${dateLabel}`
+			);
+			writeFileSync(clPath, updated, 'utf-8');
+		} catch {
+			// no changelog or no ## next — skip silently
+		}
+	}
+
+	/* Update root RELEASE.md */
+	const releaseMd = releasemdPath();
+	const existingRelease = readFileSync(releaseMd, 'utf-8');
+	const releaseEntries = releases
+		.map(r => `- @${r.displayName.replace('@', '')}@${r.newVersion}`)
+		.join('\n');
+	const newReleaseMd = `## ${today}\n${releaseEntries}\n\n` + existingRelease;
+	writeFileSync(releaseMd, newReleaseMd, 'utf-8');
+}

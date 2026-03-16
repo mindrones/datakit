@@ -1,5 +1,10 @@
 {
 	"devDependencies": {
+		"@clack/prompts": "^0.9.1",
+		"@types/node": "^25.3.2",
+		"@types/semver": "^7.5.8",
+		"commander": "^14.0.3",
+		"semver": "^7.7.1",
 		"ts-morph": "catalog:",
 		"tsx": "^4.21.0",
 		"typescript": "catalog:",
@@ -16,6 +21,8 @@
 	"scripts": {
 		"extractDocs": "tsx site/extract-docs.ts",
 		"generateLlms": "tsx site/generate-llms.ts",
+		"release": "tsx release/release.ts",
+		"release:dry": "tsx release/release.ts --dry",
 		"test": "vitest run"
 	},
 	"type": "module",
