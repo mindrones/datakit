@@ -6,8 +6,8 @@
 	"devDependencies": {
 		"@datakit/eslint": "workspace:",
 		"@eslint/compat": "catalog:",
-		"@types/node": "^25.3.2",
 		"@vitest/coverage-v8": "^4.0.18",
+		"eslint": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
 	},
@@ -21,6 +21,8 @@
 		"lint": "eslint",
 		"publish": "pnpm publish -r",
 		"publishDry": "pnpm publish -r --dry-run",
+		"release": "pnpm --filter @datakit/scripts run release",
+		"release:dry": "pnpm --filter @datakit/scripts run release:dry",
 		"test": "vitest",
 		"typecheck": "tsc -b packages/*/tsconfig.json",
 		"typecheck:watch": "tsc -b packages/*/tsconfig.json --watch"

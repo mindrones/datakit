@@ -1,0 +1,60 @@
+flowchart TD
+    A([pnpm release]) --> P
+    P{"-h / --help?"} -->|yes| ZH([print help + exit 0])
+    P -->|no| B
+
+    subgraph pre["Step 0 — Pre-flight (silent)"]
+        B[npm auth · clean tree\non dev branch · no orphan tag]
+    end
+    B -->|fail| Z1([exit])
+    B -->|ok| C
+
+    subgraph gates["Step 1 — Quality gates + annotation check"]
+        C[Phase A\ntest · typecheck · lint · dry-run publish]
+        C -->|fail| Z2([exit + show error])
+        C -->|pass| C2["Phase B\n@since check\n--yes: exit if any missing\ninteractive: rescan loop"]
+        C2 -->|rescan loop| C2
+    end
+    C2 -->|skip or all clear| D
+
+    subgraph nav["Steps 2–4 — Interactive loop (back navigation possible)"]
+        D["Step 2 — Select packages\n(--packages skips prompt)"] -->|none| Z3([exit])
+        D --> E["Step 3 — Bump type per package\n(--bump skips prompt)"]
+        E -->|back| D
+        E --> F["Step 4 — Preview summary"]
+        F -->|back| E
+        F -->|exit| Z4([exit — no disk changes])
+        F -->|"--dry"| ZD([print preview + exit 0])
+    end
+
+    F -->|"confirm / --yes"| G
+
+    subgraph write["Step 5 — Write to disk"]
+        G[bump package.json\nrename ## next → ## vX.Y.Z\nupdate RELEASE.md]
+    end
+
+    G --> H
+
+    subgraph vcs["Step 6 — Commit · Tag · Push"]
+        H[git commit\ngit tag -a YYYYMMDD -m pkgs\ngit push --follow-tags]
+    end
+    H -->|push fails| Z5([exit + rebase hint\nlocal commit+tag safe])
+
+    H -->|ok| I
+
+    subgraph npm["Step 7 — Publish"]
+        I[pnpm publish --filter pkg1 --filter pkg2]
+    end
+    I -->|fail| Z6([exit + manual publish hint])
+
+    I --> J
+
+    subgraph deploy["Step 8 — Deploy site (optional)"]
+        J{"Deploy now?\n(--no-deploy skips)"}
+    end
+    J -->|"no / --no-deploy"| K
+    J -->|yes| L["build + deploy\nextract-docs captures HEAD SHA\n= tagged commit"]
+    L -->|fail| Z7([exit + manual deploy hint])
+    L --> K
+
+    K([✔ Released!])
