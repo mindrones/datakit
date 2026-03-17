@@ -11,5 +11,7 @@ import {getValue} from '../../object/generic/getValue';
  * 6
  * > sumValue([])
  * 0
+ *
+ * @since 0.3.0
  */
 export const sumValue: Fn<ObjV<number>[], number> = arraySumWith(getValue);

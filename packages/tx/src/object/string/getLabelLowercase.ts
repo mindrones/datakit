@@ -13,6 +13,8 @@ import {getLabel} from './getLabel';
  * 'foo'
  * > getLabelLowercase({value: 42})
  * ''
+ *
+ * @since 0.3.0
  */
 export const getLabelLowercase = _.pipe<Partial<ObjL>, string>([
 	getLabel,

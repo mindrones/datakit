@@ -11,5 +11,7 @@ import {getLabel} from '../object/string/getLabel';
  * @example
  * > _.sortWith([sorterLabelDesc])([{label: 'a'}, {label: 'c'}, {label: 'b'}])
  * [{label: 'c'}, {label: 'b'}, {label: 'a'}]
+ *
+ * @since 0.3.0
  */
 export const sorterLabelDesc: _.Sorter<ObjL, true> = _.sorterDesc(getLabel);

@@ -8,6 +8,8 @@ import {makeKeyed} from '../../generic/array-object/makeKeyed';
  * @example
  * > makeKeyedEmptyArray(['a', 'b'])
  * {a: [], b: []}
+ *
+ * @since 0.3.0
  */
 export const makeKeyedEmptyArray: Fn<Array<string | number>, Obj<any[]>> =
 	makeKeyed([]);

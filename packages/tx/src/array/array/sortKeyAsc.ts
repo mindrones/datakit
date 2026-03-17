@@ -10,5 +10,7 @@ import {getKey} from '../../object/generic/getKey';
  * @example
  * > sortKeyAsc([{key: 'b', value: 1}, {key: 'a', value: 2}])
  * [{key: 'a', value: 2}, {key: 'b', value: 1}]
+ *
+ * @since 0.3.0
  */
 export const sortKeyAsc = _.sortWith<ObjK>([getKey]);

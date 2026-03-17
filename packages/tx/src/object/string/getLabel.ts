@@ -6,5 +6,7 @@ import * as _ from 'lamb';
  * @example
  * > getLabel({label: 'foo', value: 42})
  * 'foo'
+ *
+ * @since 0.3.0
  */
 export const getLabel = _.getKey('label');

@@ -13,6 +13,8 @@ import {factorial} from '../../number/number/factorial';
  * 6
  * > permutationsCount([5, 2])
  * 10
+ *
+ * @since 0.3.0
  */
 export const permutationsCount: Fn<Pair<number>, number> =
 	([itemCount, groupSize]) =>

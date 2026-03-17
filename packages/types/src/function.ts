@@ -1,6 +1,8 @@
 /**
  * A generic unary function.
  * Useful for general-purpose transformations.
+ *
+ * @since 0.1.0
  */
 export type Fn<A, B> = (a: A) => B;
 
@@ -12,6 +14,8 @@ export type Fn<A, B> = (a: A) => B;
  * > const isEven: Predicate<number> = n => n % 2 === 0;
  * > [1, 2, 3, 4].filter(isEven);
  * [2, 4]
+ *
+ * @since 0.1.0
  */
 export type Predicate<A> = (a: A) => boolean;
 
@@ -22,6 +26,8 @@ export type Predicate<A> = (a: A) => boolean;
  * > const handleClick: Action<string> = key => {
  * >	console.log(`Clicked on ${key}`);
  * > };
+ *
+ * @since 0.1.0
  */
 export type Action<A> = (a: A) => void;
 
@@ -32,6 +38,8 @@ export type Action<A> = (a: A) => void;
  * > const handleClick: ActionKL = (key, label) => {
  * >	console.log(`Clicked on ${label} (key: ${key})`);
  * > };
+ *
+ * @since 0.1.0
  */
 export type ActionKL = (key: string, label?: string) => void;
 
@@ -42,5 +50,7 @@ export type ActionKL = (key: string, label?: string) => void;
  * > const handleReset: Effect = () => {
  * >	console.log('Resetting...');
  * > };
+ *
+ * @since 0.1.0
  */
 export type Effect = () => void;

@@ -1,6 +1,6 @@
 # @datakit/types
 
-## next
+## v0.2.0
 
 - open `ObjK`/`ObjL`/`ObjV`/`ObjVs` to extra properties:
 Change the default Rest parameter from `{}` to `Obj<unknown>` in ObjK,

@@ -6,6 +6,8 @@
  * [[1, 2], [3, 4], [5]]
  * > chunkArray([1, 2, 3], 3)
  * [[1, 2, 3]]
+ *
+ * @since 0.3.0
  */
 export const chunkArray = (array: any[], size: number): any[][] => {
 	const chunks = [];

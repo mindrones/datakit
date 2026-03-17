@@ -13,5 +13,7 @@ import type {Fn} from '@datakit/types';
  * 's'
  * > plural(-1)
  * 's'
+ *
+ * @since 0.3.0
  */
 export const plural: Fn<number, string> = n => (n === 1 ? '' : 's');

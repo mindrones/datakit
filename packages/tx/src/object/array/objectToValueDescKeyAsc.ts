@@ -11,6 +11,8 @@ import {objectToKeyValueArray} from './objectToKeyValueArray';
  * @example
  * > objectToValueDescKeyAsc({b: 1, a: 3, c: 1})
  * [{key: 'a', value: 3}, {key: 'b', value: 1}, {key: 'c', value: 1}]
+ *
+ * @since 0.3.0
  */
 export const objectToValueDescKeyAsc = _.pipe<Obj<any>, ObjKV<any>[]>([
 	objectToKeyValueArray,

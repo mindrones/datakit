@@ -8,6 +8,8 @@ import {sorterKeyDesc} from '../../_sorters';
 /**
  * Return a copy of the provided array with items
  * sorted by `value` (ascending) then by `key` (descending)
+ *
+ * @since 0.3.0
  */
 export const sortValueAscKeyDesc = _.sortWith<ObjKV<unknown>>([
 	getValue,

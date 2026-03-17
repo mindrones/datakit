@@ -11,6 +11,8 @@ import {sorterValueDesc} from '../../_sorters';
  * @example
  * > sortValueDescLabelLowercaseAsc([{key: 'a', label: 'Z', value: 1}, {key: 'b', label: 'a', value: 1}])
  * [{key: 'b', label: 'a', value: 1}, {key: 'a', label: 'Z', value: 1}]
+ *
+ * @since 0.3.0
  */
 export const sortValueDescLabelLowercaseAsc = _.sortWith<ObjLV<unknown>>([
 	sorterValueDesc,

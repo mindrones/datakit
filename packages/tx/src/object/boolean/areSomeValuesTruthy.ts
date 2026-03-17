@@ -12,6 +12,8 @@ import {areSomeTruthy} from '../../array/boolean/areSomeTruthy';
  * true
  * > areSomeValuesTruthy({a: 0, b: false, c: null})
  * false
+ *
+ * @since 0.3.0
  */
 export const areSomeValuesTruthy = _.pipe<Obj<any>, boolean>([
 	_.values,

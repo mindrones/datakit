@@ -10,6 +10,8 @@ import {sorterLabelDesc, sorterValueDesc} from '../../_sorters';
  * @example
  * > sortValueDescLabelDesc([{key: 'a', label: 'a', value: 1}, {key: 'b', label: 'z', value: 1}])
  * [{key: 'b', label: 'z', value: 1}, {key: 'a', label: 'a', value: 1}]
+ *
+ * @since 0.3.0
  */
 export const sortValueDescLabelDesc = _.sortWith<ObjLV<unknown>>([
 	sorterValueDesc,

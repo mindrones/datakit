@@ -8,6 +8,8 @@ import type {Obj} from '@datakit/types';
  * @example
  * > countValues({a: 'x', b: 'y', c: 'x', d: 'z', e: 'y'})
  * {x: 2, y: 2, z: 1}
+ *
+ * @since 0.3.0
  */
 export const countValues = _.pipe<Obj<any>, Obj<number>>([
 	_.values,

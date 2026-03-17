@@ -10,5 +10,7 @@ import {sorterValueDesc} from '../../_sorters';
  * @example
  * > sortValueDesc([{key: 'a', value: 1}, {key: 'b', value: 3}, {key: 'c', value: 2}])
  * [{key: 'b', value: 3}, {key: 'c', value: 2}, {key: 'a', value: 1}]
+ *
+ * @since 0.3.0
  */
 export const sortValueDesc = _.sortWith<ObjV<unknown>>([sorterValueDesc]);

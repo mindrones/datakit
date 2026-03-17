@@ -9,6 +9,8 @@ import type {Fn} from './function';
  *   { id: '1', name: 'Alice' },
  *   { id: '2', name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export type Obj<T> = Record<string, T>;
 
@@ -30,6 +32,8 @@ export type Obj<T> = Record<string, T>;
  *   { key: '1', name: 'Alice' },
  *   { key: '2', name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export type ObjK<Rest extends Obj<any> = Obj<unknown>> = {
 	key: string;
@@ -45,6 +49,8 @@ export type ObjK<Rest extends Obj<any> = Obj<unknown>> = {
  *   { label: 'Alice', id: '1' },
  *   { label: 'Bob', id: '2' },
  * ];
+ *
+ * @since 0.1.0
  */
 export type ObjL<Rest extends Obj<any> = Obj<unknown>> = {
 	label: string;
@@ -60,6 +66,8 @@ export type ObjL<Rest extends Obj<any> = Obj<unknown>> = {
  *   { value: 1, name: 'Alice' },
  *   { value: 2, name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export type ObjV<VType, Rest extends Obj<any> = Obj<unknown>> = {
 	value: VType;
@@ -75,6 +83,8 @@ export type ObjV<VType, Rest extends Obj<any> = Obj<unknown>> = {
  *   { key: '1', label: 'Alice', age: 25 },
  *   { key: '2', label: 'Bob', age: 30 },
  * ];
+ *
+ * @since 0.1.0
  */
 export interface ObjKL extends ObjK, ObjL {};
 
@@ -88,6 +98,8 @@ export interface ObjKL extends ObjK, ObjL {};
  *   { key: '1', value: 25, name: 'Alice' },
  *   { key: '2', value: 30, name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export interface ObjKV<VType> extends ObjK, ObjV<VType> {};
 
@@ -101,6 +113,8 @@ export interface ObjKV<VType> extends ObjK, ObjV<VType> {};
  *   { label: 'Alice', value: 25, name: 'Alice' },
  *   { label: 'Bob', value: 30, name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export interface ObjLV<VType> extends ObjL, ObjV<VType> {};
 
@@ -114,6 +128,8 @@ export interface ObjLV<VType> extends ObjL, ObjV<VType> {};
  *   { key: '1', value: 25, label: 'Alice', age: 25 },
  *   { key: '2', value: 30, label: 'Bob', age: 30 },
  * ];
+ *
+ * @since 0.1.0
  */
 export interface ObjKLV<VType> extends ObjK, ObjL, ObjV<VType> {};
 
@@ -129,6 +145,8 @@ export interface ObjKLV<VType> extends ObjK, ObjL, ObjV<VType> {};
  *   { values: [1, 2], name: 'Alice' },
  *   { values: [3, 4], name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export type ObjVs<VType, Rest extends Obj<any> = Obj<unknown>> = {
 	values: VType[];
@@ -144,6 +162,8 @@ export type ObjVs<VType, Rest extends Obj<any> = Obj<unknown>> = {
  *   { key: '1', values: [25, 30], name: 'Alice' },
  *   { key: '2', values: [30, 35], name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export interface ObjKVs<VType> extends ObjK, ObjVs<VType> {};
 
@@ -157,6 +177,8 @@ export interface ObjKVs<VType> extends ObjK, ObjVs<VType> {};
  *   { label: 'Alice', values: [25, 30], name: 'Alice' },
  *   { label: 'Bob', values: [30, 35], name: 'Bob' },
  * ];
+ *
+ * @since 0.1.0
  */
 export interface ObjLVs<VType> extends ObjL, ObjVs<VType> {};
 
@@ -170,6 +192,8 @@ export interface ObjLVs<VType> extends ObjL, ObjVs<VType> {};
  *   { key: '1', label: 'Alice', values: [25, 30], age: 25 },
  *   { key: '2', label: 'Bob', values: [30, 35], age: 30 },
  * ];
+ *
+ * @since 0.1.0
  */
 export interface ObjKLVs<VType> extends ObjK, ObjL, ObjVs<VType> {};
 
@@ -183,5 +207,7 @@ export interface ObjKLVs<VType> extends ObjK, ObjL, ObjVs<VType> {};
  *	name: obj => obj.first + ' ' + obj.last,
  *	score: obj => roundTo2(obj.rawScore),
  * };
+ *
+ * @since 0.1.0
  */
 export type FnMap = Obj<Fn<any, unknown>>;

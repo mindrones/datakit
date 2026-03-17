@@ -11,5 +11,7 @@ import {getValue} from '../object/generic/getValue';
  * @example
  * > _.sortWith([sorterValueDesc])([{key: 'a', value: 1}, {key: 'b', value: 3}])
  * [{key: 'b', value: 3}, {key: 'a', value: 1}]
+ *
+ * @since 0.3.0
  */
 export const sorterValueDesc: _.Sorter<ObjV<any>, true> = _.sorterDesc(getValue);

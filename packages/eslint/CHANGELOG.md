@@ -1,6 +1,6 @@
 # @datakit/eslint
 
-## next
+## v0.1.1
 
 - Support TypeScript
 - Disabled some TypeScript and JsDoc rules

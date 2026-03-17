@@ -10,6 +10,8 @@ import type {Obj} from '@datakit/types';
  * > pluckUniquesByA = pluckUniques('a')
  * > pluckUniquesByA([{a: 1, b: 2}, {a: 1, b: 3}, {a: 2, b: 2}])
  * [1, 2]
+ *
+ * @since 0.3.0
  */
 export const pluckUniques = (key: string) => _.pipe<Obj<any>[], any[]>([
 	_.pluck(key),

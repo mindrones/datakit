@@ -6,6 +6,8 @@ import * as _ from 'lamb';
  * @example
  * > pluckUniquesFrom([{a: 1, b: 2}, {a: 1, b: 3}, {a: 2, b: 2}], 'a')
  * [1, 2]
+ *
+ * @since 0.3.0
  */
 export const pluckUniquesFrom = (arr: any[], key: string): any[] =>
 	_.uniques(_.pluckFrom(arr, key));

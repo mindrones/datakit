@@ -10,5 +10,7 @@ import {getValue} from '../../object/generic/getValue';
  * @example
  * > sortValueAsc([{key: 'a', value: 3}, {key: 'b', value: 1}, {key: 'c', value: 2}])
  * [{key: 'b', value: 1}, {key: 'c', value: 2}, {key: 'a', value: 3}]
+ *
+ * @since 0.3.0
  */
 export const sortValueAsc: Fn<ObjV<any>[], ObjV<any>[]> = _.sortWith([getValue]);

@@ -12,6 +12,8 @@ import type {Obj, Predicate} from '@datakit/types';
  * {a: 1, aa: 2}
  * > keysStartWithA({b: 0, c: 0})
  * {}
+ *
+ * @since 0.3.0
  */
 export const pickIfKeyWith = (predicate: Predicate<string>) =>
 	_.pipe<Obj<unknown>, Obj<unknown>>([

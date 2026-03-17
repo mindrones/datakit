@@ -1,6 +1,6 @@
 # @datakit/tx
 
-## next
+## v0.3.0
 
 Added:
 
