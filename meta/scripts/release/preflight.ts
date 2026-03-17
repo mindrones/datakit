@@ -17,16 +17,16 @@ export function checkBranch(isDry = false): string {
 	return currentBranch;
 }
 
-export function checkCleanTree(): void {
+export function checkCleanTree(): boolean {
 	const spin = spinner();
 	spin.start('checking git working tree …');
 	const gitStatus = exec('git status --porcelain');
 	if (gitStatus.length > 0) {
 		spin.stop('working tree is dirty');
-		console.error('\nWorking tree has uncommitted changes. Commit or stash them first.\n');
-		process.exit(1);
+		return true;
 	}
 	spin.stop('working tree clean');
+	return false;
 }
 
 export function checkNpmAuth(): void {

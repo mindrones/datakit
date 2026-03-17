@@ -3,17 +3,23 @@ import {spinner} from '@clack/prompts';
 import type {PkgRelease} from './types';
 import {exec} from './utils';
 
-export function commitRelease(releases: PkgRelease[], commitMsg: string): void {
-	const stagedFiles = [
-		...releases.map(r => `packages/${r.pkgName}/package.json`),
-		...releases.map(r => `packages/${r.pkgName}/CHANGELOG.md`),
-		'RELEASE.md',
-	];
+export function stageFiles(files: string[]): void {
+	const spin = spinner();
+	spin.start('staging …');
+	try {
+		exec(`git add ${files.map(f => `"${f}"`).join(' ')}`);
+		spin.stop('staged ✔');
+	} catch (err) {
+		spin.stop('staging failed');
+		console.error('\n' + String(err));
+		process.exit(1);
+	}
+}
 
+export function commitRelease(releases: PkgRelease[], commitMsg: string): void {
 	const spin = spinner();
 	spin.start('committing …');
 	try {
-		exec(`git add ${stagedFiles.join(' ')}`);
 		exec(`git commit -m "${commitMsg}"`);
 		spin.stop('committed ✔');
 	} catch (err) {

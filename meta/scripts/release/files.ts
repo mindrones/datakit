@@ -5,9 +5,6 @@ import type {PkgRelease} from './types';
 import {readJson, writeJson} from './utils';
 
 export function writeReleaseFiles(releases: PkgRelease[], today: string): void {
-	const dateLabel =
-		today.slice(0, 4) + '-' + today.slice(4, 6) + '-' + today.slice(6, 8);
-
 	for (const release of releases) {
 		/* Bump version in package.json */
 		const pkgPath = pkgJsonPath(release.pkgName);
@@ -21,7 +18,7 @@ export function writeReleaseFiles(releases: PkgRelease[], today: string): void {
 			const content = readFileSync(clPath, 'utf-8');
 			const updated = content.replace(
 				/^## next\s*$/m,
-				`## v${release.newVersion} — ${dateLabel}`
+				`## v${release.newVersion}\n`
 			);
 			writeFileSync(clPath, updated, 'utf-8');
 		} catch {
@@ -35,6 +32,6 @@ export function writeReleaseFiles(releases: PkgRelease[], today: string): void {
 	const releaseEntries = releases
 		.map(r => `- @${r.displayName.replace('@', '')}@${r.newVersion}`)
 		.join('\n');
-	const newReleaseMd = `## ${today}\n${releaseEntries}\n\n` + existingRelease;
+	const newReleaseMd = `## ${today}\n\n${releaseEntries}\n\n` + existingRelease;
 	writeFileSync(releaseMd, newReleaseMd, 'utf-8');
 }

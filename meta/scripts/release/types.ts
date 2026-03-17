@@ -5,6 +5,7 @@ export type PkgName = string;
 export interface MissingTag {
 	file: string;
 	symbol: string;
+	sinceVersion: string;
 }
 
 export interface PkgRelease {

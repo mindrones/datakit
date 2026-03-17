@@ -13,11 +13,12 @@ import semver from 'semver';
 
 import {checkSinceTags, findMissingSinceTags} from './annotation-check';
 import {writeReleaseFiles} from './files';
-import {commitRelease, pushRelease, resolveTag, tagRelease} from './git';
-import {buildSite, deploySite, publishPackages} from './npm';
+import {commitRelease, pushRelease, resolveTag, stageFiles, tagRelease} from './git';
+import {publishPackages} from './npm';
+import {buildSite, deploySite} from './site';
 import {getPkgDisplayName, getPkgVersion, hasNextInChangelog, publishablePackages} from './packages';
 import {checkBranch, checkCleanTree, checkNpmAuth} from './preflight';
-import {runQualityGates} from './quality-gates';
+import {GATES, runPublishDryRun, runSelectedGates} from './quality-gates';
 import {todayString} from './utils';
 
 import type {PkgName, PkgRelease} from './types';
@@ -34,7 +35,7 @@ const program = new Command()
 		return value as 'patch' | 'minor';
 	})
 	.option('--yes', 'auto-confirm at Step 4 (requires --packages and --bump)')
-	.option('--no-deploy', 'skip the optional site deploy step (Step 8)')
+	.option('--no-deploy', 'skip the optional site deploy step (Step 10)')
 	.helpOption('-h, --help', 'show this help message');
 
 program.parse();
@@ -90,8 +91,24 @@ async function main(): Promise<void> {
 		console.log('  [dry] skipping clean tree check\n');
 		console.log('  [dry] skipping branch check\n');
 	} else {
-		checkNpmAuth();
-		checkCleanTree();
+		const isDirty = checkCleanTree();
+		if (isDirty) {
+			if (isYes) {
+				console.log('  [auto] working tree is dirty — continuing anyway\n');
+			} else {
+				const dirtyAnswer = await select({
+					message: 'Working tree has uncommitted changes. Continue anyway?',
+					options: [
+						{label: 'yes — continue with dirty tree', value: 'yes'},
+						{label: 'no — abort and commit/stash changes first', value: 'no'},
+					],
+				});
+				checkCancel(dirtyAnswer);
+				if (dirtyAnswer === 'no') {
+					abort('Aborted. Commit or stash your changes first.');
+				}
+			}
+		}
 	}
 	const currentBranch = checkBranch(isDry);
 
@@ -102,99 +119,114 @@ async function main(): Promise<void> {
 
 	/* Quality gates */
 
-	runQualityGates();
-
-	/* Steps 1 — Annotation check */
-
 	if (isYes) {
-		const missingSinceTags = findMissingSinceTags();
-		if (missingSinceTags.length > 0) {
-			const maxFile = Math.max(...missingSinceTags.map(item => item.file.length));
-			const lines = missingSinceTags
-				.map(item => `  ${item.file.padEnd(maxFile + 2)}${item.symbol}`)
-				.join('\n');
-			console.error(`\n⚠ Exports missing @since (${missingSinceTags.length} total):\n${lines}\n`);
-			console.error('Fix the above @since tags and re-run.\n');
-			process.exit(1);
-		}
+		console.log('  [auto] running all quality gates\n');
+		runSelectedGates(GATES.map(g => g.key));
 	} else {
-		await checkSinceTags(isDry, checkCancel);
+		const gateAnswer = await multiselect({
+			message: 'Select quality gates to run (space to toggle, enter to confirm):',
+			options: GATES.map(g => ({label: g.label.replace(' …', ''), value: g.key})),
+			initialValues: GATES.map(g => g.key),
+			required: false,
+		});
+		checkCancel(gateAnswer);
+		if ((gateAnswer as string[]).length > 0) {
+			runSelectedGates(gateAnswer as Parameters<typeof runSelectedGates>[0]);
+		} else {
+			console.log('  skipped all quality gates\n');
+		}
 	}
 
 	/* Steps 2–4 — Select packages / bump / confirm loop */
 
-	let releases: PkgRelease[] = [];
+	let releases: PkgRelease[];
 	let confirmed = false;
 	let commitMsg = '';
+	let skipToStaging = false;
 	let step = 2;
 
-	while (step <= 4) {
-		if (step === 2) {
-			/* Step 2 — Select packages */
+	if (!isYes) {
+		const modeAnswer = await select({
+			message: 'Bump package versions, or skip straight to staging?',
+			options: [
+				{label: 'bump — select packages and bump versions', value: 'bump'},
+				{label: 'skip — versions already bumped, go straight to staging', value: 'skip'},
+			],
+		});
+		checkCancel(modeAnswer);
+		skipToStaging = modeAnswer === 'skip';
+	}
 
-			const options = publishablePackages.map(pkgName => {
-				const version = getPkgVersion(pkgName);
-				const displayName = getPkgDisplayName(pkgName);
-				const hasNext = hasNextInChangelog(pkgName);
-				const hint = hasNext ? 'has ## next in CHANGELOG' : 'no ## next in CHANGELOG';
-				return {
-					hint: `currently ${version},  ${hint}`,
-					label: displayName,
-					value: pkgName,
-				};
+	/* Step 2 — Select packages (always, so we know which files to stage) */
+
+	{
+		const options = publishablePackages.map(pkgName => {
+			const version = getPkgVersion(pkgName);
+			const displayName = getPkgDisplayName(pkgName);
+			const hasNext = hasNextInChangelog(pkgName);
+			const hint = hasNext ? 'has ## next in CHANGELOG' : 'no ## next in CHANGELOG';
+			return {
+				hint: `currently ${version},  ${hint}`,
+				label: displayName,
+				value: pkgName,
+			};
+		});
+
+		let selectedPkgs: PkgName[];
+
+		if (isDry) {
+			selectedPkgs = publishablePackages.filter(hasNextInChangelog);
+			if (selectedPkgs.length === 0) {
+				selectedPkgs = [...publishablePackages];
+			}
+			console.log(`  [dry] auto-selected: ${selectedPkgs.map(getPkgDisplayName).join(', ')}\n`);
+		} else if (packagesArg) {
+			const rawList = packagesArg.split(',').map(s => s.trim()) as PkgName[];
+			const invalid = rawList.filter(
+				p => !(publishablePackages as readonly string[]).includes(p)
+			);
+			if (invalid.length > 0) {
+				abort(`Unknown packages: ${invalid.join(', ')}. Valid: ${publishablePackages.join(', ')}`);
+			}
+			selectedPkgs = rawList;
+			console.log(`  [auto] packages: ${selectedPkgs.map(getPkgDisplayName).join(', ')}\n`);
+		} else {
+			const selected = await multiselect({
+				initialValues: [],
+				message: 'Which packages to release? (space to toggle)',
+				options,
+				required: false,
 			});
+			checkCancel(selected);
 
-			let selectedPkgs: PkgName[];
-
-			if (isDry) {
-				// auto-select all packages that have ## next
-				selectedPkgs = publishablePackages.filter(hasNextInChangelog);
-				if (selectedPkgs.length === 0) {
-					selectedPkgs = [...publishablePackages];
-				}
-				console.log(`  [dry] auto-selected: ${selectedPkgs.map(getPkgDisplayName).join(', ')}\n`);
-			} else if (packagesArg) {
-				const rawList = packagesArg.split(',').map(s => s.trim()) as PkgName[];
-				const invalid = rawList.filter(
-					p => !(publishablePackages as readonly string[]).includes(p)
-				);
-				if (invalid.length > 0) {
-					abort(`Unknown packages: ${invalid.join(', ')}. Valid: ${publishablePackages.join(', ')}`);
-				}
-				selectedPkgs = rawList;
-				console.log(`  [auto] packages: ${selectedPkgs.map(getPkgDisplayName).join(', ')}\n`);
-			} else {
-				const selected = await multiselect({
-					initialValues: [],
-					message: 'Which packages to release? (space to toggle)',
-					options,
-					required: false,
-				});
-				checkCancel(selected);
-
-				if (!Array.isArray(selected) || selected.length === 0) {
-					abort('No packages selected.');
-				}
-
-				selectedPkgs = selected as PkgName[];
+			if (!Array.isArray(selected) || selected.length === 0) {
+				abort('No packages selected.');
 			}
 
-			releases = selectedPkgs.map(pkgName => ({
-				bump: 'patch',
-				displayName: getPkgDisplayName(pkgName),
-				newVersion: '',
-				oldVersion: getPkgVersion(pkgName),
-				pkgName,
-			}));
-
-			step = 3;
-			continue;
+			selectedPkgs = selected as PkgName[];
 		}
 
+		releases = selectedPkgs.map(pkgName => ({
+			bump: 'patch',
+			displayName: getPkgDisplayName(pkgName),
+			newVersion: '',
+			oldVersion: getPkgVersion(pkgName),
+			pkgName,
+		}));
+
+		if (skipToStaging) {
+			confirmed = true;
+			commitMsg = 'release ' + selectedPkgs
+				.map(pkgName => `${getPkgDisplayName(pkgName)}@${getPkgVersion(pkgName)}`)
+				.join(' ');
+		} else {
+			step = 3;
+		}
+	}
+
+	while (!skipToStaging && step <= 4) {
 		if (step === 3) {
 			/* Step 3 — Bump type per package */
-
-			let goBack = false;
 
 			for (const release of releases) {
 				if (isDry) {
@@ -217,7 +249,6 @@ async function main(): Promise<void> {
 					{label: `minor → ${semver.inc(release.oldVersion, 'minor')}`, value: 'minor'},
 					{label: `major → ${semver.inc(release.oldVersion, 'major')}`, value: 'major'},
 					{label: 'custom → enter manually', value: 'custom'},
-					{label: '← back → return to package selection', value: 'back'},
 				];
 
 				const bump = await select({
@@ -225,11 +256,6 @@ async function main(): Promise<void> {
 					options: bumpOptions,
 				});
 				checkCancel(bump);
-
-				if (bump === 'back') {
-					goBack = true;
-					break;
-				}
 
 				if (bump === 'custom') {
 					const customVersion = await text({
@@ -252,11 +278,6 @@ async function main(): Promise<void> {
 				}
 			}
 
-			if (goBack) {
-				step = 2;
-				continue;
-			}
-
 			step = 4;
 			continue;
 		}
@@ -266,7 +287,7 @@ async function main(): Promise<void> {
 
 			const tag = resolveTag(today);
 			commitMsg =
-				'chore: release ' +
+				'release ' +
 				releases.map(r => `${r.displayName}@${r.newVersion}`).join(' ');
 
 			const tableRows = releases.map(
@@ -299,7 +320,7 @@ async function main(): Promise<void> {
 				const selected = await select({
 					message: 'Proceed?',
 					options: [
-						{label: 'confirm — write files, commit, tag, push, publish', value: 'confirm'},
+						{label: 'proceed — continue to next steps', value: 'confirm'},
 						{label: 'back — go back to bump selection', value: 'back'},
 						{label: 'exit — abort with no disk changes', value: 'exit'},
 					],
@@ -328,22 +349,134 @@ async function main(): Promise<void> {
 		return;
 	}
 
-	/* Step 5 — Write changes to disk */
+	if (!skipToStaging) {
+		/* Step 5 — Annotation check (versions now known) */
 
-	writeReleaseFiles(releases, today);
+		if (isYes) {
+			const missingSinceTags = findMissingSinceTags(releases);
+			if (missingSinceTags.length > 0) {
+				const maxFile = Math.max(...missingSinceTags.map(item => item.file.length));
+				const lines = missingSinceTags
+					.map(item => `  ${item.file.padEnd(maxFile + 2)}${item.symbol}  (@since ${item.sinceVersion})`)
+					.join('\n');
+				console.error(`\n⚠ Exports missing @since (${missingSinceTags.length} total):\n${lines}\n`);
+				console.error('Fix the above @since tags and re-run.\n');
+				process.exit(1);
+			}
+		} else {
+			await checkSinceTags(isDry, checkCancel, releases);
+		}
 
-	/* Step 6 — Commit, tag, push */
+		/* Step 6 — Write changes to disk */
 
-	const resolvedTag = resolveTag(today);
-	commitRelease(releases, commitMsg);
-	tagRelease(resolvedTag, releases);
-	pushRelease();
+		if (!isYes) {
+			const writeAnswer = await select({
+				message: 'Write changelog, package.json and RELEASE.md to disk?',
+				options: [
+					{label: 'yes — write files', value: 'yes'},
+					{label: 'skip — files already written, continue to next step', value: 'skip'},
+					{label: 'no — abort with no disk changes', value: 'no'},
+				],
+			});
+			checkCancel(writeAnswer);
+			if (writeAnswer === 'no') { abort('Aborted.'); }
+			if (writeAnswer === 'skip') {
+				console.log('  skipped writing files\n');
+			} else {
+				writeReleaseFiles(releases, today);
+			}
+		} else {
+			writeReleaseFiles(releases, today);
+		}
+	}
 
-	/* Step 7 — Publish to npm */
+	/* Step 7 — Stage files */
 
-	publishPackages(releases);
+	const releaseFiles = [
+		...releases.map(r => `packages/${r.pkgName}/package.json`),
+		...releases.map(r => `packages/${r.pkgName}/CHANGELOG.md`),
+		'RELEASE.md',
+	];
 
-	/* Step 8 — Deploy site (optional) */
+	if (isYes) {
+		if (releaseFiles.length > 0) { stageFiles(releaseFiles); }
+	} else {
+		if (releaseFiles.length > 0) {
+			console.log(`  staging:\n${releaseFiles.map(f => `    ${f}`).join('\n')}\n`);
+			stageFiles(releaseFiles);
+		}
+
+		const continueAnswer = await text({
+			message: 'Stage any additional files now (e.g. `git add …`), then press Enter to continue.',
+			placeholder: '',
+		});
+		checkCancel(continueAnswer);
+	}
+
+	/* Step 8 — Commit, tag, push */
+
+	if (!isYes) {
+		const msgAnswer = await text({
+			message: 'Commit message:',
+			initialValue: commitMsg,
+			validate: value => (value ?? '').trim().length === 0 ? 'Commit message cannot be empty.' : undefined,
+		});
+		checkCancel(msgAnswer);
+		commitMsg = (msgAnswer as string).trim();
+	}
+
+	if (!isYes) {
+		const gitAnswer = await select({
+			message: 'Commit, tag and push?',
+			options: [
+				{label: 'yes — git commit + tag + push', value: 'yes'},
+				{label: 'no — skip (files written, no git)', value: 'no'},
+			],
+		});
+		checkCancel(gitAnswer);
+		if (gitAnswer === 'no') {
+			console.log('  skipped git commit/tag/push\n');
+		} else {
+			const resolvedTag = resolveTag(today);
+			commitRelease(releases, commitMsg);
+			tagRelease(resolvedTag, releases);
+			pushRelease();
+		}
+	} else {
+		const resolvedTag = resolveTag(today);
+		commitRelease(releases, commitMsg);
+		tagRelease(resolvedTag, releases);
+		pushRelease();
+	}
+
+	/* Step 9 — Publish to npm */
+
+	if (isYes) {
+		console.log('  [auto] publishing to npm\n');
+		checkNpmAuth();
+		publishPackages(releases);
+	} else {
+		const publishAnswer = await select({
+			message: 'Publish to npm now?',
+			options: [
+				{label: 'yes — publish all selected packages to npm', value: 'yes'},
+				{label: 'no — skip (you can run pnpm publish manually later)', value: 'no'},
+				{label: 'dry run — run pnpm publish --dry-run', value: 'dry'},
+			],
+		});
+		checkCancel(publishAnswer);
+
+		if (publishAnswer === 'yes') {
+			checkNpmAuth();
+			publishPackages(releases);
+		} else if (publishAnswer === 'dry') {
+			runPublishDryRun();
+		} else {
+			console.log('  skipped npm publish\n');
+		}
+	}
+
+	/* Step 10 — Deploy site (optional) */
 
 	if (isNoDeploy) {
 		console.log('  [auto] skipping site deploy (--no-deploy)\n');
@@ -353,7 +486,7 @@ async function main(): Promise<void> {
 			options: [
 				{label: 'yes — build and deploy meta/site', value: 'yes'},
 				{
-					label: 'no — skip (you can run pnpm --filter @datakit/site deploy later)',
+					label: 'no — skip (you can run pnpm --filter @datakit/site run publish later)',
 					value: 'no',
 				},
 			],
