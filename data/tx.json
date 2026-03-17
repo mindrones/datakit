@@ -471,8 +471,9 @@
 					"> sortDesc([3, 1, 2])\n[3, 2, 1]"
 				],
 				"filePath": "array/array/sortDesc.ts",
-				"lineNumber": 10,
-				"name": "sortDesc"
+				"lineNumber": 12,
+				"name": "sortDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array of key-value objects sorted by `key` (ascending).",
@@ -480,8 +481,9 @@
 					"> sortKeyAsc([{key: 'b', value: 1}, {key: 'a', value: 2}])\n[{key: 'a', value: 2}, {key: 'b', value: 1}]"
 				],
 				"filePath": "array/array/sortKeyAsc.ts",
-				"lineNumber": 14,
-				"name": "sortKeyAsc"
+				"lineNumber": 16,
+				"name": "sortKeyAsc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array of key-value objects sorted by `key` (descending).",
@@ -489,8 +491,9 @@
 					"> sortKeyDesc([{key: 'a', value: 1}, {key: 'c', value: 2}, {key: 'b', value: 3}])\n[{key: 'c', value: 2}, {key: 'b', value: 3}, {key: 'a', value: 1}]"
 				],
 				"filePath": "array/array/sortKeyDesc.ts",
-				"lineNumber": 14,
-				"name": "sortKeyDesc"
+				"lineNumber": 16,
+				"name": "sortKeyDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array of key-value objects sorted by `value` (ascending).",
@@ -498,8 +501,9 @@
 					"> sortValueAsc([{key: 'a', value: 3}, {key: 'b', value: 1}, {key: 'c', value: 2}])\n[{key: 'b', value: 1}, {key: 'c', value: 2}, {key: 'a', value: 3}]"
 				],
 				"filePath": "array/array/sortValueAsc.ts",
-				"lineNumber": 14,
-				"name": "sortValueAsc"
+				"lineNumber": 16,
+				"name": "sortValueAsc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array with items\nsorted by `value` (ascending) then by `key` (ascending)",
@@ -513,8 +517,9 @@
 				"description": "Return a copy of the provided array with items\nsorted by `value` (ascending) then by `key` (descending)",
 				"examples": [],
 				"filePath": "array/array/sortValueAscKeyDesc.ts",
-				"lineNumber": 12,
-				"name": "sortValueAscKeyDesc"
+				"lineNumber": 14,
+				"name": "sortValueAscKeyDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array of key-value objects sorted by `value` (descending).",
@@ -522,22 +527,25 @@
 					"> sortValueDesc([{key: 'a', value: 1}, {key: 'b', value: 3}, {key: 'c', value: 2}])\n[{key: 'b', value: 3}, {key: 'c', value: 2}, {key: 'a', value: 1}]"
 				],
 				"filePath": "array/array/sortValueDesc.ts",
-				"lineNumber": 14,
-				"name": "sortValueDesc"
+				"lineNumber": 16,
+				"name": "sortValueDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array with items\nsorted by `value` (descending) then by `key` (ascending)",
 				"examples": [],
 				"filePath": "array/array/sortValueDescKeyAsc.ts",
-				"lineNumber": 12,
-				"name": "sortValueDescKeyAsc"
+				"lineNumber": 14,
+				"name": "sortValueDescKeyAsc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array with items\nsorted by `value` (descending) then by `key` (descending)",
 				"examples": [],
 				"filePath": "array/array/sortValueDescKeyDesc.ts",
-				"lineNumber": 11,
-				"name": "sortValueDescKeyDesc"
+				"lineNumber": 13,
+				"name": "sortValueDescKeyDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array sorted by `value` (descending) then `label` (ascending).",
@@ -545,8 +553,9 @@
 					"> sortValueDescLabelAsc([{key: 'a', label: 'z', value: 1}, {key: 'b', label: 'a', value: 1}])\n[{key: 'b', label: 'a', value: 1}, {key: 'a', label: 'z', value: 1}]"
 				],
 				"filePath": "array/array/sortValueDescLabelAsc.ts",
-				"lineNumber": 15,
-				"name": "sortValueDescLabelAsc"
+				"lineNumber": 17,
+				"name": "sortValueDescLabelAsc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array sorted by `value` (descending) then `label` (descending).",
@@ -554,8 +563,9 @@
 					"> sortValueDescLabelDesc([{key: 'a', label: 'a', value: 1}, {key: 'b', label: 'z', value: 1}])\n[{key: 'b', label: 'z', value: 1}, {key: 'a', label: 'a', value: 1}]"
 				],
 				"filePath": "array/array/sortValueDescLabelDesc.ts",
-				"lineNumber": 14,
-				"name": "sortValueDescLabelDesc"
+				"lineNumber": 16,
+				"name": "sortValueDescLabelDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array sorted by `value` (descending) then `label` lowercase (ascending).",
@@ -563,8 +573,9 @@
 					"> sortValueDescLabelLowercaseAsc([{key: 'a', label: 'Z', value: 1}, {key: 'b', label: 'a', value: 1}])\n[{key: 'b', label: 'a', value: 1}, {key: 'a', label: 'Z', value: 1}]"
 				],
 				"filePath": "array/array/sortValueDescLabelLowercaseAsc.ts",
-				"lineNumber": 15,
-				"name": "sortValueDescLabelLowercaseAsc"
+				"lineNumber": 17,
+				"name": "sortValueDescLabelLowercaseAsc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array sorted by `value` (descending) then `label` lowercase (descending).",
@@ -572,8 +583,9 @@
 					"> sortValueDescLabelLowercaseDesc([{key: 'a', label: 'a', value: 1}, {key: 'b', label: 'Z', value: 1}])\n[{key: 'b', label: 'Z', value: 1}, {key: 'a', label: 'a', value: 1}]"
 				],
 				"filePath": "array/array/sortValueDescLabelLowercaseDesc.ts",
-				"lineNumber": 15,
-				"name": "sortValueDescLabelLowercaseDesc"
+				"lineNumber": 17,
+				"name": "sortValueDescLabelLowercaseDesc",
+				"since": "0.3.0"
 			}
 		],
 		"id": "array/array",
@@ -863,8 +875,9 @@
 					"> permutationsCount([4, 2])\n6\n> permutationsCount([5, 2])\n10"
 				],
 				"filePath": "array/number/permutationsCount.ts",
-				"lineNumber": 17,
-				"name": "permutationsCount"
+				"lineNumber": 19,
+				"name": "permutationsCount",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return the sum of the `value` properties from the provided array of key-value objects.",
@@ -872,8 +885,9 @@
 					"> sumValue([{key: 'a', value: 1}, {key: 'b', value: 2}, {key: 'c', value: 3}])\n6\n> sumValue([])\n0"
 				],
 				"filePath": "array/number/sumValue.ts",
-				"lineNumber": 15,
-				"name": "sumValue"
+				"lineNumber": 17,
+				"name": "sumValue",
+				"since": "0.3.0"
 			}
 		],
 		"id": "array/number",
@@ -955,8 +969,9 @@
 					"> makeKeyedEmptyArray(['a', 'b'])\n{a: [], b: []}"
 				],
 				"filePath": "array/object/makeKeyedEmptyArray.ts",
-				"lineNumber": 12,
-				"name": "makeKeyedEmptyArray"
+				"lineNumber": 14,
+				"name": "makeKeyedEmptyArray",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return an object with the provided array elements as keys and all values equal to `false`",
@@ -974,8 +989,9 @@
 					"> makeKeyedNull(['a', 'b'])\n{a: null, b: null}"
 				],
 				"filePath": "array/object/makeKeyedNull.ts",
-				"lineNumber": 12,
-				"name": "makeKeyedNull"
+				"lineNumber": 14,
+				"name": "makeKeyedNull",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return an object with the provided array elements as keys and all values equal to `true`",
@@ -1486,7 +1502,7 @@
 					"> noop()\nundefined"
 				],
 				"filePath": "generic/undefined/noop.ts",
-				"lineNumber": 11,
+				"lineNumber": 10,
 				"name": "noop",
 				"since": "0.1.0"
 			}
@@ -1618,8 +1634,9 @@
 					"> factorial(0)\n1\n> factorial(5)\n120"
 				],
 				"filePath": "number/number/factorial.ts",
-				"lineNumber": 12,
-				"name": "factorial"
+				"lineNumber": 14,
+				"name": "factorial",
+				"since": "0.3.0"
 			}
 		],
 		"id": "number/number",
@@ -1653,8 +1670,9 @@
 					"> plural(1)\n''\n> plural(2)\n's'\n> plural(0)\n's'\n> plural(-1)\n's'"
 				],
 				"filePath": "number/string/plural.ts",
-				"lineNumber": 17,
-				"name": "plural"
+				"lineNumber": 19,
+				"name": "plural",
+				"since": "0.3.0"
 			}
 		],
 		"id": "number/string",
@@ -1720,8 +1738,9 @@
 					"> objectToValueDescKeyAsc({b: 1, a: 3, c: 1})\n[{key: 'a', value: 3}, {key: 'b', value: 1}, {key: 'c', value: 1}]"
 				],
 				"filePath": "object/array/objectToValueDescKeyAsc.ts",
-				"lineNumber": 15,
-				"name": "objectToValueDescKeyAsc"
+				"lineNumber": 17,
+				"name": "objectToValueDescKeyAsc",
+				"since": "0.3.0"
 			}
 		],
 		"id": "object/array",
@@ -1737,8 +1756,9 @@
 					"> areAllValuesTruthy({a: 1, b: 'hello', c: true})\ntrue\n> areAllValuesTruthy({a: 1, b: 0, c: true})\nfalse"
 				],
 				"filePath": "object/boolean/areAllValuesTruthy.ts",
-				"lineNumber": 16,
-				"name": "areAllValuesTruthy"
+				"lineNumber": 18,
+				"name": "areAllValuesTruthy",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return `true` if at least one value of the provided object is truthy.",
@@ -1746,8 +1766,9 @@
 					"> areSomeValuesTruthy({a: 0, b: 1, c: false})\ntrue\n> areSomeValuesTruthy({a: 0, b: false, c: null})\nfalse"
 				],
 				"filePath": "object/boolean/areSomeValuesTruthy.ts",
-				"lineNumber": 16,
-				"name": "areSomeValuesTruthy"
+				"lineNumber": 18,
+				"name": "areSomeValuesTruthy",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return `true` if all values of the provided object are equal.",
@@ -1917,8 +1938,9 @@
 					"> countValues({a: 'x', b: 'y', c: 'x', d: 'z', e: 'y'})\n{x: 2, y: 2, z: 1}"
 				],
 				"filePath": "object/object/countValues.ts",
-				"lineNumber": 12,
-				"name": "countValues"
+				"lineNumber": 14,
+				"name": "countValues",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the object with values converted to float.",
@@ -2062,8 +2084,9 @@
 					"> getLabel({label: 'foo', value: 42})\n'foo'"
 				],
 				"filePath": "object/string/getLabel.ts",
-				"lineNumber": 10,
-				"name": "getLabel"
+				"lineNumber": 12,
+				"name": "getLabel",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Retrieve the 'label' property of the provided object, lowercased.\nReturns an empty string if label is undefined.",
@@ -2071,8 +2094,9 @@
 					"> getLabelLowercase({label: 'Foo', value: 42})\n'foo'\n> getLabelLowercase({value: 42})\n''"
 				],
 				"filePath": "object/string/getLabelLowercase.ts",
-				"lineNumber": 17,
-				"name": "getLabelLowercase"
+				"lineNumber": 19,
+				"name": "getLabelLowercase",
+				"since": "0.3.0"
 			}
 		],
 		"id": "object/string",
@@ -2134,8 +2158,9 @@
 					"> _.sortWith([sorterKeyDesc])([{key: 'b', value: 1}, {key: 'c', value: 2}])\n[{key: 'c', value: 2}, {key: 'b', value: 1}]"
 				],
 				"filePath": "_sorters/sorterKeyDesc.ts",
-				"lineNumber": 15,
-				"name": "sorterKeyDesc"
+				"lineNumber": 17,
+				"name": "sorterKeyDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "A descending sorter for arrays of objects with a `label` property.\nUse with `_.sortWith` to sort by `label` descending.",
@@ -2143,8 +2168,9 @@
 					"> _.sortWith([sorterLabelDesc])([{label: 'a'}, {label: 'c'}, {label: 'b'}])\n[{label: 'c'}, {label: 'b'}, {label: 'a'}]"
 				],
 				"filePath": "_sorters/sorterLabelDesc.ts",
-				"lineNumber": 15,
-				"name": "sorterLabelDesc"
+				"lineNumber": 17,
+				"name": "sorterLabelDesc",
+				"since": "0.3.0"
 			},
 			{
 				"description": "A descending sorter for arrays of objects with a `value` property.\nUse with `_.sortWith` to sort by `value` descending.",
@@ -2152,8 +2178,9 @@
 					"> _.sortWith([sorterValueDesc])([{key: 'a', value: 1}, {key: 'b', value: 3}])\n[{key: 'b', value: 3}, {key: 'a', value: 1}]"
 				],
 				"filePath": "_sorters/sorterValueDesc.ts",
-				"lineNumber": 15,
-				"name": "sorterValueDesc"
+				"lineNumber": 17,
+				"name": "sorterValueDesc",
+				"since": "0.3.0"
 			}
 		],
 		"id": "sorters",
@@ -2187,8 +2214,9 @@
 					"> const keysStartWithA = pickIfKeyWith(key => key.startsWith('a'))\n> keysStartWithA({a: 1, aa: 2, b: 0, c: 0})\n{a: 1, aa: 2}\n> keysStartWithA({b: 0, c: 0})\n{}"
 				],
 				"filePath": "string-boolean/object-object/pickIfKeyWith.ts",
-				"lineNumber": 16,
-				"name": "pickIfKeyWith"
+				"lineNumber": 18,
+				"name": "pickIfKeyWith",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a function expecting an object and returning a new object without\nthe keys satisfying the provided predicate",
@@ -2196,8 +2224,9 @@
 					"> const keysDontStartWithA = skipIfKeyWith(key => key.startsWith('a'))\n> keysDontStartWithA({a: 1, aa: 2, b: 0, c: 0})\n{b: 0, c: 0}\n> keysDontStartWithA({b: 0, c: 0})\n{b: 0, c: 0}"
 				],
 				"filePath": "string-boolean/object-object/skipIfKeyWith.ts",
-				"lineNumber": 16,
-				"name": "skipIfKeyWith"
+				"lineNumber": 18,
+				"name": "skipIfKeyWith",
+				"since": "0.3.0"
 			}
 		],
 		"id": "string-boolean/object-object",
@@ -2309,8 +2338,9 @@
 					"> pluckUniquesByA = pluckUniques('a')\n> pluckUniquesByA([{a: 1, b: 2}, {a: 1, b: 3}, {a: 2, b: 2}])\n[1, 2]"
 				],
 				"filePath": "string/array-array/pluckUniques.ts",
-				"lineNumber": 14,
-				"name": "pluckUniques"
+				"lineNumber": 16,
+				"name": "pluckUniques",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return a copy of the provided array of objects assigning each object index\nto a property with the provided key (defaulting to `index`)",
@@ -2364,8 +2394,9 @@
 					"> countA = countByKey('a')\n> countA([{a: 1, b: 2}, {a: 1, b: 4}, {a: 'foo', b: 6}, {a: 'bar', b: 7}])\n{'1': 2, 'foo': 1, 'bar': 1}"
 				],
 				"filePath": "string/array-object/countByKey.ts",
-				"lineNumber": 14,
-				"name": "countByKey"
+				"lineNumber": 16,
+				"name": "countByKey",
+				"since": "0.3.0"
 			}
 		],
 		"id": "string/array-object",
@@ -2691,8 +2722,9 @@
 					"> chunkArray([1, 2, 3, 4, 5], 2)\n[[1, 2], [3, 4], [5]]\n> chunkArray([1, 2, 3], 3)\n[[1, 2, 3]]"
 				],
 				"filePath": "_n_arity/2/chunkArray.ts",
-				"lineNumber": 10,
-				"name": "chunkArray"
+				"lineNumber": 12,
+				"name": "chunkArray",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return an array by concatenating the provided arrays.",
@@ -2830,8 +2862,9 @@
 					"> pluckUniquesFrom([{a: 1, b: 2}, {a: 1, b: 3}, {a: 2, b: 2}], 'a')\n[1, 2]"
 				],
 				"filePath": "_n_arity/2/pluckUniquesFrom.ts",
-				"lineNumber": 10,
-				"name": "pluckUniquesFrom"
+				"lineNumber": 12,
+				"name": "pluckUniquesFrom",
+				"since": "0.3.0"
 			},
 			{
 				"description": "Return the portion of the provided string between the provided indices\n(first included, second excluded). Indices can be negative.",
