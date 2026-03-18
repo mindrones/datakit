@@ -70,6 +70,9 @@ declare module 'lamb' {
 	 * `_.pipe<MyInput, MyOutput>([fn1, fn2, fn3])` */
 	function pipe<A, R>(functions: ((v: any) => any)[]): (v: A) => R;
 
+	/* debounce: missing from lamb-types */
+	function debounce<F extends AnyFunction>(fn: F, timespan: number): F;
+
 	function throttle<F extends AnyFunction>(fn: F, timespan: number): F;
 
 	function unary<T, R>(fn: (a: T, ...args: any[]) => R): UnaryFunction<T, R>;
