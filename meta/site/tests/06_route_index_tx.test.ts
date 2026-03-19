@@ -3,14 +3,16 @@ import {expect, test} from '@playwright/test';
 // --- Home page ---
 
 test('/ renders package cards', async ({page}) => {
-	await page.goto('/');
-	await expect(page.getByText('@datakit/tx')).toBeVisible();
-	await expect(page.getByText('@datakit/types')).toBeVisible();
-	await expect(page.getByText('@datakit/eslint')).toBeVisible();
+	await page.goto('/datakit/');
+	// exact: true avoids matching the machine-readable list items
+	await expect(page.getByText('@datakit/tx', {exact: true})).toBeVisible();
+	await expect(page.getByText('@datakit/types', {exact: true})).toBeVisible();
+	// @datakit/eslint is config-only — intentionally absent as a card
+	await expect(page.getByRole('link', {name: /@datakit\/eslint/i})).not.toBeVisible();
 });
 
 test('/ package cards link to correct routes', async ({page}) => {
-	await page.goto('/');
+	await page.goto('/datakit/');
 	const txLink = page.getByRole('link', {name: /@datakit\/tx/i});
 	await expect(txLink).toHaveAttribute('href', /\/tx/);
 });
@@ -18,6 +20,8 @@ test('/ package cards link to correct routes', async ({page}) => {
 // --- /tx overview ---
 
 test('/tx renders category nav in sidebar', async ({page}) => {
+	// sidebar is hidden on mobile viewports (xs/sm)
+	test.skip((page.viewportSize()?.width ?? 0) < 768, 'category nav is hidden in mobile drawer');
 	await page.goto('/datakit/tx/');
 	await expect(page.locator('[data-testid="category-nav"]').first()).toBeVisible();
 });

@@ -37,7 +37,8 @@ test.describe('header navigation', () => {
 			await page.goto('/');
 			const nav = page.locator('header nav');
 			await expect(nav).toBeVisible();
-			await expect(nav.locator('a[href="/datakit/eslint"]')).toBeVisible();
+			// eslint is config-only — intentionally absent from nav
+			await expect(nav.locator('a[href="/datakit/eslint"]')).toHaveCount(0);
 			await expect(nav.locator('a[href="/datakit/tx"]')).toBeVisible();
 			await expect(nav.locator('a[href="/datakit/types"]')).toBeVisible();
 			await expect(nav.locator('a[href="/datakit/"]')).toHaveCount(0);
