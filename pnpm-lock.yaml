@@ -12,12 +12,6 @@ catalogs:
     eslint:
       specifier: ^10.0.3
       version: 10.0.3
-    just-compare:
-      specifier: 2.3.0
-      version: 2.3.0
-    lamb:
-      specifier: 0.61.1
-      version: 0.61.1
     ts-morph:
       specifier: ^27.0.2
       version: 27.0.2
@@ -180,10 +174,10 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       just-compare:
-        specifier: 'catalog:'
+        specifier: ^2.3.0
         version: 2.3.0
       lamb:
-        specifier: 'catalog:'
+        specifier: ^0.61.1
         version: 0.61.1
     devDependencies:
       '@datakit/types':

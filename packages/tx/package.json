@@ -4,8 +4,8 @@
 	},
 	"dependencies": {
 		"escape-string-regexp": "^5.0.0",
-		"just-compare": "catalog:",
-		"lamb": "catalog:"
+		"just-compare": "^2.3.0",
+		"lamb": "^0.61.1"
 	},
 	"description": "Utilities for data transformation.",
 	"devDependencies": {

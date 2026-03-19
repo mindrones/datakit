@@ -2,9 +2,7 @@
 	"bugs": {
 		"url": "https://github.com/mindrones/datakit/issues"
 	},
-	"dependencies": {},
 	"description": "Types used in @datakit packages.",
-	"devDependencies": {},
 	"exports": {
 		".": {
 			"types": "./src/index.ts"
