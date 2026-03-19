@@ -1,4 +1,5 @@
 import {expect, test} from '@playwright/test';
+import packages from '../src/lib/data/generated/packages.json' with {type: 'json'};
 
 /* --- Package cards --- */
 
@@ -52,3 +53,19 @@ test('header nav does not contain an eslint link', async ({page}) => {
 	await page.goto('/datakit/');
 	await expect(page.locator('header').getByRole('link', {name: /eslint/i})).not.toBeVisible();
 });
+
+/* --- Dynamic packages data from packages.json --- */
+
+for (const pkg of packages) {
+	test(`/ card for ${pkg.name} shows version v${pkg.version} from packages.json`, async ({page}) => {
+		await page.goto('/datakit/');
+		const card = page.getByRole('link', {name: new RegExp(pkg.name.replace('/', '\\/'))});
+		await expect(card.getByText(`v${pkg.version}`)).toBeVisible();
+	});
+
+	test(`/ card for ${pkg.name} shows description from packages.json`, async ({page}) => {
+		await page.goto('/datakit/');
+		const card = page.getByRole('link', {name: new RegExp(pkg.name.replace('/', '\\/'))});
+		await expect(card.getByText(pkg.description)).toBeVisible();
+	});
+}

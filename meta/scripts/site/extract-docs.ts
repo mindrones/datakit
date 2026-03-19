@@ -1,12 +1,12 @@
 import {execSync} from 'child_process';
-import {mkdirSync, writeFileSync} from 'fs';
+import {mkdirSync, readFileSync, writeFileSync} from 'fs';
 import * as path from 'path';
 import {fileURLToPath} from 'url';
 
 import {Project} from 'ts-morph';
 import type {JSDocTag} from 'ts-morph';
 
-import type {TxCategory, TxDocs, TxFunction, TypeDef} from './types';
+import type {PackageMeta, TxCategory, TxDocs, TxFunction, TypeDef} from './types';
 
 /* Directories */
 
@@ -260,3 +260,24 @@ writeFileSync(
 );
 const typeCount = Object.values(typeDefs).flat().length;
 console.log(`  → ${typeCount} type definitions written to types.json`);
+
+console.log('Generating packages metadata…');
+const packageSlugs = ['tx', 'types'];
+const packagesMeta: PackageMeta[] = packageSlugs.map(slug => {
+	const pkgJson = JSON.parse(
+		readFileSync(path.join(packagesDir, slug, 'package.json'), 'utf-8')
+	);
+	return {
+		description: pkgJson.description as string,
+		name: pkgJson.name as string,
+		route: `/${slug}`,
+		slug,
+		version: pkgJson.version as string,
+	};
+});
+writeFileSync(
+	path.join(outputDir, 'packages.json'),
+	JSON.stringify(packagesMeta, null, '\t'),
+	'utf-8'
+);
+console.log(`  → ${packagesMeta.length} packages written to packages.json`);

@@ -1,7 +1,7 @@
 <script lang='ts'>
-	import {base} from '$app/paths';
+	import {resolve} from '$app/paths';
 	import PackageCard from '$lib/components/PackageCard.svelte';
-	import {packages} from '$lib/data/packages';
+	import packages from '$lib/data/generated/packages.json';
 </script>
 
 <svelte:head>
@@ -30,19 +30,19 @@
 	</h2>
 	<ul class="space-y-1 text-sm text-[--color-fg-muted]">
 		<li>
-			<a href="{base}/llms.txt" class="hover:text-[--color-fg]">llms.txt</a>
+			<a href={resolve('/llms.txt' as '/')} class="hover:text-[--color-fg]">llms.txt</a>
 			— AI-readable site index (<a href="https://llmstxt.org/" class="hover:text-[--color-fg]">llmstxt.org</a>)
 		</li>
 		<li>
-			<a href="{base}/llms-full.txt" class="hover:text-[--color-fg]">llms-full.txt</a>
+			<a href={resolve('/llms-full.txt' as '/')} class="hover:text-[--color-fg]">llms-full.txt</a>
 			— full API inlined for LLM context windows
 		</li>
 		<li>
-			<a href="{base}/data/tx.json" class="hover:text-[--color-fg]">data/tx.json</a>
+			<a href={resolve('/data/tx.json' as '/')} class="hover:text-[--color-fg]">data/tx.json</a>
 			— @datakit/tx API (JSON)
 		</li>
 		<li>
-			<a href="{base}/data/types.json" class="hover:text-[--color-fg]">data/types.json</a>
+			<a href={resolve('/data/types.json' as '/')} class="hover:text-[--color-fg]">data/types.json</a>
 			— @datakit/types definitions (JSON)
 		</li>
 	</ul>
