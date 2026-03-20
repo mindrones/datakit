@@ -1,4 +1,10 @@
+import {createRequire} from 'module';
+
 import {expect, test} from '@playwright/test';
+
+const require = createRequire(import.meta.url);
+const typesData = require('../src/lib/data/generated/types.json') as Record<string, unknown[]>;
+const typeGroups = Object.keys(typesData).sort();
 
 /*
  * Viewport strategy (mirrors what we should apply to 06_route_tx tests too):
@@ -17,10 +23,9 @@ test.describe('/types sidebar', () => {
 	test('renders group headers', async ({page}) => {
 		await page.goto('/datakit/types/');
 		const navHeaders = page.locator('[data-testid="group-nav"] code');
-		await expect(navHeaders.filter({hasText: /^array$/})).toBeVisible();
-		await expect(navHeaders.filter({hasText: /^function$/})).toBeVisible();
-		await expect(navHeaders.filter({hasText: /^object$/})).toBeVisible();
-		await expect(navHeaders.filter({hasText: /^shared$/})).toBeVisible();
+		for (const group of typeGroups) {
+			await expect(navHeaders.filter({hasText: new RegExp(`^${group}$`)})).toBeVisible();
+		}
 	});
 
 	test('shows known type names in nav', async ({page}) => {
