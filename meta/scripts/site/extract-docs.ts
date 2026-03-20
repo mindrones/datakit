@@ -1,5 +1,5 @@
 import {execSync} from 'child_process';
-import {mkdirSync, readFileSync, writeFileSync} from 'fs';
+import {mkdirSync, readdirSync, readFileSync, writeFileSync} from 'fs';
 import * as path from 'path';
 import {fileURLToPath} from 'url';
 
@@ -166,23 +166,24 @@ function extractTxFunctions(): TxCategory[] {
 
 /* Extract @datakit/types definitions */
 
-type TypesFileName = 'array' | 'function' | 'object' | 'shared';
-
-function extractTypeDefs(): Record<TypesFileName, TypeDef[]> {
+function extractTypeDefs(): Record<string, TypeDef[]> {
 	const project = new Project({skipAddingFilesFromTsConfig: true});
 
-	const typeFiles: TypesFileName[] = ['array', 'function', 'object', 'shared'];
+	const typeFiles = readdirSync(typesSrcDir)
+		.filter(f => f.endsWith('.ts') && f !== 'index.ts')
+		.map(f => path.basename(f, '.ts'));
+
 	for (const file of typeFiles) {
 		project.addSourceFileAtPath(path.join(typesSrcDir, `${file}.ts`));
 	}
 
-	const result = {} as Record<TypesFileName, TypeDef[]>;
+	const result: Record<string, TypeDef[]> = {};
 
 	for (const sourceFile of project.getSourceFiles()) {
 		const fileName = path.basename(
 			sourceFile.getFilePath(),
 			'.ts'
-		) as TypesFileName;
+		);
 
 		const typeDefs: TypeDef[] = [];
 

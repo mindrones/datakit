@@ -30,7 +30,7 @@ export interface TxFunction {
 
 export interface TypeDef {
 	description: string;
-	file: 'array' | 'function' | 'object' | 'shared';
+	file: string;
 	name: string;
 	since?: string;
 	source: string;       // full TypeScript source text of the declaration
