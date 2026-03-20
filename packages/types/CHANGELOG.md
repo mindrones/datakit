@@ -1,6 +1,6 @@
 # @datakit/types
 
-## next
+## v0.2.1
 
 - add `Maybe`, `Nullable`, `Nilable`
 - rename `shared.ts` to `shape.ts`

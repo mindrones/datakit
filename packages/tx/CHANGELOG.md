@@ -1,6 +1,6 @@
 # @datakit/tx
 
-## next
+## v0.3.1
 
 - updated `@data/types`, used `Maybe`
 

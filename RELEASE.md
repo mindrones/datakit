@@ -1,3 +1,8 @@
+## 20260320
+
+- [`@datakit/tx@0.3.1`](./packages/tx/CHANGELOG.md#v031)
+- [`@datakit/types@0.2.1`](./packages/types/CHANGELOG.md#v021)
+
 ## 20260317
 
 - [`@datakit/eslint@0.1.1`](./packages/eslint/CHANGELOG.md#v011)
