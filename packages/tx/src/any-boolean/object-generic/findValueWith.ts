@@ -1,6 +1,6 @@
 import * as _ from 'lamb';
 
-import type {Obj, Predicate} from '@datakit/types';
+import type {Maybe, Obj, Predicate} from '@datakit/types';
 
 /**
  * Return a function expecting an object and returning the first of its values
@@ -17,7 +17,7 @@ import type {Obj, Predicate} from '@datakit/types';
  * @since 0.1.0
  */
 export const findValueWith = <T>(predicate: Predicate<T>) =>
-	_.pipe<Obj<T>, T | undefined>([
+	_.pipe<Obj<T>, Maybe<T>>([
 		_.values,
 		_.findWhere(predicate)
 	]);

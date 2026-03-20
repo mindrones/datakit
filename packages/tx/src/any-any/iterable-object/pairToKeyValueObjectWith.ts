@@ -1,4 +1,4 @@
-import type {Fn} from '@datakit/types';
+import type {Fn, Maybe} from '@datakit/types';
 
 /**
  * Return a function expecting a pair and returning a {key, value} object
@@ -44,9 +44,9 @@ import type {Fn} from '@datakit/types';
  */
 export const pairToKeyValueObjectWith =
 	<V, R>(fn: Fn<V, R>) =>
-		(pair: ArrayLike<unknown>): {key: unknown; value: R | undefined} => {
+		(pair: ArrayLike<unknown>): {key: unknown; value: Maybe<R>} => {
 			const key = pair[0];
-			const item = pair[1] as V | undefined;
+			const item = pair[1] as Maybe<V>;
 			return {
 				key,
 				value: item != null ? fn(item) : undefined,

@@ -1,5 +1,10 @@
 # @datakit/types
 
+## next
+
+- add `Maybe`, `Nullable`, `Nilable`
+- rename `shared.ts` to `shape.ts`
+
 ## v0.2.0
 
 - open `ObjK`/`ObjL`/`ObjV`/`ObjVs` to extra properties:

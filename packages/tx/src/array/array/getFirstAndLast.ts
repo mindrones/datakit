@@ -1,5 +1,7 @@
 import * as _ from 'lamb';
 
+import type {Maybe} from '@datakit/types';
+
 /**
  * Return an array containing the first and the last element of the provided array.
  *
@@ -14,7 +16,7 @@ import * as _ from 'lamb';
  * @since 0.1.0
  */
 export const getFirstAndLast =
-	<T>(array: T[]): [T | undefined, T | undefined] => [
-		_.head(array) as T | undefined,
-		_.last(array) as T | undefined
+	<T>(array: T[]): [Maybe<T>, Maybe<T>] => [
+		_.head(array) as Maybe<T>,
+		_.last(array) as Maybe<T>
 	];

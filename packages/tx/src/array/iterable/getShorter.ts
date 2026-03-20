@@ -1,3 +1,5 @@
+import type {Maybe} from '@datakit/types';
+
 type Iterable = string | unknown[];
 
 /**
@@ -17,8 +19,8 @@ type Iterable = string | unknown[];
  *
  * @since 0.1.0
  */
-export const getShorter = (iterable: Iterable[]): Iterable | undefined => {
-	let result: Iterable | undefined;
+export const getShorter = (iterable: Iterable[]): Maybe<Iterable> => {
+	let result: Maybe<Iterable>;
 
 	if (iterable.length > 0) {
 		let i = 0;
