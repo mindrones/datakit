@@ -1,7 +1,7 @@
 # @datakit
 
 > A collection of TypeScript utilities for functional data transformation.
-> Two documented packages: `@datakit/tx` (237 functions) and `@datakit/types` (21 types).
+> Two documented packages: `@datakit/tx` (237 functions) and `@datakit/types` (24 types).
 
 `@datakit/tx` organises its functions by signature category (e.g. `string → string`,
 `array → object`). Each function has a JSDoc description, type signature, and usage example.

@@ -45,6 +45,29 @@
 			"source": "export type Effect = () => void;"
 		}
 	],
+	"nil": [
+		{
+			"description": "A value that can be of type T or undefined.",
+			"file": "nil",
+			"name": "Maybe",
+			"since": "0.2.1",
+			"source": "export type Maybe<T> = T | undefined;"
+		},
+		{
+			"description": "A value that can be of type T or null.",
+			"file": "nil",
+			"name": "Nullable",
+			"since": "0.2.1",
+			"source": "export type Nullable<T> = T | null;"
+		},
+		{
+			"description": "A value that can be of type T, null, or undefined.",
+			"file": "nil",
+			"name": "Nilable",
+			"since": "0.2.1",
+			"source": "export type Nilable<T> = T | null | undefined;"
+		}
+	],
 	"object": [
 		{
 			"description": "A type representing an object with string keys and values of type T.",
@@ -137,17 +160,17 @@
 			"source": "export interface ObjKLVs<VType> extends ObjK, ObjL, ObjVs<VType> {}"
 		}
 	],
-	"shared": [
+	"shape": [
 		{
 			"description": "Types with a length property.",
-			"file": "shared",
+			"file": "shape",
 			"name": "HasLength",
 			"since": "0.1.0",
 			"source": "export type HasLength = {length: number};"
 		},
 		{
 			"description": "Types with a size property",
-			"file": "shared",
+			"file": "shape",
 			"name": "HasSize",
 			"since": "0.1.0",
 			"source": "export type HasSize = {size: number};"

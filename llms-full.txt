@@ -1,7 +1,7 @@
 # @datakit
 
 > A collection of TypeScript utilities for functional data transformation.
-> Two documented packages: `@datakit/tx` (237 functions) and `@datakit/types` (21 types).
+> Two documented packages: `@datakit/tx` (237 functions) and `@datakit/types` (24 types).
 
 `@datakit/tx` organises its functions by signature category (e.g. `string → string`,
 `array → object`). Each function has a JSDoc description, type signature, and usage example.
@@ -2428,6 +2428,32 @@ export type Effect = () => void;
 
 Useful for effects and other side-effectful functions that don't need any input.
 
+## @datakit/types — nil
+
+### Maybe
+
+```typescript
+export type Maybe<T> = T | undefined;
+```
+
+A value that can be of type T or undefined.
+
+### Nullable
+
+```typescript
+export type Nullable<T> = T | null;
+```
+
+A value that can be of type T or null.
+
+### Nilable
+
+```typescript
+export type Nilable<T> = T | null | undefined;
+```
+
+A value that can be of type T, null, or undefined.
+
 ## @datakit/types — object
 
 ### Obj
@@ -2556,7 +2582,7 @@ export interface ObjKLVs<VType> extends ObjK, ObjL, ObjVs<VType> {}
 An object with `key`, `label`, `values` properties and optional additional properties.
 Useful for representing items in a list or options in a dropdown.
 
-## @datakit/types — shared
+## @datakit/types — shape
 
 ### HasLength
 

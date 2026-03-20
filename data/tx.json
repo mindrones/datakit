@@ -421,7 +421,7 @@
 					"> getFirstAndLast([0, 1, 2, 3, 4])\n[0, 4]\n> getFirstAndLast([0])\n[0, 0]\n> getFirstAndLast([])\n[undefined, undefined]"
 				],
 				"filePath": "array/array/getFirstAndLast.ts",
-				"lineNumber": 16,
+				"lineNumber": 18,
 				"name": "getFirstAndLast",
 				"since": "0.1.0"
 			},
@@ -787,7 +787,7 @@
 					"> getShorter([[1, 2], [1], [1, 2, 3], ['a']])\n[1]\n> getShorter(['abc', 'a', [1]])\n'a'\n> getShorter(['b', 'a'])\n'b'\n> getShorter([])\nundefined"
 				],
 				"filePath": "array/iterable/getShorter.ts",
-				"lineNumber": 20,
+				"lineNumber": 22,
 				"name": "getShorter",
 				"since": "0.1.0"
 			}
@@ -1428,7 +1428,7 @@
 					"> makeEmptyArrayIfUndefined(undefined)\n[]\n> makeEmptyArrayIfUndefined([1, 2, 3])\n[1, 2, 3]"
 				],
 				"filePath": "generic/generic/makeEmptyArrayIfUndefined.ts",
-				"lineNumber": 12,
+				"lineNumber": 14,
 				"name": "makeEmptyArrayIfUndefined",
 				"since": "0.1.0"
 			},
