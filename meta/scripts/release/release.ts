@@ -17,7 +17,7 @@ import {commitRelease, pushRelease, resolveTag, stageFiles, tagRelease} from './
 import {publishPackages} from './npm';
 import {buildSite, deploySite} from './site';
 import {getPkgDisplayName, getPkgVersion, hasNextInChangelog, publishablePackages} from './packages';
-import {checkBranch, checkCleanTree, checkNpmAuth} from './preflight';
+import {checkBranch, checkCleanTree} from './preflight';
 import {GATES, runPublishDryRun, runSelectedGates} from './quality-gates';
 import {todayString} from './utils';
 
@@ -453,7 +453,6 @@ async function main(): Promise<void> {
 
 	if (isYes) {
 		console.log('  [auto] publishing to npm\n');
-		checkNpmAuth();
 		publishPackages(releases);
 	} else {
 		const publishAnswer = await select({
@@ -467,7 +466,6 @@ async function main(): Promise<void> {
 		checkCancel(publishAnswer);
 
 		if (publishAnswer === 'yes') {
-			checkNpmAuth();
 			publishPackages(releases);
 		} else if (publishAnswer === 'dry') {
 			runPublishDryRun();
