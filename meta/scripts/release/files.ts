@@ -30,7 +30,7 @@ export function writeReleaseFiles(releases: PkgRelease[], today: string): void {
 	const releaseMd = releasemdPath();
 	const existingRelease = readFileSync(releaseMd, 'utf-8');
 	const releaseEntries = releases
-		.map(r => `- @${r.displayName.replace('@', '')}@${r.newVersion}`)
+		.map(r => `- [\`${r.displayName}@${r.newVersion}\`](./packages/${r.pkgName}/CHANGELOG.md#v${r.newVersion.replace(/\./g, '')})`)
 		.join('\n');
 	const newReleaseMd = `## ${today}\n\n${releaseEntries}\n\n` + existingRelease;
 	writeFileSync(releaseMd, newReleaseMd, 'utf-8');
