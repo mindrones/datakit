@@ -7,3 +7,4 @@ brave-debug-profile
 build/
 coverage/
 node_modules/
+.crew
